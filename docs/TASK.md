@@ -6,7 +6,7 @@
 [TASK-01] 태스크 내용 (O) @agent-name
 ```
 
-- 번호: `TASK-01`부터 순서대로 증가합니다.
+- 번호: `TASK-00`부터 순서대로 증가합니다.
 - 모델: 줄 끝 괄호 안에 적습니다.
   - `(O)` Opus: 설계, 복잡한 구현, 까다로운 디버깅
   - `(S)` Sonnet: 일반적인 구현, 콘텐츠 작성
@@ -18,6 +18,10 @@
   - `@qa-reviewer`: 빌드와 린트, 반응형, 접근성, 배포 사이트 점검
 
 ## 태스크
+
+### 0. 환경 세팅
+
+[TASK-00] Originkit 로그인: `npx originkit@latest login` 실행 후 `npx originkit@latest whoami`로 확인 (새 PC에서 작업 시작할 때마다 필요) (H)
 
 ### 1. 모바일 반응형
 
