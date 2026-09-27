@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .originkit/
+
+# personal documents (resume / portfolio PDFs) — kept out of the public repo
+docs/*.pdf
