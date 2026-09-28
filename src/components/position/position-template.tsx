@@ -26,6 +26,8 @@ type PositionTemplateProps = {
  */
 export default function PositionTemplate({ position, projects, builds = [], related, showcase }: PositionTemplateProps) {
   const [lead, ...rest] = projects;
+  // 프로젝트가 모두 같은 구분이면(예: AI Product Builder는 전부 AI) 구분 칩이 정보가 없어 숨깁니다.
+  const showCategory = new Set(projects.map((p) => p.category)).size > 1;
   // 홀수 개면 마지막 하나는 반쪽 빈칸이 생기지 않게 큰 카드로
   const odd = rest.length % 2 === 1;
   const grid = odd ? rest.slice(0, -1) : rest;
@@ -36,23 +38,30 @@ export default function PositionTemplate({ position, projects, builds = [], rela
       {/* 소개 */}
       <Container className="flex flex-col gap-8 pt-16 pb-section md:pt-24">
         <h1 className="text-display uppercase text-fg">{position.title}</h1>
-        <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-16">
-          <p className="text-h3 font-medium text-fg text-balance">{position.tagline}</p>
-          <div className="flex flex-col gap-4">
-            {position.intro.map((paragraph) => (
-              <Text key={paragraph} size="lg">
-                {paragraph}
-              </Text>
-            ))}
-            <ul className="mt-2 flex flex-wrap gap-2" aria-label="강조 역량">
-              {position.emphasis.map((item) => (
-                <li key={item}>
-                  <Tag variant="solid">{item}</Tag>
-                </li>
+        {/* 소개 문단 · 강조 태그가 없는 포지션은 한 줄 소개만 넓게 보여줍니다. */}
+        {position.intro.length > 0 || position.emphasis.length > 0 ? (
+          <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-16">
+            <p className="text-h3 font-medium text-fg text-balance">{position.tagline}</p>
+            <div className="flex flex-col gap-4">
+              {position.intro.map((paragraph) => (
+                <Text key={paragraph} size="lg">
+                  {paragraph}
+                </Text>
               ))}
-            </ul>
+              {position.emphasis.length > 0 && (
+                <ul className="mt-2 flex flex-wrap gap-2" aria-label="강조 역량">
+                  {position.emphasis.map((item) => (
+                    <li key={item}>
+                      <Tag variant="solid">{item}</Tag>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <p className="max-w-3xl text-h3 font-medium text-fg text-balance">{position.tagline}</p>
+        )}
       </Container>
 
       {showcase}
@@ -64,7 +73,7 @@ export default function PositionTemplate({ position, projects, builds = [], rela
         </Heading>
         {lead && (
           <Reveal className="mt-10">
-            <ProjectCard project={lead} index={0} size="large" />
+            <ProjectCard project={lead} index={0} size="large" showCategory={showCategory} />
           </Reveal>
         )}
         {grid.length > 0 && (
@@ -72,7 +81,7 @@ export default function PositionTemplate({ position, projects, builds = [], rela
             {grid.map((project, i) => (
               <li key={project.slug}>
                 <Reveal>
-                  <ProjectCard project={project} index={i + 1} />
+                  <ProjectCard project={project} index={i + 1} showCategory={showCategory} />
                 </Reveal>
               </li>
             ))}
@@ -80,7 +89,7 @@ export default function PositionTemplate({ position, projects, builds = [], rela
         )}
         {tail && (
           <Reveal className="mt-16">
-            <ProjectCard project={tail} index={rest.length} size="large" />
+            <ProjectCard project={tail} index={rest.length} size="large" showCategory={showCategory} />
           </Reveal>
         )}
         {builds.length > 0 && (

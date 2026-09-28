@@ -35,7 +35,7 @@ export function Button({
   return <button type={type} className={cn(buttonClass({ variant, size }), className)} {...props} />;
 }
 
-/** 버튼 모양 링크. 외부 링크(http, mailto)는 새 탭이나 기본 동작으로 엽니다. */
+/** 버튼 모양 링크. 외부 링크(http, mailto)와 공개 데모(/demo/*)는 새 탭이나 기본 동작으로 엽니다. */
 export function ButtonLink({
   variant,
   size,
@@ -52,9 +52,11 @@ export function ButtonLink({
       </span>
     );
   }
-  const isExternal = /^(https?:|mailto:|tel:)/.test(href) || href.endsWith(".pdf");
+  // /demo/* 는 이 사이트 안이지만 따로 루트 레이아웃을 쓰는 공개 데모라 새 탭으로 엽니다.
+  const isDemo = href.startsWith("/demo/");
+  const isExternal = /^(https?:|mailto:|tel:)/.test(href) || href.endsWith(".pdf") || isDemo;
   if (isExternal) {
-    const newTab = href.startsWith("http");
+    const newTab = href.startsWith("http") || isDemo;
     return (
       <a
         href={href}

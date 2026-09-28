@@ -1,9 +1,9 @@
 import Link from "next/link";
+import Reveal from "@/components/motion/reveal";
 import Heading from "@/components/ui/heading";
 import Section from "@/components/ui/section";
 import { builderShowcase } from "@/content/showcases";
 import { cn } from "@/lib/cn";
-import { DataTable, ShowcaseBlock } from "./showcase-parts";
 
 type Owner = "me" | "claude" | "both";
 
@@ -13,17 +13,17 @@ const owners: Record<Owner, { label: string; text: string; border: string }> = {
   both: { label: "함께", text: "text-fg", border: "border-line-strong" },
 };
 
-/** AI Product Builder: 혼자 Claude Code로 프로덕트를 만드는 루프 → 3중 검증 */
+/** AI Product Builder: 혼자 Claude Code로 프로덕트를 만드는 6단계 루프 */
 export default function BuilderShowcase() {
-  const { loop, checks } = builderShowcase;
+  const { loop } = builderShowcase;
   return (
     <Section bordered aria-labelledby="how-i-build">
       <Heading id="how-i-build" eyebrow="How I Build">
-        혼자서 팀처럼 만듭니다
+        Claude Code Building Loop
       </Heading>
 
-      <div className="mt-12 flex flex-col gap-20">
-        <ShowcaseBlock title="Claude Code 빌딩 루프" caption={loop.caption}>
+      <Reveal className="mt-10 flex flex-col gap-5">
+        <p className="text-small text-subtle">{loop.caption}</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-caption" aria-label="범례">
             {(Object.keys(owners) as Owner[]).map((o) => (
               <li key={o} className="flex items-center gap-2 text-subtle">
@@ -62,19 +62,7 @@ export default function BuilderShowcase() {
               );
             })}
           </ol>
-
-          <p className="flex items-center gap-3 rounded-card border border-dashed border-line-strong px-5 py-4 text-small text-muted">
-            <span aria-hidden className="text-h3 leading-none text-fg">
-              ↺
-            </span>
-            {loop.loopBack}
-          </p>
-        </ShowcaseBlock>
-
-        <ShowcaseBlock title="3중 검증" caption={checks.caption}>
-          <DataTable columns={checks.columns} rows={checks.rows} />
-        </ShowcaseBlock>
-      </div>
+      </Reveal>
     </Section>
   );
 }

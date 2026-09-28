@@ -30,21 +30,26 @@ export default function CategoryBadge({
   category,
   status,
   deployment,
+  showCategory = true,
   className,
 }: {
   category: Category;
   status?: string;
   deployment?: Deployment;
+  /** false면 협업 · 창업 · AI 구분 칩을 숨깁니다 (한 페이지의 프로젝트가 모두 같은 구분일 때) */
+  showCategory?: boolean;
   className?: string;
 }) {
   const c = categories[category];
   const d = deployment && deployments[deployment];
   return (
     <span className={cn("inline-flex flex-wrap items-center gap-2 text-caption font-medium", className)}>
-      <span className={cn("inline-flex h-6 items-center gap-1.5 rounded-pill border px-2.5", c.border, c.text)}>
-        <span aria-hidden className={cn("size-1.5 rounded-pill", c.bg)} />
-        {c.label}
-      </span>
+      {showCategory && (
+        <span className={cn("inline-flex h-6 items-center gap-1.5 rounded-pill border px-2.5", c.border, c.text)}>
+          <span aria-hidden className={cn("size-1.5 rounded-pill", c.bg)} />
+          {c.label}
+        </span>
+      )}
       {d && (
         <span
           title={d.title}

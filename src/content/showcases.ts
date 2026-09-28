@@ -64,7 +64,7 @@ export const plannerShowcase = {
   ],
 };
 
-/** AI Product Builder: 혼자 Claude Code로 만드는 방식 (세 저장소의 CLAUDE.md · TASK.md · 스킬 · 훅 기준) */
+/** AI Product Builder: 혼자 Claude Code로 만드는 6단계 루프 (세 저장소의 CLAUDE.md · TASK.md · 스킬 · 훅 기준) */
 export const builderShowcase = {
   loop: {
     caption: "포트폴리오 · 카드뉴스 에이전트 · 서학개미클럽 저장소에서 공통으로 쓰는 순서",
@@ -111,16 +111,6 @@ export const builderShowcase = {
         evidence: ["Stop 훅 자동 커밋", "calls.jsonl 원장", "회고 문서"],
         example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
       },
-    ],
-    loopBack: "6 → 1 · 회고에서 나온 규칙이 다음 작업의 CLAUDE.md가 됩니다",
-  },
-  checks: {
-    caption: "AI가 만든 결과를 세 겹으로 확인합니다",
-    columns: ["프로젝트", "자동 검사", "다른 눈", "최종 확인"],
-    rows: [
-      ["카드뉴스 에이전트", "줄표 · 문장 길이 · 줄바꿈 규칙 스크립트", "GPT가 소리 내어 읽고 걸리는 자리만 짚음", "사람 검토 + 식품표시광고법 심의"],
-      ["서학개미클럽", "Python Decimal 계산 · 콜 기록 게이트", "4대 거장 에이전트끼리 반박", "Yahoo 실측가 자동 채점 · 실계좌 매수"],
-      ["이 포트폴리오", "build · lint", "qa-reviewer 에이전트 리뷰", "배포 사이트 직접 확인"],
     ],
   },
 };

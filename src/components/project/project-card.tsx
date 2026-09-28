@@ -14,9 +14,11 @@ type ProjectCardProps = {
   index?: number;
   /** large: 대표 프로젝트, 이미지를 크게 */
   size?: "large" | "default";
+  /** 구분 칩(협업 · 창업 · AI) 표시. 페이지의 프로젝트가 모두 같은 구분이면 끕니다. */
+  showCategory?: boolean;
 };
 
-export default function ProjectCard({ project, index, size = "default" }: ProjectCardProps) {
+export default function ProjectCard({ project, index, size = "default", showCategory = true }: ProjectCardProps) {
   const large = size === "large";
   // 카드 전체는 제목 링크를 늘려 덮고(stretched link), 바로가기 버튼은 그 위에 따로 둡니다.
   const links = project.links?.slice(0, 2) ?? [];
@@ -33,7 +35,7 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
           {index !== undefined && (
             <span className="font-mono text-caption text-subtle">{String(index + 1).padStart(2, "0")}</span>
           )}
-          <CategoryBadge category={project.category} deployment={project.deployment} />
+          <CategoryBadge category={project.category} deployment={project.deployment} showCategory={showCategory} />
         </div>
         <p className="text-caption text-muted">
           <span className="font-semibold text-fg">{affiliations[project.affiliation]}</span> · {project.organization}

@@ -119,5 +119,8 @@ export const cardnewsAgent: Project = {
     "검사 둘이 모두 통과한 편에서도 사람이 여러 자리를 되돌렸습니다. 자동 검사는 기계로 셀 수 있는 것만 잡는다는 걸 전제로, 사람이 훑을 항목을 문서로 남겼습니다.",
     "피드 조회수를 갈래별로 읽어 보니 '행동' 주제가 평균 254로 '기준' 주제(160)보다 높았습니다. 이후 주제 후보를 낼 때 갈래가 연속되는지부터 봅니다.",
   ],
-  links: [{ label: "GitHub", href: "https://github.com/uwol-is-june/cardnews-agent" }],
+  links: [
+    { label: "데모 열기", href: "/demo/cardnews" },
+    { label: "GitHub", href: "https://github.com/uwol-is-june/cardnews-agent" },
+  ],
 };
