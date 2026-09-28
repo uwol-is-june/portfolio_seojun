@@ -1,0 +1,304 @@
+/* 공개 데모 스타일: 이 폴더와 src/demos/seohak 만 스캔한다 (포트폴리오 클래스와 섞이지 않게) */
+@import "tailwindcss" source(none);
+@source "./";
+@source "../../../../demos/seohak";
+@plugin "@tailwindcss/typography";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   xAI 디자인 시스템 토큰 — docs/DESIGN-x.ai.md 기반.
+   원칙: near-black 캔버스(#0a0a0a) 단일 서페이스 + 화이트 아웃라인 pill이 전체
+   인터랙티브 어휘 + Universal Sans(Inter 대체) weight 400 + 음수 트래킹 +
+   Geist Mono 대문자 eyebrow. 그림자 없음 — 헤어라인 보더가 모든 elevation.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* 서페이스 — near-black 단일 캔버스 + 미세하게 밝은 카드/소프트 */
+  --color-canvas: #0a0a0a; /* 유일한 페이지 배경 */
+  --color-canvas-soft: #1a1c20; /* hover·툴팁·인풋 */
+  --color-canvas-card: #191919; /* 카드 fill */
+  --color-canvas-mid: #363a3f; /* 중첩 서페이스·코드 목업 */
+  --color-hairline: #212327; /* 1px 디바이더 */
+
+  /* 텍스트 */
+  --color-ink: #ffffff; /* 기본 텍스트·디스플레이 */
+  --color-body: #dadbdf; /* 보조 본문 */
+  --color-mute: #7d8187; /* 캡션·파인프린트·eyebrow */
+
+  /* 액센트 — 마케팅 표면엔 드물게, 일러스트/코드/포인트에만 */
+  --color-sunset: #ff7a17;
+  --color-sunset-soft: #ffc285;
+  --color-dusk: #7c3aed;
+  --color-twilight: #c4b5fd;
+  --color-breeze: #a0c3ec;
+  --color-midnight: #0d1726;
+
+  /* 폰트 — Universal Sans는 독점 → Inter로 대체(디스플레이+본문), Geist Mono는 eyebrow/label */
+  --font-sans: var(--font-inter), Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+/* 스크롤바 공간 예약 — 탭 전환 시 mx-auto 레이아웃이 옆으로 밀리는 것 방지 */
+html {
+  scrollbar-gutter: stable;
+  background: var(--color-canvas);
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 디스플레이: 절대 볼드 금지 — weight 400 + 음수 트래킹이 위계를 만든다.
+   (docs: 96px에서 -2.4px, 사이즈별로 스케일. 크기+트래킹이 강조를 담당) */
+h1, h2, h3, h4 {
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+/* 화이트-투명 포커스 링 (다크 캔버스용) */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Geist Mono 대문자 eyebrow — 코드 코멘트처럼 읽히는 시그니처 라벨 */
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-mute);
+}
+
+/* 슬림 커스텀 스크롤바 — near-black 트랙(투명) + 헤어라인/뮤트 썸. (xAI: 그림자 없음, 은은하게) */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-canvas-mid) transparent;
+}
+.scroll-slim::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--color-canvas-mid);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: var(--color-mute);
+  background-clip: content-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   보고서 마크다운 — @tailwindcss/typography 대신 DESIGN-x.ai 토큰으로 직접
+   위계·간격을 잡는다. ReactMarkdown이 뱉는 순수 HTML 요소를 타겟.
+   (글자 크기/줄간격/마진/정렬 일관성 확보 → 가독성)
+   ───────────────────────────────────────────────────────────────────────── */
+.report-prose {
+  color: var(--color-body);
+  /* 밀도 우선: 한 화면에 더 많은 내용이 들어오도록 폰트·줄간격 축소(가독성 하한 유지) */
+  font-size: 13.5px;
+  line-height: 1.55;
+  /* 넓은 모달 폭을 그대로 사용(표·코드블록·헤더는 전체 폭). 본문 텍스트만 아래에서
+     읽기 좋은 줄길이로 제한한다. */
+  max-width: none;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* 본문 텍스트 블록은 줄길이를 제한해 가독성 유지(표/코드/헤더는 전체 폭 사용).
+   가로 폭을 더 활용해 세로 스크롤을 줄인다. */
+.report-prose p,
+.report-prose ul,
+.report-prose ol,
+.report-prose blockquote {
+  max-width: 104ch;
+}
+.report-prose > :first-child {
+  margin-top: 0;
+}
+.report-prose h1,
+.report-prose h2,
+.report-prose h3,
+.report-prose h4 {
+  color: var(--color-ink);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.report-prose h1 {
+  font-size: 1.55rem;
+  margin: 0 0 0.7rem;
+}
+.report-prose h2 {
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+.report-prose h3 {
+  font-size: 1.05rem;
+  margin: 1.2rem 0 0.4rem;
+}
+.report-prose h4 {
+  font-size: 0.95rem;
+  margin: 0.95rem 0 0.35rem;
+  color: var(--color-body);
+}
+.report-prose p {
+  margin: 0 0 0.65rem;
+}
+.report-prose strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.report-prose em {
+  color: var(--color-body);
+}
+.report-prose a {
+  color: var(--color-breeze);
+  text-decoration: none;
+}
+.report-prose a:hover {
+  text-decoration: underline;
+}
+.report-prose ul,
+.report-prose ol {
+  margin: 0 0 0.65rem;
+  padding-left: 1.3rem;
+}
+.report-prose li {
+  margin: 0.15rem 0;
+}
+.report-prose li::marker {
+  color: var(--color-mute);
+}
+.report-prose blockquote {
+  margin: 0.8rem 0;
+  padding: 0.15rem 0 0.15rem 0.9rem;
+  border-left: 2px solid var(--color-canvas-mid);
+  color: var(--color-mute);
+}
+.report-prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-hairline);
+  margin: 1.3rem 0;
+}
+.report-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-canvas-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.report-prose pre {
+  background: var(--color-canvas-card);
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  padding: 0.8rem 0.9rem;
+  overflow-x: auto;
+  margin: 0.9rem 0;
+}
+.report-prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.82rem;
+  color: var(--color-body);
+}
+/* 테이블 — 가로 스크롤 래핑 + 헤어라인 보더 + 헤더 강조 + 지브라 */
+.report-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.9rem 0;
+  font-size: 0.85rem;
+  display: block;
+  overflow-x: auto;
+}
+.report-prose th,
+.report-prose td {
+  border: 1px solid var(--color-hairline);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+.report-prose th {
+  background: var(--color-canvas-soft);
+  color: var(--color-ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.report-prose td {
+  color: var(--color-body);
+}
+.report-prose tbody tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* 탭 전환 애니메이션 */
+@keyframes tab-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-panel {
+  animation: tab-fade-in 0.22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-panel {
+    animation: none;
+  }
+}
+
+/* 사이드바 드릴다운 전환 (TASK-96) — 하위 목록으로 들어갈 때는 오른쪽에서,
+   '뒤로'로 나올 때는 왼쪽에서 들어온다. 방향이 위계를 말해주므로 페이드만 주지 않는다. */
+@keyframes nav-slide-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes nav-slide-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.nav-view-forward {
+  animation: nav-slide-from-right 0.18s ease-out;
+}
+
+.nav-view-back {
+  animation: nav-slide-from-left 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-view-forward,
+  .nav-view-back {
+    animation: none;
+  }
+}

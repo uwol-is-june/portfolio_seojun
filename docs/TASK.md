@@ -21,4 +21,3 @@
 ## 태스크
 
 콘텐츠 근거와 결정 사항은 [CONTENT-PLAN.md](CONTENT-PLAN.md)에 있습니다.
-

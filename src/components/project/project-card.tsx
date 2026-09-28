@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
 import Tag from "@/components/ui/tag";
 import type { Project } from "@/content/types";
@@ -17,11 +18,12 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project, index, size = "default" }: ProjectCardProps) {
   const large = size === "large";
+  // 카드 전체는 제목 링크를 늘려 덮고(stretched link), 바로가기 버튼은 그 위에 따로 둡니다.
+  const links = project.links?.slice(0, 2) ?? [];
   return (
-    <Link
-      href={`/projects/${project.slug}`}
+    <article
       className={cn(
-        "group flex flex-col gap-5",
+        "group relative flex flex-col gap-5",
         large && "md:grid md:grid-cols-[1.2fr_1fr] md:items-center md:gap-10",
       )}
     >
@@ -31,19 +33,24 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
           {index !== undefined && (
             <span className="font-mono text-caption text-subtle">{String(index + 1).padStart(2, "0")}</span>
           )}
-          <CategoryBadge category={project.category} status={project.status} deployment={project.deployment} />
+          <CategoryBadge category={project.category} deployment={project.deployment} />
         </div>
         <p className="text-caption text-muted">
           <span className="font-semibold text-fg">{affiliations[project.affiliation]}</span> · {project.organization}
         </p>
         <h3 className={cn("font-semibold text-fg text-balance", large ? "text-h2" : "text-h3")}>
-          {project.title}
-          <span
-            aria-hidden
-            className="ml-2 inline-block text-muted transition-transform duration-300 group-hover:translate-x-1"
+          <Link
+            href={`/projects/${project.slug}`}
+            className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none after:rounded-card focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-fg"
           >
-            →
-          </span>
+            {project.title}
+            <span
+              aria-hidden
+              className="ml-2 inline-block text-muted transition-transform duration-300 group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </Link>
         </h3>
         <p className="text-small font-medium text-fg">{project.subtitle}</p>
         {project.cardPoints?.length ? (
@@ -60,9 +67,6 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
         ) : (
           <p className="text-small text-muted text-pretty md:text-body">{project.summary}</p>
         )}
-        <p className="text-caption text-subtle">
-          {project.role} · {project.period}
-        </p>
         <ul className="mt-1 flex flex-wrap gap-2">
           {project.tags.slice(0, 4).map((tag) => (
             <li key={tag}>
@@ -70,8 +74,17 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
             </li>
           ))}
         </ul>
+        {links.length > 0 && (
+          <div className="relative z-10 mt-2 flex flex-wrap gap-2">
+            {links.map((l) => (
+              <ButtonLink key={l.href} href={l.href} size="sm" variant="secondary" aria-label={`${project.title} ${l.label} 새 탭에서 열기`}>
+                {l.label} ↗
+              </ButtonLink>
+            ))}
+          </div>
+        )}
       </div>
-    </Link>
+    </article>
   );
 }
 

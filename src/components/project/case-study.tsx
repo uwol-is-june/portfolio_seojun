@@ -76,7 +76,9 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           </Text>
           {project.deployment === "local" && (
             <p className="text-small text-subtle">
-              로컬에서 실행하는 프로젝트라 공개 주소가 없습니다. 코드와 문서는 GitHub에서 볼 수 있습니다.
+              {project.links?.some((l) => l.href.startsWith("/demo/"))
+                ? "로컬에서 실행하는 프로젝트라, 실계좌 연동만 목 데이터로 바꾼 공개 데모를 이 사이트에 붙였습니다. 코드와 문서는 GitHub에서 볼 수 있습니다."
+                : "로컬에서 실행하는 프로젝트라 공개 주소가 없습니다. 코드와 문서는 GitHub에서 볼 수 있습니다."}
             </p>
           )}
           {project.links && project.links.length > 0 && (

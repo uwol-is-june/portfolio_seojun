@@ -172,6 +172,7 @@ export const seohakGaemiClub: Project = {
     { src: "/projects/seohak-gaemi-club/screen-before.webp", alt: "기존 감정 매매 수익률 화면", caption: "Metrics 3 · 기존 감정 매매" },
   ],
   links: [
+    { label: "데모 열기", href: "/demo/seohak" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/seohak-gaemi-club" },
     { label: "원본 오픈소스", href: "https://github.com/xbtlin/ai-berkshire" },
   ],

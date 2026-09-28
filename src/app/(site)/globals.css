@@ -1,4 +1,7 @@
 @import "tailwindcss";
+/* 서학개미클럽 데모는 자체 스타일시트를 쓴다 */
+@source not "../../demos";
+@source not "../(seohak)";
 
 /*
  * 디자인 토큰 (TASK-04)
