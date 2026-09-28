@@ -19,7 +19,7 @@ type PositionTemplateProps = {
 
 /**
  * 포지션 페이지 공통 템플릿 (TASK-14)
- * 순서: 소개 → 핵심 역량 → 포지션별 강조 섹션 → 대표 프로젝트
+ * 순서: 소개 → 포지션별 강조 섹션 → 프로젝트
  */
 export default function PositionTemplate({ position, projects, builds = [], showcase }: PositionTemplateProps) {
   const [lead, ...rest] = projects;
@@ -48,35 +48,25 @@ export default function PositionTemplate({ position, projects, builds = [], show
         </div>
       </Container>
 
-      {/* 핵심 역량 */}
-      <Section bordered aria-labelledby="competencies">
-        <Heading id="competencies" eyebrow="Core Competencies">
-          핵심 역량
-        </Heading>
-        <ul className="mt-10 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2">
-          {position.competencies.map((c, i) => (
-            <li key={c.title} className="flex flex-col gap-3 bg-bg p-6 sm:odd:last:col-span-2 md:p-8">
-              <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="text-h3 font-semibold text-fg">{c.title}</h3>
-              <Text size="sm">{c.description}</Text>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
       {showcase}
 
-      {/* 대표 프로젝트 */}
+      {/* 프로젝트: 케이스 스터디는 큰 카드, 케이스 스터디가 없는 서비스는 작은 카드 */}
       <Section bordered aria-labelledby="projects">
-        <Heading id="projects" eyebrow="Selected Projects">
-          대표 프로젝트
+        <Heading id="projects" eyebrow="Projects">
+          프로젝트
         </Heading>
         {lead && (
           <Reveal className="mt-10">
             <ProjectCard project={lead} index={0} size="large" />
           </Reveal>
         )}
-        {rest.length > 0 && (
+        {/* 나머지가 하나뿐이면 반쪽 빈칸이 생기지 않게 큰 카드로 */}
+        {rest.length === 1 && (
+          <Reveal className="mt-16">
+            <ProjectCard project={rest[0]} index={1} size="large" />
+          </Reveal>
+        )}
+        {rest.length > 1 && (
           <ul className="mt-16 grid gap-12 md:grid-cols-2 md:gap-10">
             {rest.map((project, i) => (
               <li key={project.slug}>
@@ -89,7 +79,12 @@ export default function PositionTemplate({ position, projects, builds = [], show
         )}
         {builds.length > 0 && (
           <div className="mt-20 flex flex-col gap-6">
-            <h3 className="text-h3 font-semibold text-fg">그 밖의 프로젝트</h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="text-h3 font-semibold text-fg">그 밖의 프로젝트</h3>
+              <p className="text-small text-subtle">
+                배포: 누구나 접속할 수 있는 서비스 · 로컬: 내 PC에서 실행하는 도구 (코드는 GitHub 공개)
+              </p>
+            </div>
             <BuildList builds={builds} />
           </div>
         )}

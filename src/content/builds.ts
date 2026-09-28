@@ -90,21 +90,4 @@ export const builds: Build[] = [
     ],
     stat: "커밋 178",
   },
-  {
-    name: "인카 주가 모니터",
-    deployment: "live",
-    positions: ["ai-product-builder"],
-    description: "경영진 주가 보고 자동화 (인카금융서비스 DX 과제)",
-    category: "ai",
-    points: [
-      "평일 장 마감 후 주가 · 재무 · 투자자 동향을 자동 수집하고 Gemini로 시장 요약 · 종목 분석",
-      "보고 업무 연 16 영업일, 약 410만 원 절감",
-    ],
-    stack: ["Python", "pykrx", "DART API", "Gemini", "GitHub Actions"],
-    links: [
-      { label: "대시보드", href: "https://incar-stock.vercel.app" },
-      { label: "GitHub", href: "https://github.com/uwol-is-june/incar_stock" },
-    ],
-    stat: "커밋 307",
-  },
 ];

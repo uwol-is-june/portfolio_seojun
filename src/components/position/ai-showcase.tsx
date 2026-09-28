@@ -1,15 +1,13 @@
 import Link from "next/link";
-import BuildList from "@/components/project/build-list";
 import Heading from "@/components/ui/heading";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import { aiShowcase } from "@/content/showcases";
-import { getBuildsByPosition } from "@/lib/content";
 import { ShowcaseBlock } from "./showcase-parts";
 
-/** AI Product Builder: 실투자 검증 → 직접 만든 것들 → AI 활용 원칙 → 사용 기술 */
+/** AI Product Builder: 실투자 검증 → 사용 기술 */
 export default function AiShowcase() {
-  const { validation, principles, stack } = aiShowcase;
+  const { validation, stack } = aiShowcase;
 
   return (
     <Section bordered aria-labelledby="what-i-build">
@@ -34,23 +32,6 @@ export default function AiShowcase() {
           >
             {validation.project.title} 케이스 스터디 보기 →
           </Link>
-        </ShowcaseBlock>
-
-        <ShowcaseBlock title="직접 만든 것들" caption="배포: 누구나 접속할 수 있는 서비스 · 로컬: 내 PC에서 실행하는 도구 (코드는 GitHub 공개)">
-          <BuildList builds={getBuildsByPosition("ai-product-builder")} />
-        </ShowcaseBlock>
-
-        <ShowcaseBlock title="AI를 쓰는 원칙" caption="만들면서 정한 규칙들">
-          <ul className="grid gap-3 md:grid-cols-2">
-            {principles.map((p, i) => (
-              <li key={p.title} className="flex flex-col gap-2 rounded-card bg-surface p-6">
-                <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-h3 font-semibold text-fg">{p.title}</span>
-                <span className="text-small text-muted">{p.description}</span>
-                <span className="text-caption text-ai">{p.source}</span>
-              </li>
-            ))}
-          </ul>
         </ShowcaseBlock>
 
         <ShowcaseBlock title="사용 기술">

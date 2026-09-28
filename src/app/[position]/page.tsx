@@ -35,8 +35,7 @@ export default async function PositionPage(props: PageProps<"/[position]">) {
     <PositionTemplate
       position={position}
       projects={getProjectsByPosition(position.id)}
-      // AI Product Builder는 강조 섹션에서 Builds 목록을 이미 보여줍니다.
-      builds={position.id === "ai-product-builder" ? [] : getBuildsByPosition(position.id)}
+      builds={getBuildsByPosition(position.id)}
       showcase={showcases[position.id]}
     />
   );

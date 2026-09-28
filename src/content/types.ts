@@ -32,7 +32,6 @@ export interface Position {
   /** 한 줄 소개 (메타 description으로도 사용) */
   tagline: string;
   intro: string[];
-  competencies: { title: string; description: string }[];
   /** 이 포지션에서 강조할 관점 */
   emphasis: string[];
   /** 홈 HoverImageReveal에 뜨는 이미지 */

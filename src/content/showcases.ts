@@ -76,7 +76,7 @@ export const plannerShowcase = {
   ],
 };
 
-/** AI Product Builder: 실투자 검증, 만든 것들, AI 활용 원칙, 기술 */
+/** AI Product Builder: 실투자 검증, 사용 기술 */
 export const aiShowcase = {
   validation: {
     project: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
@@ -86,28 +86,6 @@ export const aiShowcase = {
       { label: "감정 매매 대비 개선", value: "45%", description: "−24.1% → +21.0%" },
     ],
   },
-  principles: [
-    {
-      title: "계산은 코드, 해석은 LLM",
-      description: "사주 계산과 밸류에이션처럼 틀리면 안 되는 부분은 코드(Python Decimal, 만세력 라이브러리)가 하고, LLM은 해석과 문장만 맡깁니다.",
-      source: "다이어트 사주 · 서학개미클럽",
-    },
-    {
-      title: "판단을 기록하고 채점한다",
-      description: "AI가 낸 판단을 수정할 수 없는 원장에 남기고, 실제 주가로 자동 채점해 맞았는지를 데이터로 확인합니다.",
-      source: "서학개미클럽",
-    },
-    {
-      title: "규칙은 코드로 검사한다",
-      description: "줄표 금지, 문장 길이 같은 'AI 티' 문안 규칙을 스크립트로 검사해 사람이 매번 고치지 않게 합니다.",
-      source: "카드뉴스 에이전트",
-    },
-    {
-      title: "태스크와 에이전트로 나눈다",
-      description: "작업을 태스크 문서로 쪼개고 역할별 에이전트와 모델을 배정해, 혼자서도 기획부터 QA까지 진행합니다.",
-      source: "이 포트폴리오 사이트",
-    },
-  ],
   stack: [
     { category: "AI", items: ["Claude Code", "Gemini API", "멀티 에이전트", "RAG"] },
     { category: "만들기", items: ["Next.js", "TypeScript", "Python", "Supabase"] },
