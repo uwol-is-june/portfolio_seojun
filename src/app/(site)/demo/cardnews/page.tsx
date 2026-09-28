@@ -51,6 +51,9 @@ export default function CardnewsDemoPage() {
             <ButtonLink href="https://github.com/uwol-is-june/cardnews-agent" size="sm" variant="secondary">
               GitHub ↗
             </ButtonLink>
+            <ButtonLink href="https://www.instagram.com/dasii.official/" size="sm" variant="secondary">
+              Instagram ↗
+            </ButtonLink>
           </div>
         </div>
         <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-card bg-surface">
@@ -134,8 +137,8 @@ export default function CardnewsDemoPage() {
       <section className="border-t border-line py-section">
         <Container className="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-center">
           <div className="flex flex-col gap-4">
-            <Heading eyebrow="Result">같은 과정으로 9월에만 14편</Heading>
-            <Text>9/05부터 9/18까지 14편 89장을 이 순서로 만들었고, 8월분까지 &lsquo;다시&rsquo; 인스타그램에 20편을 운영하고 있습니다.</Text>
+            <Heading eyebrow="Result">같은 과정으로 31편</Heading>
+            <Text>8월 알룰로스 편부터 &lsquo;다시&rsquo; 인스타그램에 올린 카드뉴스 31편을 모두 이 순서로 만들었습니다. 9/05부터 9/18까지만 14편 89장입니다.</Text>
           </div>
           <Reveal className="relative aspect-[4/5] w-full overflow-hidden rounded-card bg-surface">
             <Image src={d.covers.src} alt={d.covers.alt} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-contain" />

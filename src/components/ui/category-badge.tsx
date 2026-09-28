@@ -31,6 +31,7 @@ export default function CategoryBadge({
   status,
   deployment,
   showCategory = true,
+  affiliation,
   className,
 }: {
   category: Category;
@@ -38,6 +39,8 @@ export default function CategoryBadge({
   deployment?: Deployment;
   /** false면 협업 · 창업 · AI 구분 칩을 숨깁니다 (한 페이지의 프로젝트가 모두 같은 구분일 때) */
   showCategory?: boolean;
+  /** 배포 칩 오른쪽에 붙는 소속 칩. title은 마우스를 올렸을 때 보이는 전체 소속 이름 */
+  affiliation?: { label: string; title: string };
   className?: string;
 }) {
   const c = categories[category];
@@ -70,6 +73,15 @@ export default function CategoryBadge({
           </svg>
           {d.label}
           <span className="sr-only">: {d.title}</span>
+        </span>
+      )}
+      {affiliation && (
+        <span
+          title={affiliation.title}
+          className="inline-flex h-6 items-center rounded-pill border border-line-strong px-2.5 text-muted"
+        >
+          {affiliation.label}
+          <span className="sr-only">: {affiliation.title}</span>
         </span>
       )}
       {status && (

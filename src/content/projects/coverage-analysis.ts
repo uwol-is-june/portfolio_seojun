@@ -87,5 +87,8 @@ export const coverageAnalysis: Project = {
     { src: "/projects/coverage-analysis/cover.webp", alt: "보장 점수, 가입 보험 수, 월 보험료와 가입 보험 목록", caption: "결과 · 보장 점수와 가입 보험 목록 (데모 데이터)" },
     { src: "/projects/coverage-analysis/screen-coverage.webp", alt: "보장 항목별 진행바와 갭 분석 표", caption: "보장 현황 · 갭 분석 (데모 데이터)" },
   ],
-  links: [{ label: "서비스", href: "https://incar-ca-test.vercel.app" }],
+  links: [
+    { label: "데모 열기", href: "/demo/coverage" },
+    { label: "서비스", href: "https://incar-ca-test.vercel.app" },
+  ],
 };

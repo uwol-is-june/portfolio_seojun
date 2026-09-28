@@ -64,53 +64,79 @@ export const plannerShowcase = {
   ],
 };
 
-/** AI Product Builder: 혼자 Claude Code로 만드는 6단계 루프 (세 저장소의 CLAUDE.md · TASK.md · 스킬 · 훅 기준) */
-export const builderShowcase = {
-  loop: {
-    caption: "포트폴리오 · 카드뉴스 에이전트 · 서학개미클럽 저장소에서 공통으로 쓰는 순서",
-    steps: [
-      {
-        label: "규칙 문서",
-        owner: "me" as const,
-        text: "코드보다 규칙을 먼저 씁니다. CLAUDE.md 하나를 규칙의 단일 소스로 두고, 근거와 사례는 따로 적어 사본이 두 벌 생기지 않게 합니다.",
-        evidence: ["CLAUDE.md", "docs/README.md"],
-        example: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
-      },
-      {
-        label: "태스크 쪼개기",
-        owner: "me" as const,
-        text: "요청을 TASK-NN 단위로 나누고, 난이도에 맞춰 모델을 붙입니다. 설계는 Opus, 일반 구현은 Sonnet, 단순 수정은 Haiku.",
-        evidence: ["docs/TASK.md", "(O) · (S) · (H)"],
-        example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
-      },
-      {
-        label: "스킬 · 에이전트",
-        owner: "claude" as const,
-        text: "반복되는 절차는 스킬로, 관점이 다른 일은 서브에이전트로 나눠 동시에 돌립니다.",
-        evidence: ["스킬 12개", "4대 거장 병렬 에이전트", "ui-builder · qa-reviewer"],
-        example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
-      },
-      {
-        label: "멈춤 지점",
-        owner: "me" as const,
-        text: "방향이 갈리는 자리에서는 AI가 멈추고 제가 통과시킵니다. 통과 전에는 다음 단계로 넘어가지 않습니다.",
-        evidence: ["주제 → 골격 → 문안 ⛳"],
-        example: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
-      },
-      {
-        label: "3중 검증",
-        owner: "both" as const,
-        text: "셀 수 있는 것은 스크립트가, 읽히는지는 다른 모델이, 마지막은 사람이 봅니다. 계산은 LLM 대신 코드로 합니다.",
-        evidence: ["check-text → read-text(GPT)", "Python Decimal", "build · lint"],
-        example: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
-      },
-      {
-        label: "기록 → 규칙",
-        owner: "claude" as const,
-        text: "훅이 결과를 자동 커밋하고, 판단은 수정할 수 없는 원장에 남깁니다. 되돌린 자리는 날짜와 함께 규칙 문서로 올려 다음 작업이 먼저 읽게 합니다.",
-        evidence: ["Stop 훅 자동 커밋", "calls.jsonl 원장", "회고 문서"],
-        example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
-      },
-    ],
-  },
+/**
+ * AI Product Builder: 혼자 Claude Code로 만드는 흐름 (처음 → 배포)
+ * 갈래(branches)의 예시는 각 저장소 코드로 확인한 것만 적습니다:
+ * Supabase(devtier · Podo-Wiki package.json), GitHub Actions cron(incar_stock daily-collect · devtier batch),
+ * GitHub Actions CI(diet-saju ci.yml), Expo EAS(Podo-Wiki/mobile).
+ */
+type Owner = "me" | "claude" | "both";
+type Example = { title: string; slug: string };
+type Branch = { need: string; tool: string; examples: Example[] };
+
+const ex = {
+  cardnews: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
+  seohak: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
+  devtier: { title: "DevTier", slug: "devtier" },
+  wiki: { title: "포도위키", slug: "podo-wiki" },
+  stock: { title: "경영진 주가 보고", slug: "incar-stock-report" },
+  saju: { title: "다이어트 사주", slug: "diet-saju" },
+  coverage: { title: "보장분석", slug: "coverage-analysis" },
+};
+
+export const builderShowcase: {
+  flow: { label: string; owner: Owner; text: string; tags: string[]; branches?: Branch[] }[];
+} = {
+  flow: [
+    {
+      label: "규칙 문서",
+      owner: "me",
+      text: "코드보다 규칙을 먼저 씁니다. CLAUDE.md 하나를 규칙의 단일 소스로 둡니다.",
+      tags: ["CLAUDE.md"],
+    },
+    {
+      label: "태스크 쪼개기",
+      owner: "me",
+      text: "요청을 TASK-NN으로 나누고 난이도에 맞춰 Opus · Sonnet · Haiku를 붙입니다.",
+      tags: ["docs/TASK.md"],
+    },
+    {
+      label: "에이전트로 개발",
+      owner: "claude",
+      text: "반복 절차는 스킬로, 관점이 다른 일은 서브에이전트로 나눠 동시에 돌립니다.",
+      tags: ["스킬", "서브에이전트"],
+      branches: [
+        { need: "DB가 필요하면", tool: "Supabase", examples: [ex.devtier, ex.wiki] },
+        { need: "정기 실행이 필요하면", tool: "GitHub Actions cron", examples: [ex.stock, ex.devtier] },
+        { need: "외부 데이터가 필요하면", tool: "API 연동 (DART · SEC · CODEF · 토스증권)", examples: [ex.stock, ex.seohak, ex.coverage] },
+        { need: "문장 생성이 필요하면", tool: "Gemini · Claude (계산은 코드로)", examples: [ex.saju, ex.stock] },
+      ],
+    },
+    {
+      label: "멈춤 · 검증",
+      owner: "both",
+      text: "방향이 갈리는 자리는 제가 통과시키고, 셀 수 있는 것은 스크립트 · 테스트가 봅니다.",
+      tags: ["build · lint", "Vitest"],
+      branches: [
+        { need: "테스트를 매번 돌리려면", tool: "GitHub Actions CI", examples: [ex.saju] },
+        { need: "문장을 다른 눈으로 보려면", tool: "GPT 읽기 검사", examples: [ex.cardnews] },
+      ],
+    },
+    {
+      label: "배포",
+      owner: "claude",
+      text: "웹은 Vercel에, 앱은 스토어에 올립니다. 키가 필요한 도구는 로컬에서 돌립니다.",
+      tags: ["Vercel"],
+      branches: [
+        { need: "앱이면", tool: "Expo EAS → App Store · Google Play", examples: [ex.wiki] },
+        { need: "실계좌 · 로컬 전용이면", tool: "로컬 실행 + 공개 데모", examples: [ex.seohak] },
+      ],
+    },
+    {
+      label: "운영 · 회고",
+      owner: "me",
+      text: "되돌린 자리를 날짜와 함께 규칙 문서로 올려, 다음 작업이 먼저 읽게 합니다.",
+      tags: ["회고 문서"],
+    },
+  ],
 };

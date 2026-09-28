@@ -5,11 +5,11 @@ export const cardnewsAgent: Project = {
   title: "카드뉴스 에이전트",
   subtitle: "인스타그램 카드뉴스를 만드는 Claude Code 스킬",
   summary:
-    "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구입니다. Claude Code 스킬로 불러 쓰며, '다시(DASII)' 인스타그램 카드뉴스 20편을 이 도구로 만들어 운영하고 있습니다.",
+    "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구입니다. Claude Code 스킬로 불러 쓰며, '다시(DASII)' 인스타그램 카드뉴스 31편을 이 도구로 만들어 운영하고 있습니다.",
   cardPoints: [
     "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구",
     "Claude Code 스킬로 불러 쓰고, 규칙 검사 → GPT 읽기 검사 → 사람 검토로 검수",
-    "'다시(DASII)' 인스타그램 카드뉴스 20편을 이 도구로 운영",
+    "'다시(DASII)' 인스타그램 카드뉴스 31편을 이 도구로 운영 (알룰로스 편부터 전부)",
   ],
   category: "ai",
   deployment: "local",
@@ -22,7 +22,7 @@ export const cardnewsAgent: Project = {
   tags: ["Claude Code 스킬", "Node.js", "Headless Edge", "GPT 검수"],
   thumbnail: { src: "/projects/cardnews-agent/cover.webp", alt: "카드뉴스 에이전트로 만든 '다시' 카드뉴스 표지 모음" },
   highlights: [
-    "'다시(DASII)' 인스타그램 카드뉴스 20편 운영",
+    "알룰로스 편부터 '다시(DASII)' 인스타그램 카드뉴스 31편 전부 에이전트로 제작",
     "규칙 검사 → GPT 읽기 검사 → 사람 검토, 3단계 검수",
     "수치마다 논문 · 기관 출처, 관찰연구는 인과를 단정하지 않음",
     "글은 데이터(cards.json)로, 스타일 · 폰트는 공유 템플릿으로",
@@ -97,9 +97,9 @@ export const cardnewsAgent: Project = {
     caption: "cardnews-agent 저장소 코드 기준 · 로컬에서 실행하는 도구",
   },
   outcome: {
-    verdict: "'다시' 인스타그램 카드뉴스 20편 운영",
+    verdict: "'다시' 인스타그램 카드뉴스 31편 운영",
     metrics: [
-      { label: "운영 편수", value: "20편", description: "8월 6편 + 9월 14편" },
+      { label: "운영 편수", value: "31편", description: "2026.08 알룰로스 편 ~ 09.18 발행분, 저장소 기록 기준" },
       { label: "9월 렌더 카드", value: "89장", description: "9/05 ~ 9/18 14편, 편당 5~7장" },
       { label: "커밋", value: "30개", description: "편을 낼 때마다 규칙 문서를 함께 갱신" },
     ],
@@ -122,5 +122,6 @@ export const cardnewsAgent: Project = {
   links: [
     { label: "데모 열기", href: "/demo/cardnews" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/cardnews-agent" },
+    { label: "Instagram", href: "https://www.instagram.com/dasii.official/" },
   ],
 };

@@ -2,7 +2,8 @@ import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
 import Tag from "@/components/ui/tag";
 import type { Build } from "@/content/types";
-import { affiliations } from "@/lib/affiliation";
+import { affiliationChip, affiliations } from "@/lib/affiliation";
+import { categories } from "@/lib/category";
 
 /** 직접 만든 작은 결과물 카드 목록 */
 export default function BuildList({ builds }: { builds: Build[] }) {
@@ -11,13 +12,18 @@ export default function BuildList({ builds }: { builds: Build[] }) {
       {builds.map((b) => (
         <li key={b.name} className="flex flex-col gap-4 rounded-card border border-line bg-surface p-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <CategoryBadge category={b.category} status={b.status} deployment={b.deployment} />
+            <CategoryBadge
+              category={b.category}
+              status={b.status}
+              deployment={b.deployment}
+              affiliation={{
+                label: affiliationChip(b.affiliation, b.organization, categories[b.category].label === affiliations[b.affiliation]),
+                title: `${affiliations[b.affiliation]} · ${b.organization}`,
+              }}
+            />
             {b.stat && <span className="font-mono text-caption text-subtle">{b.stat}</span>}
           </div>
           <div className="flex flex-col gap-1">
-            <p className="text-caption text-muted">
-              <span className="font-semibold text-fg">{affiliations[b.affiliation]}</span> · {b.organization}
-            </p>
             <h4 className="text-h3 font-semibold text-fg">{b.name}</h4>
             <p className="text-small text-muted">{b.description}</p>
             {b.role && <p className="text-caption text-subtle">역할 · {b.role}</p>}

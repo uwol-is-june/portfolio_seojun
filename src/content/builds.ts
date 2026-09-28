@@ -18,13 +18,14 @@ export const builds: Build[] = [
     points: [
       "iOS · Android 앱 출시 후 운영 중",
       "제조사 표시사항과 식약처 자료로 함량 · 복용법을 정리한 성분 매거진 랜딩",
-      "직접 만든 카드뉴스 에이전트로 인스타그램 콘텐츠 운영",
+      "직접 만든 카드뉴스 에이전트로 인스타그램 카드뉴스 31편 운영",
     ],
     stack: ["App Store", "Google Play", "Vercel"],
     links: [
       { label: "App Store", href: "https://apps.apple.com/kr/app/id6754357876" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.dasii" },
       { label: "성분 매거진", href: "https://dasii-landing-page.vercel.app" },
+      { label: "Instagram", href: "https://www.instagram.com/dasii.official/" },
     ],
   },
 ];

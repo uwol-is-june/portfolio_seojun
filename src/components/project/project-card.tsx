@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
 import Tag from "@/components/ui/tag";
 import type { Project } from "@/content/types";
-import { affiliations } from "@/lib/affiliation";
+import { affiliationChip, affiliations } from "@/lib/affiliation";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 
@@ -35,11 +35,20 @@ export default function ProjectCard({ project, index, size = "default", showCate
           {index !== undefined && (
             <span className="font-mono text-caption text-subtle">{String(index + 1).padStart(2, "0")}</span>
           )}
-          <CategoryBadge category={project.category} deployment={project.deployment} showCategory={showCategory} />
+          <CategoryBadge
+            category={project.category}
+            deployment={project.deployment}
+            showCategory={showCategory}
+            affiliation={{
+              label: affiliationChip(
+                project.affiliation,
+                project.organization,
+                showCategory && categories[project.category].label === affiliations[project.affiliation],
+              ),
+              title: `${affiliations[project.affiliation]} · ${project.organization}`,
+            }}
+          />
         </div>
-        <p className="text-caption text-muted">
-          <span className="font-semibold text-fg">{affiliations[project.affiliation]}</span> · {project.organization}
-        </p>
         <h3 className={cn("font-semibold text-fg text-balance", large ? "text-h2" : "text-h3")}>
           <Link
             href={`/projects/${project.slug}`}
