@@ -79,6 +79,48 @@ export const seohakGaemiClub: Project = {
       description: "Next.js 대시보드에 토스증권 Open API로 실계좌 포트폴리오를 연동하고 보고서 · 트랙레코드 · 실적 캘린더를 모았습니다.",
     },
   ],
+  architecture: {
+    stages: [
+      {
+        title: "명령",
+        items: ["스킬 12개 중 하나를 호출", "예: /investment-team AAPL"],
+        tech: ["Claude Code 스킬"],
+        kind: "screen",
+      },
+      {
+        title: "데이터 수집",
+        items: ["SEC XBRL 재무 수치 직접 추출", "시세 · 뉴스 · 공시 원문", "근거마다 신뢰도 등급"],
+        tech: ["SEC EDGAR", "Yahoo Finance", "fetch_financials.py"],
+        kind: "system",
+      },
+      {
+        title: "4대 거장 병렬 분석",
+        items: ["단융핑 · 버핏 · 멍거 · 리루 에이전트 동시 실행", "서로 반박 → 종합 보고서", "계산은 Python Decimal"],
+        tech: ["서브에이전트 4개", "financial_rigor.py"],
+        kind: "system",
+      },
+      {
+        title: "기록",
+        items: ["보고서 Markdown 저장 · 훅이 로컬 git 커밋", "매수 · 관망 · 회피 콜을 원장에 append (수정 불가)"],
+        tech: ["reports/*.md", "calls.jsonl", "Stop 훅"],
+        kind: "store",
+      },
+      {
+        title: "채점",
+        items: ["콜 시점가와 Yahoo 실측가 비교", "방향 적중 · 목표 도달 · 오차"],
+        tech: ["score_calls.py"],
+        kind: "system",
+      },
+      {
+        title: "대시보드",
+        items: ["포트폴리오 · 트랙레코드 · 종목별 보고서", "아티클 · 실적 점검 · 병목 신호"],
+        tech: ["Next.js", "토스증권 Open API"],
+        kind: "screen",
+      },
+    ],
+    extras: ["비밀번호 로그인 뒤에서만 금융 데이터 제공", "토스 API가 IP 허용목록을 요구해 로컬 전용으로 운영"],
+    caption: "seohak-gaemi-club 저장소 코드 기준 · 스킬 12개 · Python 도구 · Next.js 대시보드",
+  },
   outcome: {
     verdict: "추천 종목 실투자로 2주 만에 수익률 +21.0%",
     metrics: [
@@ -88,6 +130,36 @@ export const seohakGaemiClub: Project = {
     ],
   },
   gallery: [
+    {
+      src: "/projects/seohak-gaemi-club/dash-portfolio.webp",
+      alt: "대시보드 포트폴리오 탭: 보유 종목 카드와 당일 변동 표",
+      caption: "대시보드 · 포트폴리오 (목 데이터: 토스증권 실계좌 대신 목업 응답)",
+      wide: true,
+    },
+    {
+      src: "/projects/seohak-gaemi-club/dash-track-record.webp",
+      alt: "대시보드 트랙레코드 탭: 종목별 콜과 진입가까지 남은 거리",
+      caption: "대시보드 · 트랙레코드 (콜 원장 · Yahoo 실측가, 보유 정보는 목 데이터)",
+      wide: true,
+    },
+    {
+      src: "/projects/seohak-gaemi-club/dash-reports.webp",
+      alt: "대시보드 종목별 보고서 탭: 테크/AI 분야의 AI 인프라 산업 리서치 보고서",
+      caption: "대시보드 · 종목별 보고서 (분야 → 섹터 → 종목)",
+      wide: true,
+    },
+    {
+      src: "/projects/seohak-gaemi-club/dash-articles.webp",
+      alt: "대시보드 아티클 탭: 발행 현황과 스페이스X 주가 변동 아티클",
+      caption: "대시보드 · 아티클",
+      wide: true,
+    },
+    {
+      src: "/projects/seohak-gaemi-club/dash-earnings.webp",
+      alt: "대시보드 실적 점검 탭: 보유 종목별 다음 실적 발표일",
+      caption: "대시보드 · 실적 캘린더 (보유 종목은 목 데이터)",
+      wide: true,
+    },
     { src: "/projects/seohak-gaemi-club/screen-test.webp", alt: "추천 종목 실계좌 수익률 화면", caption: "Metrics 1 · 실투자 수익률" },
     { src: "/projects/seohak-gaemi-club/screen-sp500.webp", alt: "같은 기간 S&P500 지수 수익률 화면", caption: "Metrics 2 · S&P500 비교" },
     { src: "/projects/seohak-gaemi-club/screen-nasdaq.webp", alt: "같은 기간 나스닥100 지수 수익률 화면", caption: "Metrics 2 · 나스닥100 비교" },

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CaseStudy from "@/components/project/case-study";
 import type { Position } from "@/content/types";
-import { getAdjacentProjects, getPosition, getProject, getProjects } from "@/lib/content";
+import { getPosition, getProject, getProjects } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
@@ -21,8 +21,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const { slug } = await props.params;
   const project = getProject(slug);
   if (!project) notFound();
-  const { prev, next } = getAdjacentProjects(slug);
   const positions = project.positions.map(getPosition).filter((p): p is Position => Boolean(p));
 
-  return <CaseStudy project={project} positions={positions} prev={prev} next={next} />;
+  return <CaseStudy project={project} positions={positions} />;
 }

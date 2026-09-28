@@ -8,10 +8,14 @@ import { site } from "@/content/site";
 import { cn } from "@/lib/cn";
 import { duration, revealUp, stagger } from "@/lib/motion";
 
+/** 이만큼 내려오면 헤더 배경을 깝니다 (px) */
+const SOLID_AFTER = 16;
+
 export default function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState(pathname);
+  const [scrolled, setScrolled] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +29,18 @@ export default function SiteHeader() {
     setOpen(false);
     setOpenedAt(pathname);
   }
+
+  // 스크롤하면 로고 · 메뉴가 본문 위에 겹치지 않도록 배경을 깝니다. 맨 위에서는 투명하게 둡니다.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SOLID_AFTER);
+    // 새로고침 후 스크롤 위치가 복원된 경우도 한 번 반영
+    const frame = requestAnimationFrame(onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   // 메뉴가 열려 있는 동안 배경 스크롤을 막고, 첫 링크로 포커스를 옮기고, Esc로 닫습니다.
   useEffect(() => {
@@ -51,6 +67,14 @@ export default function SiteHeader() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-safe px-safe">
+      {/* 배경은 별도 레이어에 둡니다. header에 backdrop-filter를 걸면 fixed인 모바일 메뉴의 기준이 header로 바뀝니다. */}
+      <div
+        aria-hidden
+        className={cn(
+          "absolute inset-0 border-b transition-[background-color,border-color,backdrop-filter] duration-300",
+          scrolled && !open ? "border-line bg-bg/70 backdrop-blur-md" : "border-transparent",
+        )}
+      />
       <div className="relative z-10 mx-auto flex h-header w-full max-w-page items-center justify-between px-gutter">
         <Link href="/" className="text-small font-semibold tracking-[0.2em] text-fg">
           {site.name}

@@ -16,6 +16,8 @@ export interface ImageAsset {
   src: string;
   alt: string;
   caption?: string;
+  /** 갤러리에서 가로로 긴 화면 캡처로 보여줄지 (16:10, 2열) */
+  wide?: boolean;
 }
 
 export interface LinkItem {

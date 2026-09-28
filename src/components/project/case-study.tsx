@@ -6,7 +6,7 @@ import CategoryBadge from "@/components/ui/category-badge";
 import Container from "@/components/ui/container";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
-import type { Evidence, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
+import type { Evidence, ImageAsset, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 import ArchitectureDiagram from "./architecture-diagram";
@@ -16,15 +16,13 @@ import FlowCompare from "./flow-compare";
 type CaseStudyProps = {
   project: Project;
   positions: Position[];
-  prev?: Project;
-  next?: Project;
 };
 
 /**
  * 프로젝트 상세(케이스 스터디) 템플릿
  * 포트폴리오 PDF와 같은 순서: Overview → Problem & Hypothesis → Action → Result → 실패 분석 · 개선 → 재결과
  */
-export default function CaseStudy({ project, positions, prev, next }: CaseStudyProps) {
+export default function CaseStudy({ project, positions }: CaseStudyProps) {
   const accent = categories[project.category];
   const meta = [
     { label: "Role", value: project.role },
@@ -203,32 +201,16 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
 
           {project.gallery && project.gallery.length > 0 && (
             <Chapter number={nextChapter()} label="Gallery" title="화면과 현장">
-              <ul
-                className={cn(
-                  "grid gap-3 md:gap-4",
-                  project.galleryLayout === "wide" ? "sm:grid-cols-2" : "grid-cols-2 md:grid-cols-3",
+              <div className="flex flex-col gap-3 md:gap-4">
+                {project.galleryLayout === "wide" ? (
+                  <Gallery images={project.gallery} wide />
+                ) : (
+                  <>
+                    <Gallery images={project.gallery.filter((img) => img.wide)} wide />
+                    <Gallery images={project.gallery.filter((img) => !img.wide)} />
+                  </>
                 )}
-              >
-                {project.gallery.map((img) => (
-                  <li key={img.src} className="flex flex-col gap-2">
-                    <div
-                      className={cn(
-                        "relative overflow-hidden rounded-card bg-surface",
-                        project.galleryLayout === "wide" ? "aspect-[16/10] border border-line" : "aspect-[4/5]",
-                      )}
-                    >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        sizes={project.galleryLayout === "wide" ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
-                        className={project.galleryLayout === "wide" ? "object-cover object-top" : "object-contain"}
-                      />
-                    </div>
-                    {img.caption && <p className="text-caption text-subtle">{img.caption}</p>}
-                  </li>
-                ))}
-              </ul>
+              </div>
             </Chapter>
           )}
 
@@ -245,16 +227,34 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
           )}
         </div>
       </article>
-
-      {(prev || next) && (
-        <nav aria-label="다른 프로젝트" className="border-t border-line">
-          <Container className="grid md:grid-cols-2">
-            {prev && <AdjacentLink project={prev} direction="prev" />}
-            {next && <AdjacentLink project={next} direction="next" />}
-          </Container>
-        </nav>
-      )}
     </main>
+  );
+}
+
+function Gallery({ images, wide = false }: { images: ImageAsset[]; wide?: boolean }) {
+  if (images.length === 0) return null;
+  return (
+    <ul className={cn("grid gap-3 md:gap-4", wide ? "sm:grid-cols-2" : "grid-cols-2 md:grid-cols-3")}>
+      {images.map((img) => (
+        <li key={img.src} className="flex flex-col gap-2">
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-card bg-surface",
+              wide ? "aspect-[16/10] border border-line" : "aspect-[4/5]",
+            )}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              sizes={wide ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
+              className={wide ? "object-cover object-top" : "object-contain"}
+            />
+          </div>
+          {img.caption && <p className="text-caption text-subtle">{img.caption}</p>}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -407,22 +407,5 @@ function IterationBlock({ iteration, accent }: { iteration: Iteration; accent: s
         {iteration.after.note && <p className="text-caption text-subtle">{iteration.after.note}</p>}
       </div>
     </div>
-  );
-}
-
-function AdjacentLink({ project, direction }: { project: Project; direction: "prev" | "next" }) {
-  const isNext = direction === "next";
-  return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className={cn(
-        "group flex flex-col gap-2 py-10 md:py-14",
-        isNext ? "border-t border-line md:border-t-0 md:border-l md:pl-10 md:text-right" : "md:pr-10",
-      )}
-    >
-      <span className="text-caption uppercase text-subtle">{isNext ? "Next Project →" : "← Previous Project"}</span>
-      <span className="text-h3 font-semibold text-muted transition-colors group-hover:text-fg">{project.title}</span>
-      <span className="text-small text-subtle">{project.subtitle}</span>
-    </Link>
   );
 }

@@ -30,17 +30,6 @@ export function getProjectsByPosition(id: PositionId) {
     .map(({ p }) => p);
 }
 
-/** 전체 목록 기준 이전/다음 프로젝트 (끝에서는 반대쪽으로 순환) */
-export function getAdjacentProjects(slug: string) {
-  const i = projects.findIndex((p) => p.slug === slug);
-  if (i < 0) return { prev: undefined, next: undefined };
-  const n = projects.length;
-  return {
-    prev: projects[(i - 1 + n) % n],
-    next: projects[(i + 1) % n],
-  };
-}
-
 /** 해당 포지션 페이지에 보여줄 작은 결과물 */
 export function getBuildsByPosition(id: PositionId) {
   return builds.filter((b) => b.positions.includes(id));
