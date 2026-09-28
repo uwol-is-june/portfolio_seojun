@@ -1,16 +1,18 @@
 /**
- * 포트폴리오 데이터 모델 (TASK-11)
- * 콘텐츠를 채울 때는 이 타입에 맞춰 src/content/ 아래 파일만 수정하면 됩니다.
- * 모르는 내용은 "[TODO] ..."로 남겨두세요.
+ * 포트폴리오 데이터 모델
+ * 케이스 스터디는 포트폴리오 PDF와 같은 순서로 구성됩니다:
+ * Overview → Background · User Interview → Problem → Hypothesis → Metrics → Action & Result → 실패 분석 · 개선 → 재결과
  */
 
 export type PositionId = "product-manager" | "service-planner" | "ai-product-builder";
 
+/** 협업(초록) · 창업(보라) · AI(빨강). 포트폴리오 표지의 구분과 같습니다. */
+export type Category = "collab" | "startup" | "ai";
+
 export interface ImageAsset {
   src: string;
   alt: string;
-  width?: number;
-  height?: number;
+  caption?: string;
 }
 
 export interface LinkItem {
@@ -21,27 +23,37 @@ export interface LinkItem {
 /** 포지션 페이지 1개 */
 export interface Position {
   id: PositionId;
-  /** 메뉴, 제목에 쓰는 이름 */
   title: string;
   /** 홈 메뉴처럼 좁은 곳에 쓰는 짧은 이름 */
   shortTitle: string;
   /** 한 줄 소개 (메타 description으로도 사용) */
   tagline: string;
-  /** 포지션 소개 문단 */
   intro: string[];
-  /** 핵심 역량 3~4개 */
   competencies: { title: string; description: string }[];
-  /** 이 포지션에서 강조할 관점. 프로젝트 상세에서도 어떤 부분을 먼저 보여줄지 정합니다. */
+  /** 이 포지션에서 강조할 관점 */
   emphasis: string[];
   /** 홈 HoverImageReveal에 뜨는 이미지 */
   cover: ImageAsset;
-  /** 페이지 하단 CTA */
   cta: { label: string; href: string };
 }
 
+/** 통계나 조사 결과 묶음 (Background, User Interview) */
+export interface Evidence {
+  title: string;
+  stats: string[];
+  /** 출처. 작게 표시합니다. */
+  source?: string;
+}
+
+/** 지표 정의 (포트폴리오의 "def.") */
+export interface MetricDefinition {
+  name: string;
+  definitions: string[];
+}
+
+/** 결과 값. label은 가능하면 MetricDefinition의 이름과 맞춥니다. */
 export interface Metric {
   label: string;
-  /** 예: "+18%", "3.2배", "[TODO]" */
   value: string;
   description?: string;
 }
@@ -49,9 +61,43 @@ export interface Metric {
 export interface ProcessStep {
   title: string;
   description: string;
-  /** 산출물 종류. 예: "유저 플로우", "와이어프레임", "PRD", "프로토타입" */
+  /** 산출물 종류. 예: "PRD", "화면설계서" */
   artifact?: string;
-  image?: ImageAsset;
+  /** 세부 항목 */
+  points?: string[];
+}
+
+/** 플로우 노드. decision이면 branches로 갈라집니다. */
+export interface FlowNode {
+  label: string;
+  kind?: "step" | "decision" | "system" | "end";
+  /** 누가 판단하는지 등 짧은 설명 */
+  note?: string;
+  branches?: { condition: string; label: string }[];
+}
+
+export interface FlowDiagram {
+  title: string;
+  description?: string;
+  nodes: FlowNode[];
+}
+
+export interface FlowComparison {
+  title: string;
+  before: FlowDiagram;
+  after: FlowDiagram;
+}
+
+/** 결과 → 실패 분석 → 인사이트 → 개선 액션 → 재결과 */
+export interface Iteration {
+  /** 1차 결과 요약 (예: "핵심 가설 검증 실패") */
+  verdict: string;
+  findings: string[];
+  analysis: Evidence;
+  insight: string;
+  actions: ProcessStep[];
+  flow?: FlowComparison;
+  after: { verdict: string; metrics: Metric[]; note?: string };
 }
 
 /** 프로젝트(케이스 스터디) 1개 */
@@ -59,37 +105,74 @@ export interface Project {
   /** URL: /projects/{slug} */
   slug: string;
   title: string;
+  /** 한 줄 설명. 예: "스토리 IP 거래 플랫폼" */
+  subtitle: string;
   /** 카드와 메타 description에 쓰는 1~2문장 요약 */
   summary: string;
+  category: Category;
   /** 이 프로젝트를 근거로 보여줄 포지션. 첫 번째가 대표 포지션입니다. */
   positions: PositionId[];
-  /** 포지션 페이지 상단에 먼저 보여줄 대표 프로젝트 여부 */
   featured?: boolean;
+  /** "운영 중", "진행 중" 등 현재 상태 */
+  status?: string;
 
-  /** 메타 정보 */
   role: string;
   period: string;
-  team?: string;
   organization?: string;
+  /** 직군별 인원. 예: [{ role: "PM", count: 1 }] */
+  team?: { role: string; count: number }[];
   tags: string[];
 
-  thumbnail: ImageAsset;
+  logo?: ImageAsset;
+  /** 없으면 카드에 구분 색 텍스트 카드를 대신 보여줍니다. */
+  thumbnail?: ImageAsset;
+  /** Overview 성과 3~4줄 */
+  highlights: string[];
 
-  /** 케이스 스터디 본문 */
-  overview: string;
-  problem: { statement: string; points: string[] };
-  process: ProcessStep[];
-  outcome: { summary: string; metrics: Metric[] };
-  retrospective: string[];
+  background?: Evidence;
+  research?: Evidence;
+  problem: { statement: string; points?: string[] };
+  hypothesis?: string;
+  hypothesisNote?: string;
+  metrics?: MetricDefinition[];
 
+  actions: ProcessStep[];
+  outcome: { verdict?: string; summary?: string; metrics: Metric[] };
+  iterations?: Iteration[];
+
+  gallery?: ImageAsset[];
+  retrospective?: string[];
   links?: LinkItem[];
+}
+
+/** 케이스 스터디까지는 아닌, 직접 만든 작은 결과물 */
+export interface Build {
+  name: string;
+  description: string;
+  category: Category;
+  status?: string;
+  /** 맡은 역할 (직접 만든 경우 생략) */
+  role?: string;
+  /** 무엇을 어떻게 만들었는지 한두 줄 */
+  points: string[];
+  stack: string[];
+  links: LinkItem[];
+  /** GitHub 커밋 수 등 짧은 수치 */
+  stat?: string;
 }
 
 export interface TimelineItem {
   period: string;
   organization: string;
   role: string;
-  description: string;
+  description?: string;
+  points?: string[];
+}
+
+export interface DatedItem {
+  date: string;
+  title: string;
+  issuer: string;
 }
 
 export interface SkillGroup {
@@ -100,13 +183,19 @@ export interface SkillGroup {
 /** About 페이지와 홈 소개 */
 export interface Profile {
   name: string;
+  nameEn: string;
+  /** 지원 포지션 */
+  target: string;
   /** 홈과 메타 description에 쓰는 한 줄 소개 */
   headline: string;
-  /** About 소개 문단 */
   bio: string[];
+  contact: { birth: string; address: string; email: string; phone: string };
+  portrait?: ImageAsset;
   timeline: TimelineItem[];
+  activities: TimelineItem[];
   education: TimelineItem[];
+  awards: DatedItem[];
+  certificates: DatedItem[];
   skills: SkillGroup[];
   resume: { label: string; href: string };
-  portrait?: ImageAsset;
 }

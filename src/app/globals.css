@@ -15,6 +15,11 @@
   --color-subtle: #80868c; /* 캡션, 라벨 등 읽어야 하는 보조 텍스트 (대비 5.7:1) */
   --color-dim: #51565a; /* 홈 메뉴 비활성 항목 등 장식용. 본문 텍스트에는 쓰지 않습니다 (대비 2.8:1) */
   --color-line: #232629;
+
+  /* 프로젝트 구분 (포트폴리오 표지와 같은 색). 검은 배경 대비 모두 6:1 이상 */
+  --color-collab: #12d18e; /* 협업 */
+  --color-startup: #b18cff; /* 창업 */
+  --color-ai: #ff4d6d; /* AI */
   --color-line-strong: #3a3e42;
 
   /* Type scale (모바일 → 데스크톱 fluid) */

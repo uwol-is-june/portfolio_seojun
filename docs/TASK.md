@@ -20,43 +20,42 @@
 
 ## 태스크
 
-### 0. 환경 세팅
+이력서와 포트폴리오를 사이트에 반영하는 작업입니다. 분석 내용과 근거는 [CONTENT-PLAN.md](CONTENT-PLAN.md)에 있습니다.
 
-- [x] [TASK-00] Originkit 로그인: `npx originkit@latest login` 실행 후 `npx originkit@latest whoami`로 확인 (새 PC에서 작업 시작할 때마다 필요) (H)
+### 1. 공개 범위와 사실 확인 (먼저 결정)
 
-### 1. 모바일 반응형
+- [x] [TASK-22] 공개 범위 확정: 사이트에 공개할 개인정보(이메일만 공개, 전화·주소·생년월일 제외 권장), 사이트 이름(`SEOJUN` / `SEO JUN` / `서준`), 재직 중인 인카금융서비스 업무의 공개 수준, 현장 사진 사용 여부를 정해 CONTENT-PLAN.md 6장에 기록 (H)
+- [x] [TASK-23] 수치 불일치 정리: 포도티켓 추가 단축률(15.5% vs 23%), 멍멍멍멍멍 기간, 포도상점 성과 기준일(2025.12 / 2026.03)을 확정하고, 공개할 링크(포도상점, 포도위키, 서학개미클럽, GitHub, LinkedIn) 목록 받기 (H)
 
-- [x] [TASK-01] 현재 홈(HoverImageReveal)을 375 / 768 / 1440px에서 점검하고, 문제점(글자 넘침, 이미지 크기, 터치 기기에서 hover 없음)을 목록으로 정리 (S) @qa-reviewer
-- [x] [TASK-02] 전역 반응형 기반 세팅: viewport, 가로 스크롤 방지, safe-area, 기본 breakpoint 정리 (H) @ui-builder
-- [x] [TASK-03] HoverImageReveal 모바일 대응: 화면 크기별 폰트, 간격, 이미지 크기를 props로 조절하고, 터치 기기에서는 탭으로 이미지가 나오도록 처리 (Originkit 원본 파일은 수정하지 않음) (O) @ui-builder
+### 2. 데이터 모델과 템플릿 확장
 
-### 2. 디자인 시스템 (현재 페이지 기반)
+- [x] [TASK-24] 데이터 모델 확장 (`src/content/types.ts`): 프로젝트에 구분(협업 · 창업 · AI), 팀 구성(직군별 인원), 성과 하이라이트, 배경 통계와 출처, 사용자 조사(대상 · 표본 수), 가설, 지표 정의(이름 + def.), 반복 루프(결과 → 실패 분석 → 인사이트 → 개선 액션 → 재결과), AS-IS / TO-BE 플로우 추가. 프로필에 활동, 수상, 자격증, 사진 추가. 작은 결과물용 `Build` 타입 신설 (O) @ui-builder
+- [x] [TASK-25] 구분별 색 토큰: 포트폴리오와 같은 협업(초록) · 창업(보라) · AI(빨강) 색을 `@theme`에 추가하고, 검은 배경 대비 4.5:1 이상인지 확인. 프로젝트 카드와 상세에 구분 배지 표시, `/design-system`에 반영 (S) @ui-builder
+- [x] [TASK-26] 케이스 스터디 템플릿 개편: 포트폴리오 순서(Overview → Background · User Interview → Problem → Hypothesis → Metrics 정의 → Action & Result → 실패 분석 · Insight → 개선 액션 → 재결과)에 맞춰 섹션 추가. 지표 정의와 결과 값을 같은 지표 이름으로 연결하고, 통계 출처는 작게 표시 (O) @ui-builder
+- [x] [TASK-27] 플로우 비교 컴포넌트: AS-IS / TO-BE 플로우를 이미지가 아닌 컴포넌트로 그리기 (분기 · 자동 판별 표시, 모바일에서는 세로 배치). 포도티켓 발권 플로우로 확인 (O) @ui-builder
 
-- [x] [TASK-04] 현재 페이지에서 디자인 토큰 추출 후 `globals.css`의 `@theme`에 정의: 색상(배경, 텍스트, dim), 타이포 스케일, 간격, radius, 모바일 우선 breakpoint (O) @ui-builder
-- [x] [TASK-05] 폰트 세팅: `next/font`로 영문 Inter와 한글 Pretendard 적용 (S) @ui-builder
-- [x] [TASK-06] 모션 프리셋 정리: 공통 spring 값, hover/reveal 패턴, `prefers-reduced-motion` 대응 (S) @ui-builder
-- [x] [TASK-07] 기본 UI 컴포넌트: Container, Section, Heading, Text, Button/Link, Tag, Divider (S) @ui-builder
-- [x] [TASK-08] 공통 레이아웃: 헤더 네비게이션(모바일 햄버거 메뉴 포함)과 푸터(연락처, 링크) (S) @ui-builder
-- [x] [TASK-09] `/design-system` 페이지: 토큰과 컴포넌트를 한눈에 확인하는 내부용 페이지 (검색엔진 노출 제외) (S) @ui-builder
+### 3. 이미지 준비
 
-### 3. 사이트 구조와 목업 데이터
+- [x] [TASK-28] 포트폴리오 PDF에서 이미지 추출: 프로젝트 로고 4종, 서비스 화면(포도상점 웹, 멍멍멍멍멍 앱, 포도티켓 NFC · 태블릿, 서학개미클럽 대시보드 · 모바일), 현장 사진을 `public/projects/<slug>/`에 webp로 저장하고 파일 목록과 alt 문구 정리 (TASK-22에서 허용한 사진만) (S)
+- [x] [TASK-29] 공개용 이력서 PDF 준비: 전화번호 · 주소 · 생년월일을 뺀 버전을 `public/resume.pdf`로 추가 (파일은 직접 준비) (H)
 
-- [x] [TASK-10] 정보 구조(IA)와 라우트 설계: `/`, `/product-manager`, `/service-planner`, `/ai-product-builder`, `/projects/[slug]`, `/about` (O)
-- [x] [TASK-11] 포트폴리오 데이터 모델 정의: 프로젝트 타입(포지션, 역할, 기간, 문제, 과정, 성과, 이미지)과 `src/content/` 구조 (S) @ui-builder
-- [x] [TASK-12] 목업 콘텐츠 작성: 포지션별 프로젝트 2~3개와 소개글. 모르는 내용은 `[TODO]`로 표시 (S) @content-writer
+### 4. 콘텐츠 반영
 
-### 4. 페이지 목업
+- [x] [TASK-30] 기본 정보 반영: `profile.ts`(이름, 한 줄 소개 "협업을 좋아해서, 창업을 해버린 AI PM", 프로필 문단, 경력 2건, 활동 3건, 학력, 수상 6건, 자격증 5건, 스킬 4묶음)와 `site.ts`(이메일, 외부 링크) (S) @content-writer
+- [x] [TASK-31] 창업 케이스 스터디 2개: 포도상점(거래 0 → 13건, 신뢰 부족 원인 규명과 개선 루프, PG사 연동), 포도티켓(발권 시간 73.5% 단축, 자동 판별 로직, VOC 80% 감소)을 새 템플릿 구조로 작성 (S) @content-writer
+- [x] [TASK-32] 협업 · AI 케이스 스터디 2개: 멍멍멍멍멍(12인 팀, OKR 스프린트, 만족도 4.83 · NPS 74, 최우수상), 서학개미클럽(오픈소스 재구축, 토스증권 API, 실투자 +21.0%) (S) @content-writer
+- [x] [TASK-33] 인카금융서비스 AI PM 케이스 스터디: AX 요건 약 50건 분류 · 우선순위화, 보험 비교 · 추천 RAG 기획과 4차 QA, DX 3종 직접 개발 · 배포. TASK-22에서 정한 공개 수준에 맞춰 작성 (S) @content-writer
+- [x] [TASK-34] Builds 목록: 카드뉴스 에이전트, Devtier, 포도위키, 다이어트 사주 분석, 인카 DX 3종, 이 사이트를 작은 카드 목록 데이터로 만들고 AI Product Builder 페이지에 섹션 추가 (S) @content-writer @ui-builder
+- [x] [TASK-35] 목업 정리와 포지션 매핑: 목업 프로젝트 5개 삭제, 실제 프로젝트의 포지션 연결(PM: 포도상점 · 멍멍멍멍멍 · 인카 / Service Planner: 포도티켓 · 멍멍멍멍멍 · 포도상점 / AI: 서학개미클럽 · 인카 · 이 사이트)과 노출 순서 정리 (H)
+- [x] [TASK-36] 포지션 페이지 실제 근거로 교체: 포지션별 소개 · 핵심 역량과 `showcases.ts`를 CONTENT-PLAN.md 4장의 근거로 다시 작성 (PM: 포도상점 지표 정의 · 가설 검증 루프, OKR 스프린트, 인카 우선순위화 / Service Planner: 포도티켓 플로우, PG 결제 · 약관 정책, PRD · 화면설계서 / AI: 실투자 검증 지표, RAG QA, 사용 기술) (O) @content-writer @ui-builder
 
-- [x] [TASK-13] 홈 재구성: HoverImageReveal을 세 포지션(PM / Service Planner / AI Product Builder) 메뉴로 사용하고, 짧은 소개와 CTA 배치 (S) @ui-builder @content-writer
-- [x] [TASK-14] 포지션 페이지 공통 템플릿: 포지션 소개, 핵심 역량, 대표 프로젝트 목록, CTA (O) @ui-builder
-- [x] [TASK-15] Product Manager 페이지 목업: 문제 정의, 지표, 로드맵, 우선순위 결정 과정 강조 (S) @ui-builder @content-writer
-- [x] [TASK-16] Service Planner 페이지 목업: 유저 플로우, IA, 와이어프레임, 정책 설계 강조 (S) @ui-builder @content-writer
-- [x] [TASK-17] AI Product Builder 페이지 목업: 직접 만든 프로토타입과 데모, 사용 기술, AI 활용 방식 강조 (S) @ui-builder @content-writer
-- [x] [TASK-18] 프로젝트 상세(케이스 스터디) 템플릿 `/projects/[slug]`: 개요, 문제, 과정, 결과, 회고, 이전/다음 프로젝트 이동 (O) @ui-builder
-- [x] [TASK-19] About 페이지: 경력 타임라인, 스킬, 이력서 PDF 다운로드, 연락처 (S) @ui-builder @content-writer
+### 5. 페이지 반영
 
-### 5. 마무리와 배포
+- [x] [TASK-37] 홈 개편: 히어로 문구를 "협업을 좋아해서 창업을 해버린 AI PM"으로 바꾸고, 핵심 숫자 띠(지원금 2,490만 원 · 실매출 약 160만 원 · 수상 6회 · 실투자 +21.0%)와 협업 · 창업 · AI 대표 프로젝트 바로가기 추가. 홈 메뉴 이미지를 프로젝트 이미지로 교체 (S) @ui-builder @content-writer
+- [x] [TASK-38] About 개편: 활동, 수상, 자격증 섹션 추가, 프로필 사진(선택), 공개용 이력서 다운로드 연결, 페이지 안 연락처와 푸터 연락처 중복 정리 (S) @ui-builder
 
-- [x] [TASK-20] 메타데이터 세팅: 페이지별 title/description, OG 이미지, sitemap, robots (S) @seo-performance
-- [x] [TASK-21] 전체 QA: 모든 페이지의 반응형, 접근성, 링크, 빌드와 린트 점검 (S) @qa-reviewer
+### 6. 마무리
+
+- [x] [TASK-39] 메타데이터 갱신: 이름과 한 줄 소개로 title · description · OG 이미지 문구 교체, 프로젝트 OG 이미지에 구분 색 반영 (SEO 목적이 아니라서 JSON-LD는 제외) (S) @seo-performance
+- [x] [TASK-40] 최종 점검: 화면에 남은 `[TODO]` 0건 확인, 개인정보(전화 · 주소 · 생년월일) 노출 여부 검사, 빌드 · 린트 · 반응형 · 접근성 · 링크 QA (S) @qa-reviewer
 

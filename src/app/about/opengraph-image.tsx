@@ -6,5 +6,5 @@ export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
-  return renderOgImage({ eyebrow: "About", title: "경력 · 스킬 · 연락처", description: profile.headline });
+  return renderOgImage({ eyebrow: "About", title: `${profile.name} ${profile.nameEn}`, description: `${profile.headline} · 경력 · 수상 · 자격증` });
 }

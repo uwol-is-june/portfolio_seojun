@@ -1,51 +1,60 @@
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/button";
+import BuildList from "@/components/project/build-list";
 import Heading from "@/components/ui/heading";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
+import { builds } from "@/content/builds";
 import { aiShowcase } from "@/content/showcases";
-import { getProjectsByPosition } from "@/lib/content";
 import { ShowcaseBlock } from "./showcase-parts";
 
-/** AI Product Builder: 직접 만든 프로토타입과 데모 → 사용 기술 → AI 활용 방식 (TASK-17) */
+/** AI Product Builder: 실투자 검증 → 직접 만든 것들 → AI 활용 원칙 → 사용 기술 */
 export default function AiShowcase() {
-  const { stack, workflow, agents } = aiShowcase;
-  const builds = getProjectsByPosition("ai-product-builder");
+  const { validation, principles, stack } = aiShowcase;
 
   return (
     <Section bordered aria-labelledby="what-i-build">
       <Heading id="what-i-build" eyebrow="What I Build">
-        직접 만들고 검증합니다
+        직접 만들고, 실제로 써서 검증합니다
       </Heading>
 
       <div className="mt-12 flex flex-col gap-20">
-        <ShowcaseBlock title="프로토타입과 데모" caption="동작하는 결과물로 바로 확인할 수 있습니다.">
-          <ul className="grid gap-4 md:grid-cols-2">
-            {builds.map((p) => (
-              <li key={p.slug} className="flex flex-col gap-4 rounded-card border border-line bg-surface p-6">
-                <div className="flex flex-col gap-2">
-                  <Link href={`/projects/${p.slug}`} className="text-h3 font-semibold text-fg hover:underline">
-                    {p.title}
-                  </Link>
-                  <p className="text-small text-muted">{p.summary}</p>
-                </div>
-                <div className="mt-auto flex flex-wrap gap-2">
-                  {p.links?.map((l) => (
-                    <ButtonLink key={l.label} href={l.href} size="sm" variant="secondary">
-                      {l.label}
-                    </ButtonLink>
-                  ))}
-                  <ButtonLink href={`/projects/${p.slug}`} size="sm" variant="ghost">
-                    만든 과정 →
-                  </ButtonLink>
-                </div>
+        <ShowcaseBlock title="실투자 검증" caption={`${validation.project.title}: 추천 종목을 실계좌로 매수해 확인`}>
+          <ul className="grid gap-3 sm:grid-cols-3">
+            {validation.metrics.map((m) => (
+              <li key={m.label} className="flex flex-col gap-2 rounded-card border border-ai/50 p-6">
+                <span className="text-caption uppercase text-subtle">{m.label}</span>
+                <span className="text-h1 font-semibold text-ai">{m.value}</span>
+                <span className="text-small text-muted">{m.description}</span>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href={`/projects/${validation.project.slug}`}
+            className="text-small text-muted underline-offset-4 hover:text-fg hover:underline"
+          >
+            {validation.project.title} 케이스 스터디 보기 →
+          </Link>
+        </ShowcaseBlock>
+
+        <ShowcaseBlock title="직접 만들어 배포한 것들" caption="모두 공개 저장소나 실제 서비스로 확인할 수 있습니다.">
+          <BuildList builds={builds} />
+        </ShowcaseBlock>
+
+        <ShowcaseBlock title="AI를 쓰는 원칙" caption="만들면서 정한 규칙들">
+          <ul className="grid gap-3 md:grid-cols-2">
+            {principles.map((p, i) => (
+              <li key={p.title} className="flex flex-col gap-2 rounded-card bg-surface p-6">
+                <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-h3 font-semibold text-fg">{p.title}</span>
+                <span className="text-small text-muted">{p.description}</span>
+                <span className="text-caption text-ai">{p.source}</span>
               </li>
             ))}
           </ul>
         </ShowcaseBlock>
 
         <ShowcaseBlock title="사용 기술">
-          <dl className="grid gap-6 md:grid-cols-3">
+          <dl className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {stack.map((g) => (
               <div key={g.category} className="flex flex-col gap-3">
                 <dt className="text-caption uppercase text-subtle">{g.category}</dt>
@@ -57,33 +66,6 @@ export default function AiShowcase() {
               </div>
             ))}
           </dl>
-        </ShowcaseBlock>
-
-        <ShowcaseBlock title="AI 활용 방식" caption="이 포트폴리오 사이트를 만든 실제 방식입니다.">
-          <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-            <ol className="flex flex-col divide-y divide-line border-y border-line">
-              {workflow.map((w, i) => (
-                <li key={w.title} className="grid grid-cols-[2.5rem_1fr] gap-2 py-5">
-                  <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-body font-semibold text-fg">{w.title}</span>
-                    <span className="text-small text-muted">{w.description}</span>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className="flex flex-col gap-3 rounded-card bg-surface p-6">
-              <p className="font-mono text-caption text-subtle">.claude/agents/</p>
-              <ul className="flex flex-col gap-3">
-                {agents.map((a) => (
-                  <li key={a.name} className="flex flex-col gap-0.5">
-                    <span className="font-mono text-small text-fg">@{a.name}</span>
-                    <span className="text-small text-muted">{a.role}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </ShowcaseBlock>
       </div>
     </Section>

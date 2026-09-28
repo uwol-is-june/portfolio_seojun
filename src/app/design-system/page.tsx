@@ -24,6 +24,9 @@ const colors = [
   { name: "dim", value: "#51565a", use: "홈 메뉴 비활성 항목 (장식용)" },
   { name: "line", value: "#232629", use: "구분선, 카드 테두리" },
   { name: "line-strong", value: "#3a3e42", use: "버튼, 태그 테두리" },
+  { name: "collab", value: "#12d18e", use: "구분 · 협업 (10.5:1)" },
+  { name: "startup", value: "#b18cff", use: "구분 · 창업 (8.1:1)" },
+  { name: "ai", value: "#ff4d6d", use: "구분 · AI (6.5:1)" },
 ];
 
 const typeScale = [

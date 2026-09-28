@@ -19,10 +19,13 @@ export async function renderOgImage({
   eyebrow,
   title,
   description,
+  accent = "#ffffff",
 }: {
   eyebrow: string;
   title: string;
   description?: string;
+  /** 제목 위 막대 색 (프로젝트 구분 색) */
+  accent?: string;
 }) {
   const [regular, semibold] = await fonts;
   const titleSize = title.length > 28 ? 56 : title.length > 16 ? 68 : 84;
@@ -47,6 +50,7 @@ export async function renderOgImage({
           <span style={{ color: "#51565a", letterSpacing: "0.08em" }}>{eyebrow.toUpperCase()}</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          <div style={{ width: 96, height: 8, borderRadius: 8, background: accent }} />
           <div
             style={{
               fontSize: titleSize,

@@ -32,17 +32,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.roles}`,
+    default: `${profile.name} — ${profile.headline}`,
     template: `%s | ${site.name}`,
   },
-  description: profile.headline,
+  description: `${profile.headline} ${profile.name}의 포트폴리오 · ${site.roles}`,
   applicationName: site.name,
   openGraph: {
     type: "website",
     locale: "ko_KR",
     siteName: site.name,
-    title: `${site.name} — ${site.roles}`,
-    description: profile.headline,
+    title: `${profile.name} — ${profile.headline}`,
+    description: `${profile.headline} ${profile.name}의 포트폴리오 · ${site.roles}`,
     url: "/",
   },
   twitter: { card: "summary_large_image" },
