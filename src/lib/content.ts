@@ -1,3 +1,4 @@
+import { builds } from "@/content/builds";
 import { positions } from "@/content/positions";
 import { projects } from "@/content/projects";
 import type { PositionId } from "@/content/types";
@@ -38,4 +39,9 @@ export function getAdjacentProjects(slug: string) {
     prev: projects[(i - 1 + n) % n],
     next: projects[(i + 1) % n],
   };
+}
+
+/** 해당 포지션 페이지에 보여줄 작은 결과물 */
+export function getBuildsByPosition(id: PositionId) {
+  return builds.filter((b) => b.positions.includes(id));
 }

@@ -3,7 +3,6 @@ import type { Profile } from "./types";
 export const profile: Profile = {
   name: "서준",
   nameEn: "SEO JUN",
-  target: "[신입] 서비스기획 / PM",
   headline: "협업을 좋아해서, 창업을 해버린 AI PM",
   bio: [
     "IT 연합 동아리에서 개발자 10명 · 디자이너와 프로덕트를 만들어 데모데이 최우수상을 받으며, 함께 만드는 즐거움을 확인했습니다. 이 경험을 계기로 직접 팀을 꾸려 창업에 뛰어들었습니다.",
@@ -32,9 +31,10 @@ export const profile: Profile = {
       ],
     },
     {
-      period: "2025.01 – 현재",
+      period: "2025.08 – 2026.03",
       organization: "포도상점",
       role: "Founder & Product Manager",
+      description: "2025.01 팀 결성, 예비창업 단계부터 포도상점 · 포도티켓 기획 · 운영 (사업자 등록 2025.08)",
       points: [
         "스토리 IP 거래 플랫폼 [포도상점] · [포도티켓] 프로덕트 기획 · 운영 총괄",
         "지원사업 수주 2,490만 원 | 2025 매출 1,595,000원 달성",
@@ -91,7 +91,6 @@ export const profile: Profile = {
     { category: "QA", items: ["Test Case 설계", "Manual QA", "버그 리포트 문서화"] },
     { category: "데이터", items: ["GA4", "SQL", "Python"] },
     { category: "AI", items: ["Claude Code", "Gemini API"] },
-    { category: "만들기", items: ["Next.js", "TypeScript", "Supabase", "GitHub Actions", "Vercel"] },
   ],
   resume: { label: "이력서 PDF", href: "/resume.pdf" },
 };

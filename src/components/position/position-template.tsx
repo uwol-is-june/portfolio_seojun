@@ -1,34 +1,33 @@
 import Reveal from "@/components/motion/reveal";
+import BuildList from "@/components/project/build-list";
 import ProjectCard from "@/components/project/project-card";
-import { ButtonLink } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import Heading from "@/components/ui/heading";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
-import type { Position, Project } from "@/content/types";
+import type { Build, Position, Project } from "@/content/types";
 
 type PositionTemplateProps = {
   position: Position;
-  /** 목록 기준 순번 (Position 01, 02 ...) */
-  index: number;
   projects: Project[];
+  /** 케이스 스터디가 없는 작은 프로젝트 (예: 다시) */
+  builds?: Build[];
   /** 포지션마다 다른 강조 섹션 (TASK-15~17) */
   showcase?: React.ReactNode;
 };
 
 /**
  * 포지션 페이지 공통 템플릿 (TASK-14)
- * 순서: 소개 → 핵심 역량 → 포지션별 강조 섹션 → 대표 프로젝트 → CTA
+ * 순서: 소개 → 핵심 역량 → 포지션별 강조 섹션 → 대표 프로젝트
  */
-export default function PositionTemplate({ position, index, projects, showcase }: PositionTemplateProps) {
+export default function PositionTemplate({ position, projects, builds = [], showcase }: PositionTemplateProps) {
   const [lead, ...rest] = projects;
 
   return (
     <main className="pt-header">
       {/* 소개 */}
       <Container className="flex flex-col gap-8 pt-16 pb-section md:pt-24">
-        <p className="text-caption uppercase text-subtle">Position {String(index + 1).padStart(2, "0")}</p>
         <h1 className="text-display uppercase text-fg">{position.title}</h1>
         <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-16">
           <p className="text-h3 font-medium text-fg text-balance">{position.tagline}</p>
@@ -88,22 +87,14 @@ export default function PositionTemplate({ position, index, projects, showcase }
             ))}
           </ul>
         )}
+        {builds.length > 0 && (
+          <div className="mt-20 flex flex-col gap-6">
+            <h3 className="text-h3 font-semibold text-fg">그 밖의 프로젝트</h3>
+            <BuildList builds={builds} />
+          </div>
+        )}
       </Section>
 
-      {/* CTA */}
-      <Section bordered>
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <Heading level="h2" eyebrow="Next">
-            {position.title}로 함께 일하고 싶다면
-          </Heading>
-          <div className="flex flex-wrap gap-3">
-            <ButtonLink href={position.cta.href}>{position.cta.label}</ButtonLink>
-            <ButtonLink href="/" variant="secondary">
-              다른 포지션 보기
-            </ButtonLink>
-          </div>
-        </div>
-      </Section>
     </main>
   );
 }

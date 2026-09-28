@@ -6,6 +6,9 @@
 
 export type PositionId = "product-manager" | "service-planner" | "ai-product-builder";
 
+/** live: 누구나 접속할 수 있게 배포된 서비스 / local: 내 PC에서 실행하는 도구 · 프로젝트 */
+export type Deployment = "live" | "local";
+
 /** 협업(초록) · 창업(보라) · AI(빨강). 포트폴리오 표지의 구분과 같습니다. */
 export type Category = "collab" | "startup" | "ai";
 
@@ -34,7 +37,6 @@ export interface Position {
   emphasis: string[];
   /** 홈 HoverImageReveal에 뜨는 이미지 */
   cover: ImageAsset;
-  cta: { label: string; href: string };
 }
 
 /** 통계나 조사 결과 묶음 (Background, User Interview) */
@@ -65,6 +67,7 @@ export interface ProcessStep {
   artifact?: string;
   /** 세부 항목 */
   points?: string[];
+  image?: ImageAsset;
 }
 
 /** 플로우 노드. decision이면 branches로 갈라집니다. */
@@ -115,6 +118,7 @@ export interface Project {
   featured?: boolean;
   /** "운영 중", "진행 중" 등 현재 상태 */
   status?: string;
+  deployment?: Deployment;
 
   role: string;
   period: string;
@@ -148,9 +152,12 @@ export interface Project {
 /** 케이스 스터디까지는 아닌, 직접 만든 작은 결과물 */
 export interface Build {
   name: string;
+  /** 이 결과물을 보여줄 포지션 페이지 */
+  positions: PositionId[];
   description: string;
   category: Category;
   status?: string;
+  deployment: Deployment;
   /** 맡은 역할 (직접 만든 경우 생략) */
   role?: string;
   /** 무엇을 어떻게 만들었는지 한두 줄 */
@@ -184,8 +191,6 @@ export interface SkillGroup {
 export interface Profile {
   name: string;
   nameEn: string;
-  /** 지원 포지션 */
-  target: string;
   /** 홈과 메타 description에 쓰는 한 줄 소개 */
   headline: string;
   bio: string[];

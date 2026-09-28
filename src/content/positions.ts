@@ -31,7 +31,6 @@ export const positions: Position[] = [
     ],
     emphasis: ["문제 정의", "가설 검증", "지표 정의", "우선순위", "OKR"],
     cover: { src: "/projects/podo-store/cover.webp", alt: "포도상점 서비스 화면" },
-    cta: { label: "이력서와 경력 보기", href: "/about" },
   },
   {
     id: "service-planner",
@@ -62,7 +61,6 @@ export const positions: Position[] = [
     ],
     emphasis: ["유저 플로우", "화면 설계", "정책 설계", "현장 운영", "QA"],
     cover: { src: "/projects/podo-ticket/cover.webp", alt: "포도티켓 모바일 화면" },
-    cta: { label: "이력서와 경력 보기", href: "/about" },
   },
   {
     id: "ai-product-builder",
@@ -93,7 +91,6 @@ export const positions: Position[] = [
     ],
     emphasis: ["실투자 검증", "멀티 에이전트", "RAG", "자동화", "직접 배포"],
     cover: { src: "/projects/seohak-gaemi-club/cover.webp", alt: "서학개미클럽 대시보드" },
-    cta: { label: "GitHub에서 더 보기", href: "https://github.com/uwol-is-june" },
   },
 ];
 

@@ -111,6 +111,9 @@ export default function Home() {
                           <span className="text-body font-semibold text-fg group-hover:underline">
                             {p.title}
                             {p.status && <span className="ml-2 text-caption font-normal text-collab">{p.status}</span>}
+                            {p.deployment === "local" && (
+                              <span className="ml-2 text-caption font-normal text-subtle">로컬</span>
+                            )}
                           </span>
                           <span className="text-small text-muted">{p.subtitle}</span>
                         </span>

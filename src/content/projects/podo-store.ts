@@ -7,11 +7,12 @@ export const podoStore: Project = {
   summary:
     "작가의 스토리 IP와 공연 단체를 잇는 거래 플랫폼입니다. 출시 후 거래 0건의 원인을 '플랫폼 신뢰 부족'으로 찾아내고 개선해 거래 13건, 매출 1,595,000원을 만들었습니다.",
   category: "startup",
+  deployment: "live",
   positions: ["product-manager", "service-planner"],
   featured: true,
   status: "운영 중",
   role: "Founder & Product Manager",
-  period: "2025.01 – 현재",
+  period: "2025.01 – 2026.03",
   organization: "창업 · 포도상점",
   team: [
     { role: "PM", count: 1 },
@@ -106,9 +107,10 @@ export const podoStore: Project = {
           points: ["워크숍 우수작 4편 매칭", "쇼케이스 참석 관객 총 46명"],
         },
         {
-          title: "공연 컨퍼런스",
-          description: "고객(공연 단체) 대상으로 플랫폼을 알리는 행사를 열었습니다.",
+          title: "대학 극회 연합 무대 컨퍼런스",
+          description: "고객인 공연 단체를 대상으로 컨퍼런스를 주최 · 운영하며 플랫폼을 알렸습니다.",
           points: ["26개 공연단체, 120명 참여", "MOU 체결과 네트워크 확장"],
+          image: { src: "/projects/podo-store/conference/group-1.webp", alt: "대학 극회 연합 무대 컨퍼런스 참가자 단체 사진" },
         },
         {
           title: "PG사 연동",
@@ -138,7 +140,12 @@ export const podoStore: Project = {
   gallery: [
     { src: "/projects/podo-store/photo-workshop.webp", alt: "작가 대상 온라인 워크숍 화면", caption: "온라인 워크숍 · 작가 40명 참여" },
     { src: "/projects/podo-store/photo-matching.webp", alt: "작품 매칭 프로젝트 쇼케이스 현장", caption: "작품 매칭 프로젝트 쇼케이스" },
-    { src: "/projects/podo-store/photo-conference.webp", alt: "공연 컨퍼런스 단체 사진", caption: "공연 컨퍼런스 · 26개 단체 120명" },
+    { src: "/projects/podo-store/photo-conference.webp", alt: "공연 컨퍼런스 단체 사진", caption: "무대 컨퍼런스 · 26개 단체 120명" },
+    { src: "/projects/podo-store/conference/talk.webp", alt: "무대 컨퍼런스에서 발표하는 모습", caption: "무대 컨퍼런스 · 발표" },
+    { src: "/projects/podo-store/conference/discussion.webp", alt: "무대 컨퍼런스 참가자들이 테이블에서 토론하는 모습", caption: "무대 컨퍼런스 · 그룹 토론" },
+    { src: "/projects/podo-store/conference/registration.webp", alt: "무대 컨퍼런스 접수 데스크", caption: "무대 컨퍼런스 · 현장 접수" },
+    { src: "/projects/podo-store/conference/networking.webp", alt: "무대 컨퍼런스 네트워킹 현장", caption: "무대 컨퍼런스 · 네트워킹" },
+    { src: "/projects/podo-store/conference/group-intermission.webp", alt: "무대 컨퍼런스 현수막 앞 단체 사진", caption: "무대 컨퍼런스 · 단체 사진" },
   ],
   links: [{ label: "포도상점 바로가기", href: "https://www.podo-store.com" }],
 };

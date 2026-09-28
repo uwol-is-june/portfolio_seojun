@@ -5,7 +5,7 @@ import PlannerShowcase from "@/components/position/planner-showcase";
 import PmShowcase from "@/components/position/pm-showcase";
 import PositionTemplate from "@/components/position/position-template";
 import type { PositionId } from "@/content/types";
-import { getPosition, getPositions, getProjectsByPosition } from "@/lib/content";
+import { getBuildsByPosition, getPosition, getPositions, getProjectsByPosition } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
@@ -34,8 +34,9 @@ export default async function PositionPage(props: PageProps<"/[position]">) {
   return (
     <PositionTemplate
       position={position}
-      index={getPositions().indexOf(position)}
       projects={getProjectsByPosition(position.id)}
+      // AI Product Builder는 강조 섹션에서 Builds 목록을 이미 보여줍니다.
+      builds={position.id === "ai-product-builder" ? [] : getBuildsByPosition(position.id)}
       showcase={showcases[position.id]}
     />
   );

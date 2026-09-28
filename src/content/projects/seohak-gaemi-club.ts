@@ -7,6 +7,7 @@ export const seohakGaemiClub: Project = {
   summary:
     "GitHub 14.7k★ 중국장 투자 분석 오픈소스를 미국장 버전으로 다시 만들고, 토스증권 API로 실계좌를 연동했습니다. 추천 종목을 실제로 매수해 2주 만에 수익률 +21.0%를 확인했습니다.",
   category: "ai",
+  deployment: "local",
   positions: ["ai-product-builder", "product-manager"],
   featured: true,
   status: "진행 중",

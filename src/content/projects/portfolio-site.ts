@@ -7,6 +7,7 @@ export const portfolioSite: Project = {
   summary:
     "역할별 AI 에이전트와 태스크 문서로 기획, 디자인 시스템, 구현, QA를 나눠 진행하며 이 사이트를 만들었습니다. 이력서와 포트폴리오 PDF, GitHub를 분석해 콘텐츠를 구성했습니다.",
   category: "ai",
+  deployment: "live",
   positions: ["ai-product-builder"],
   status: "운영 중",
   role: "기획 · 디자인 · 개발 (1인)",

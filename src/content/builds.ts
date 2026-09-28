@@ -7,6 +7,8 @@ import type { Build } from "./types";
 export const builds: Build[] = [
   {
     name: "다시 DASII",
+    deployment: "live",
+    positions: ["product-manager", "service-planner"],
     description: "다이어트 제품 성분 분석 및 후기 앱",
     category: "startup",
     status: "운영 중",
@@ -25,6 +27,8 @@ export const builds: Build[] = [
   },
   {
     name: "카드뉴스 에이전트",
+    deployment: "local",
+    positions: ["ai-product-builder"],
     description: "인스타그램 카드뉴스 제작 에이전트",
     category: "ai",
     status: "운영 중",
@@ -39,6 +43,8 @@ export const builds: Build[] = [
   },
   {
     name: "다이어트 사주",
+    deployment: "live",
+    positions: ["ai-product-builder"],
     description: "Gemini 기반 다이어트 사주 분석 서비스",
     category: "ai",
     points: [
@@ -54,6 +60,8 @@ export const builds: Build[] = [
   },
   {
     name: "DevTier",
+    deployment: "live",
+    positions: ["ai-product-builder"],
     description: "GitHub 잔디로 측정하는 개발자 전투력 · 티어",
     category: "ai",
     points: [
@@ -69,6 +77,8 @@ export const builds: Build[] = [
   },
   {
     name: "포도위키",
+    deployment: "live",
+    positions: ["ai-product-builder"],
     description: "공연단체 인수인계 KMS",
     category: "startup",
     status: "운영 중",
@@ -82,6 +92,8 @@ export const builds: Build[] = [
   },
   {
     name: "인카 주가 모니터",
+    deployment: "live",
+    positions: ["ai-product-builder"],
     description: "경영진 주가 보고 자동화 (인카금융서비스 DX 과제)",
     category: "ai",
     points: [

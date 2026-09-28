@@ -7,6 +7,7 @@ export const mungx5: Project = {
   summary:
     "IT 연합동아리 UMC 7기에서 개발자 10명 · 디자이너 1명과 만든 음주 기록 앱입니다. iOS · Android로 정식 출시해 지금도 운영 중이고, 69개 팀 중 데모데이 최우수상을 받았습니다.",
   category: "collab",
+  deployment: "live",
   positions: ["service-planner", "product-manager"],
   featured: true,
   status: "운영 중",

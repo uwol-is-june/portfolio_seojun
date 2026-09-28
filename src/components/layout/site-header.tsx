@@ -15,6 +15,11 @@ export default function SiteHeader() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // 사이트 안에서 이동한 횟수. 프로젝트 상세의 뒤로가기(BackLink)가 브라우저 뒤로가기를 써도 되는지 판단합니다.
+  useEffect(() => {
+    window.__portfolioNavCount = (window.__portfolioNavCount ?? 0) + 1;
+  }, [pathname]);
+
   // 다른 페이지로 이동하면 메뉴를 닫습니다.
   if (open && openedAt !== pathname) {
     setOpen(false);

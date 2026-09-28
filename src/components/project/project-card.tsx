@@ -30,7 +30,7 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
           {index !== undefined && (
             <span className="font-mono text-caption text-subtle">{String(index + 1).padStart(2, "0")}</span>
           )}
-          <CategoryBadge category={project.category} status={project.status} />
+          <CategoryBadge category={project.category} status={project.status} deployment={project.deployment} />
         </div>
         <h3 className={cn("font-semibold text-fg text-balance", large ? "text-h2" : "text-h3")}>
           {project.title}

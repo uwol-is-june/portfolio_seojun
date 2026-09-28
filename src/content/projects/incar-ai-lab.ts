@@ -7,6 +7,7 @@ export const incarAiLab: Project = {
   summary:
     "AI전략총괄 AI Lab의 AI PM으로 현업 요건 약 50건을 분류해 우선순위를 정하고, 보험상품 비교 · 추천 RAG 서비스를 기획해 POC에서 본사업으로 넘겼습니다. DX 과제 3종은 Claude Code로 직접 개발 · 배포했습니다.",
   category: "ai",
+  deployment: "live",
   positions: ["product-manager", "ai-product-builder"],
   featured: true,
   role: "AI PM · AI전략총괄 AI Lab (사원, 계약직)",

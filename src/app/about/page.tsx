@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import Heading from "@/components/ui/heading";
 import Section from "@/components/ui/section";
-import Tag from "@/components/ui/tag";
+import SkillIcon from "@/components/ui/skill-icon";
 import Text from "@/components/ui/text";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
@@ -38,7 +38,7 @@ export default function AboutPage() {
         )}
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">
-            <p className="text-caption uppercase text-subtle">About · 지원 포지션 {profile.target}</p>
+            <p className="text-caption uppercase text-subtle">About</p>
             <h1 className="text-h1 font-semibold text-fg">
               {profile.name} <span className="text-h3 font-medium text-subtle">{profile.nameEn}</span>
             </h1>
@@ -113,10 +113,18 @@ export default function AboutPage() {
             {profile.skills.map((group) => (
               <div key={group.category} className="grid gap-3 py-5 sm:grid-cols-[8rem_1fr] sm:gap-6">
                 <dt className="text-small font-medium text-fg">{group.category}</dt>
-                <dd className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <Tag key={item}>{item}</Tag>
-                  ))}
+                <dd>
+                  <ul className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <li
+                        key={item}
+                        className="inline-flex h-10 items-center gap-2 rounded-sm border border-line bg-surface px-3 text-small text-fg"
+                      >
+                        <SkillIcon name={item} className="text-muted" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </dd>
               </div>
             ))}

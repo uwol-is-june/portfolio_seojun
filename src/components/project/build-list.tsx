@@ -10,7 +10,7 @@ export default function BuildList({ builds }: { builds: Build[] }) {
       {builds.map((b) => (
         <li key={b.name} className="flex flex-col gap-4 rounded-card border border-line bg-surface p-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <CategoryBadge category={b.category} status={b.status} />
+            <CategoryBadge category={b.category} status={b.status} deployment={b.deployment} />
             {b.stat && <span className="font-mono text-caption text-subtle">{b.stat}</span>}
           </div>
           <div className="flex flex-col gap-1">

@@ -9,6 +9,7 @@ import Text from "@/components/ui/text";
 import type { Evidence, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
+import BackLink from "./back-link";
 import FlowCompare from "./flow-compare";
 
 type CaseStudyProps = {
@@ -38,9 +39,10 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
     <main className="pt-header">
       <article>
         {/* Overview */}
-        <Container className="flex flex-col gap-8 pt-16 pb-12 md:pt-24">
+        <Container className="flex flex-col gap-8 pt-10 pb-12 md:pt-16">
+          {positions[0] && <BackLink fallbackHref={`/${positions[0].id}`} fallbackLabel={`${positions[0].title} 페이지`} />}
           <div className="flex flex-wrap items-center gap-3">
-            <CategoryBadge category={project.category} status={project.status} />
+            <CategoryBadge category={project.category} status={project.status} deployment={project.deployment} />
             <ul className="flex flex-wrap gap-2" aria-label="관련 포지션">
               {positions.map((p) => (
                 <li key={p.id}>
@@ -69,6 +71,11 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
           <Text size="lg" className="max-w-3xl">
             {project.summary}
           </Text>
+          {project.deployment === "local" && (
+            <p className="text-small text-subtle">
+              로컬에서 실행하는 프로젝트라 공개 주소가 없습니다. 코드와 문서는 GitHub에서 볼 수 있습니다.
+            </p>
+          )}
           {project.links && project.links.length > 0 && (
             <div className="flex flex-wrap gap-3">
               {project.links.map((l, i) => (
@@ -286,6 +293,17 @@ function Steps({ steps }: { steps: ProcessStep[] }) {
     <ol className="grid gap-4 md:grid-cols-2">
       {steps.map((step, i) => (
         <li key={step.title} className="flex flex-col gap-3 rounded-card border border-line p-6 md:odd:last:col-span-2">
+          {step.image && (
+            <div className="relative mb-2 aspect-[3/2] overflow-hidden rounded-sm bg-surface">
+              <Image
+                src={step.image.src}
+                alt={step.image.alt}
+                fill
+                sizes="(min-width: 768px) 45vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          )}
           <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
           <h3 className="text-h3 font-semibold text-fg">{step.title}</h3>
           <Text size="sm">{step.description}</Text>
