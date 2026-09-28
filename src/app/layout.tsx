@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import localFont from "next/font/local";
+import ScrollToTop from "@/components/layout/scroll-to-top";
 import SiteFooter from "@/components/layout/site-footer";
 import SiteHeader from "@/components/layout/site-header";
 import MotionProvider from "@/components/motion/motion-provider";
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />
+          <ScrollToTop />
         </MotionProvider>
       </body>
     </html>
