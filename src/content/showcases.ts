@@ -3,7 +3,7 @@
  * 모두 이력서 · 포트폴리오 · GitHub에 있는 실제 근거입니다.
  */
 
-/** Product Manager: 가설 검증 루프, 지표 정의, 우선순위, OKR */
+/** Product Manager: 가설 검증 루프, 지표 정의, OKR */
 export const pmShowcase = {
   loop: {
     project: { title: "포도상점", slug: "podo-store" },
@@ -26,16 +26,6 @@ export const pmShowcase = {
       ["탐색 · 상호작용", "유료 구매", "0건", "13건", "1,595,000원"],
       ["계약 초기 행동", "공연 단체 MOU 체결 수", "5건", "15건", "+200%"],
     ],
-  },
-  prioritization: {
-    caption: "인카금융서비스 전사 AX 과제 정의",
-    input: "현업 부서 요건 약 50건",
-    buckets: [
-      { label: "RPA", description: "반복 작업 자동화로 풀 요건" },
-      { label: "전산", description: "시스템 개발로 풀 요건" },
-      { label: "AI", description: "AI 서비스로 풀 요건" },
-    ],
-    rule: "절감 임팩트순으로 우선순위화",
   },
   okr: {
     caption: "멍멍멍멍멍 12인 팀 OKR 기반 스프린트",
@@ -65,31 +55,11 @@ export const plannerShowcase = {
     columns: ["문서", "프로젝트", "내용"],
     rows: [
       ["PRD · 화면설계서", "멍멍멍멍멍", "사용자 인터뷰 기반 핵심 기능 도출, iOS · Android 출시"],
-      ["PRD · 요구사항 정의서", "인카 RAG 서비스", "FGI · FA 인터뷰 기반 보험상품 비교 · 추천"],
-      ["Test Case · 버그 리포트", "인카 RAG 서비스", "외주 개발사 대상 4차 QA, 정합성 100%"],
       ["결제 플로우 · 약관", "포도상점", "PG 연동, 예외 처리, 개인정보 처리방침"],
     ],
   },
   other: [
     { title: "KIA SWIPY", description: "사용자 기반 PBV 모듈 추천 및 교체 서비스 기획", context: "소프티어 부트캠프 4기 · 현대자동차그룹" },
     { title: "캐스퍼 EV와 떠나기", description: "현대자동차그룹 신차 출시 이벤트 기획", context: "소프티어 부트캠프 4기 · 현대자동차그룹" },
-  ],
-};
-
-/** AI Product Builder: 실투자 검증, 사용 기술 */
-export const aiShowcase = {
-  validation: {
-    project: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
-    metrics: [
-      { label: "실투자 수익률", value: "+21.0%", description: "추천 종목 실계좌 매수, 약 2주 보유" },
-      { label: "지수 대비 초과수익", value: "약 20%", description: "같은 기간 S&P500 · 나스닥100 대비" },
-      { label: "감정 매매 대비 개선", value: "45%", description: "−24.1% → +21.0%" },
-    ],
-  },
-  stack: [
-    { category: "AI", items: ["Claude Code", "Gemini API", "멀티 에이전트", "RAG"] },
-    { category: "만들기", items: ["Next.js", "TypeScript", "Python", "Supabase"] },
-    { category: "데이터 · 자동화", items: ["GitHub Actions", "토스증권 Open API", "SEC XBRL", "pykrx · DART"] },
-    { category: "배포", items: ["Vercel", "App Store", "Google Play"] },
   ],
 };

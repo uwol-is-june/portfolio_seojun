@@ -9,6 +9,7 @@ import Text from "@/components/ui/text";
 import type { Evidence, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
+import ArchitectureDiagram from "./architecture-diagram";
 import BackLink from "./back-link";
 import FlowCompare from "./flow-compare";
 
@@ -31,6 +32,9 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
     { label: "Organization", value: project.organization },
     { label: "Team", value: project.team?.map((t) => `${t.role} ${t.count}`).join(" · ") },
   ].filter((m): m is { label: string; value: string } => Boolean(m.value));
+
+  // 가설 · 지표가 없는 프로젝트는 문제 카드만 한 줄로
+  const hasHypothesis = Boolean(project.hypothesis || project.metrics);
 
   let chapter = 0;
   const nextChapter = () => String(++chapter).padStart(2, "0");
@@ -120,8 +124,12 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
 
         <div className="flex flex-col gap-section py-section">
           {/* Problem & Hypothesis */}
-          <Chapter number={nextChapter()} label="Problem & Hypothesis" title={project.problem.statement}>
-            <div className="grid gap-4 lg:grid-cols-2">
+          <Chapter
+            number={nextChapter()}
+            label={hasHypothesis ? "Problem & Hypothesis" : "Problem"}
+            title={project.problem.statement}
+          >
+            <div className={cn("grid gap-4", hasHypothesis && "lg:grid-cols-2")}>
               <div className="flex flex-col gap-4">
                 {project.background && <EvidenceCard label="Background" evidence={project.background} />}
                 {project.research && <EvidenceCard label="User Interview" evidence={project.research} />}
@@ -171,11 +179,20 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
             <Steps steps={project.actions} />
           </Chapter>
 
+          {/* Architecture: 코드에서 읽어낸 서비스 구조 */}
+          {project.architecture && (
+            <Chapter number={nextChapter()} label="Architecture" title="서비스 구조">
+              <ArchitectureDiagram architecture={project.architecture} />
+            </Chapter>
+          )}
+
           {/* Result */}
-          <Chapter number={nextChapter()} label="Result" title={project.outcome.verdict ?? "결과"}>
-            <MetricGrid metrics={project.outcome.metrics} />
-            {project.outcome.summary && <Text>{project.outcome.summary}</Text>}
-          </Chapter>
+          {project.outcome.metrics.length > 0 && (
+            <Chapter number={nextChapter()} label="Result" title={project.outcome.verdict ?? "결과"}>
+              <MetricGrid metrics={project.outcome.metrics} />
+              {project.outcome.summary && <Text>{project.outcome.summary}</Text>}
+            </Chapter>
+          )}
 
           {/* 실패 분석 · 개선 */}
           {project.iterations?.map((it) => (
@@ -186,16 +203,26 @@ export default function CaseStudy({ project, positions, prev, next }: CaseStudyP
 
           {project.gallery && project.gallery.length > 0 && (
             <Chapter number={nextChapter()} label="Gallery" title="화면과 현장">
-              <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+              <ul
+                className={cn(
+                  "grid gap-3 md:gap-4",
+                  project.galleryLayout === "wide" ? "sm:grid-cols-2" : "grid-cols-2 md:grid-cols-3",
+                )}
+              >
                 {project.gallery.map((img) => (
                   <li key={img.src} className="flex flex-col gap-2">
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-card bg-surface">
+                    <div
+                      className={cn(
+                        "relative overflow-hidden rounded-card bg-surface",
+                        project.galleryLayout === "wide" ? "aspect-[16/10] border border-line" : "aspect-[4/5]",
+                      )}
+                    >
                       <Image
                         src={img.src}
                         alt={img.alt}
                         fill
-                        sizes="(min-width: 768px) 33vw, 50vw"
-                        className="object-contain"
+                        sizes={project.galleryLayout === "wide" ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
+                        className={project.galleryLayout === "wide" ? "object-cover object-top" : "object-contain"}
                       />
                     </div>
                     {img.caption && <p className="text-caption text-subtle">{img.caption}</p>}

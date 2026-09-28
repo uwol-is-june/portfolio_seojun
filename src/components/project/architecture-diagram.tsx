@@ -1,0 +1,75 @@
+import type { Architecture, ArchitectureStage } from "@/content/types";
+import { cn } from "@/lib/cn";
+
+const kinds: Record<NonNullable<ArchitectureStage["kind"]>, { label: string; className: string }> = {
+  screen: { label: "화면", className: "border-line-strong" },
+  system: { label: "자동 처리", className: "border-ai/60 bg-ai/5" },
+  store: { label: "저장 · 배포", className: "border-dashed border-line-strong" },
+};
+
+/**
+ * 서비스 구조도 (코드에서 읽어낸 데이터 흐름)
+ * 데스크톱: 단계가 가로로 이어지고 화살표로 연결 / 모바일: 세로로 이어짐
+ */
+export default function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
+  const { stages, extras, caption } = architecture;
+  return (
+    <figure className="flex flex-col gap-5">
+      <ol className="flex flex-col lg:flex-row lg:items-stretch">
+        {stages.map((stage, i) => {
+          const kind = kinds[stage.kind ?? "screen"];
+          return (
+            <li key={stage.title} className="flex flex-col lg:min-w-0 lg:flex-1 lg:flex-row">
+              <div className={cn("flex flex-1 flex-col gap-3 rounded-card border p-5", kind.className)}>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-caption text-subtle">{kind.label}</span>
+                </div>
+                <p className="text-body font-semibold text-fg">{stage.title}</p>
+                <ul className="flex flex-col gap-1.5">
+                  {stage.items.map((item) => (
+                    <li key={item} className="text-small text-muted">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                {stage.tech && (
+                  <ul className="mt-auto flex flex-wrap gap-1.5 pt-1">
+                    {stage.tech.map((t) => (
+                      <li key={t} className="rounded-sm bg-surface-raised px-2 py-0.5 font-mono text-caption text-fg">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {i < stages.length - 1 && (
+                <span
+                  aria-hidden
+                  className="flex h-6 items-center justify-center text-subtle lg:h-auto lg:w-6 lg:shrink-0"
+                >
+                  <span className="lg:hidden">↓</span>
+                  <span className="hidden lg:inline">→</span>
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      {(extras || caption) && (
+        <figcaption className="flex flex-col gap-2">
+          {extras && (
+            <ul className="flex flex-wrap gap-2">
+              {extras.map((e) => (
+                <li key={e} className="rounded-pill border border-line px-3 py-1 text-caption text-muted">
+                  + {e}
+                </li>
+              ))}
+            </ul>
+          )}
+          {caption && <p className="text-caption text-subtle">{caption}</p>}
+        </figcaption>
+      )}
+    </figure>
+  );
+}

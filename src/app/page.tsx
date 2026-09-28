@@ -93,7 +93,8 @@ export default function Home() {
         </Heading>
         <div className="mt-12 flex flex-col gap-16">
           {groups.map((g) => {
-            const list = projects.filter((p) => p.category === g.category);
+            // 홈에는 구분별 대표 프로젝트만. 전체 목록은 각 포지션 페이지에 있습니다.
+            const list = projects.filter((p) => p.category === g.category && p.featured);
             const c = categories[g.category];
             return (
               <Reveal key={g.category} className="grid gap-6 lg:grid-cols-[1fr_2.5fr] lg:gap-12">

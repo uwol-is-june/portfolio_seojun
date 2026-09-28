@@ -90,6 +90,25 @@ export interface FlowComparison {
   after: FlowDiagram;
 }
 
+/** 코드에서 읽어낸 서비스 구조의 한 단계 */
+export interface ArchitectureStage {
+  title: string;
+  /** 이 단계에서 하는 일 */
+  items: string[];
+  /** 이 단계에 쓴 기술 */
+  tech?: string[];
+  /** 사람이 보는 화면이면 screen, 자동으로 도는 부분이면 system, 저장 · 배포면 store */
+  kind?: "screen" | "system" | "store";
+}
+
+/** 서비스 구조도: 왼쪽(위)에서 오른쪽(아래)으로 흐르는 단계 */
+export interface Architecture {
+  caption?: string;
+  stages: ArchitectureStage[];
+  /** 흐름 밖의 부가 기능 */
+  extras?: string[];
+}
+
 /** 결과 → 실패 분석 → 인사이트 → 개선 액션 → 재결과 */
 export interface Iteration {
   /** 1차 결과 요약 (예: "핵심 가설 검증 실패") */
@@ -140,10 +159,14 @@ export interface Project {
   metrics?: MetricDefinition[];
 
   actions: ProcessStep[];
+  architecture?: Architecture;
+  /** metrics가 비어 있으면 결과 장을 생략합니다. */
   outcome: { verdict?: string; summary?: string; metrics: Metric[] };
   iterations?: Iteration[];
 
   gallery?: ImageAsset[];
+  /** wide: 웹 화면 캡처처럼 가로로 긴 이미지 (2열, 16:10) */
+  galleryLayout?: "wide";
   retrospective?: string[];
   links?: LinkItem[];
 }
