@@ -6,6 +6,11 @@ export const seohakGaemiClub: Project = {
   subtitle: "4대 거장 투자 전략 기반, AI 미국장 종목 분석 서비스",
   summary:
     "GitHub 14.7k★ 중국장 투자 분석 오픈소스를 미국장 버전으로 다시 만들고, 토스증권 API로 실계좌를 연동했습니다. 추천 종목을 실제로 매수해 2주 만에 수익률 +21.0%를 확인했습니다.",
+  cardPoints: [
+    "GitHub 14.7k★ 중국장 투자 분석 오픈소스를 미국장 버전으로 재구축",
+    "토스증권 API로 실계좌 연동",
+    "추천 종목 실매수 2주 만에 수익률 +21.0%",
+  ],
   category: "ai",
   deployment: "local",
   positions: ["ai-product-builder", "product-manager"],
@@ -13,11 +18,12 @@ export const seohakGaemiClub: Project = {
   status: "진행 중",
   role: "기획 · 개발 (1인)",
   period: "2026.06 – 현재",
-  organization: "AI 사이드 프로젝트",
+  affiliation: "personal",
+  organization: "사이드 프로젝트",
   team: [{ role: "AI PM", count: 1 }],
   tags: ["Claude Code", "멀티 에이전트", "토스증권 API", "SEC XBRL", "Next.js"],
   logo: { src: "/projects/seohak-gaemi-club/logo.webp", alt: "서학개미클럽 로고" },
-  thumbnail: { src: "/projects/seohak-gaemi-club/cover.webp", alt: "서학개미클럽 포트폴리오 대시보드" },
+  thumbnail: { src: "/projects/seohak-gaemi-club/cover-dashboard.webp", alt: "서학개미클럽 대시보드 포트폴리오 화면 (목 데이터)" },
   highlights: [
     "GitHub 14.7k★ 중국장 오픈소스를 미국장으로 재구축",
     "버핏 · 멍거 · 리루 · 단융핑 4대 거장 전략 시스템화",

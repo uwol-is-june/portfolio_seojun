@@ -7,6 +7,7 @@ import Container from "@/components/ui/container";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
 import type { Evidence, ImageAsset, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
+import { affiliations } from "@/lib/affiliation";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 import ArchitectureDiagram from "./architecture-diagram";
@@ -27,7 +28,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
   const meta = [
     { label: "Role", value: project.role },
     { label: "Period", value: project.period },
-    { label: "Organization", value: project.organization },
+    { label: "Organization", value: `${affiliations[project.affiliation]} · ${project.organization}` },
     { label: "Team", value: project.team?.map((t) => `${t.role} ${t.count}`).join(" · ") },
   ].filter((m): m is { label: string; value: string } => Boolean(m.value));
 

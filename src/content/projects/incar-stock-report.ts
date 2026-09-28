@@ -6,13 +6,19 @@ export const incarStockReport: Project = {
   subtitle: "주가 · 재무 · 투자자 동향 자동 수집과 AI 분석 대시보드",
   summary:
     "경영진에게 매일 올리던 주가 보고를 자동화했습니다. 평일 장 마감 후 데이터를 모으고 Gemini로 분석해 대시보드와 PDF로 보여주며, 보고 업무를 연 16 영업일 줄였습니다.",
+  cardPoints: [
+    "경영진에게 매일 올리던 주가 보고를 자동화",
+    "평일 장 마감 후 수집 → Gemini 분석 → 대시보드 · PDF",
+    "보고 업무 연 16 영업일 절감",
+  ],
   category: "ai",
   deployment: "live",
   positions: ["ai-product-builder"],
   featured: true,
   role: "기획 · 개발 (1인)",
   period: "2026.05 – 2026.09",
-  organization: "(주)인카금융서비스 · AI Lab",
+  affiliation: "company",
+  organization: "인카금융서비스 · AI Lab",
   tags: ["Python", "GitHub Actions", "Gemini", "pykrx · DART", "Chart.js"],
   thumbnail: { src: "/projects/incar-stock-report/cover.webp", alt: "인카금융서비스 주가 모니터 대시보드" },
   highlights: [

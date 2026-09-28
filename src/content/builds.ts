@@ -11,6 +11,8 @@ export const builds: Build[] = [
     positions: ["product-manager", "service-planner"],
     description: "다이어트 제품 성분 분석 및 후기 앱",
     category: "startup",
+    affiliation: "startup",
+    organization: "다시(DASII)",
     status: "운영 중",
     role: "PM · 서비스 기획",
     points: [

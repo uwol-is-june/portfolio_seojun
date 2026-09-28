@@ -6,6 +6,11 @@ export const mungx5: Project = {
   subtitle: "게이미피케이션 기반 음주 습관 관리 서비스",
   summary:
     "IT 연합동아리 UMC 7기에서 개발자 10명 · 디자이너 1명과 만든 음주 기록 앱입니다. iOS · Android로 정식 출시해 지금도 운영 중이고, 69개 팀 중 데모데이 최우수상을 받았습니다.",
+  cardPoints: [
+    "개발자 10명 · 디자이너 1명과 만든 음주 기록 앱",
+    "iOS · Android 정식 출시, 현재 운영 중",
+    "69개 팀 중 데모데이 최우수상",
+  ],
   category: "collab",
   deployment: "live",
   positions: ["service-planner", "product-manager"],
@@ -13,7 +18,8 @@ export const mungx5: Project = {
   status: "운영 중",
   role: "서비스 기획 (PM)",
   period: "2025.01 – 현재",
-  organization: "협업 · IT 연합동아리 UMC 7기",
+  affiliation: "club",
+  organization: "IT 연합동아리 UMC 7기",
   team: [
     { role: "PM", count: 1 },
     { role: "디자이너", count: 1 },

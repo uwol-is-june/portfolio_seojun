@@ -63,3 +63,64 @@ export const plannerShowcase = {
     { title: "캐스퍼 EV와 떠나기", description: "현대자동차그룹 신차 출시 이벤트 기획", context: "소프티어 부트캠프 4기 · 현대자동차그룹" },
   ],
 };
+
+/** AI Product Builder: 혼자 Claude Code로 만드는 방식 (세 저장소의 CLAUDE.md · TASK.md · 스킬 · 훅 기준) */
+export const builderShowcase = {
+  loop: {
+    caption: "포트폴리오 · 카드뉴스 에이전트 · 서학개미클럽 저장소에서 공통으로 쓰는 순서",
+    steps: [
+      {
+        label: "규칙 문서",
+        owner: "me" as const,
+        text: "코드보다 규칙을 먼저 씁니다. CLAUDE.md 하나를 규칙의 단일 소스로 두고, 근거와 사례는 따로 적어 사본이 두 벌 생기지 않게 합니다.",
+        evidence: ["CLAUDE.md", "docs/README.md"],
+        example: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
+      },
+      {
+        label: "태스크 쪼개기",
+        owner: "me" as const,
+        text: "요청을 TASK-NN 단위로 나누고, 난이도에 맞춰 모델을 붙입니다. 설계는 Opus, 일반 구현은 Sonnet, 단순 수정은 Haiku.",
+        evidence: ["docs/TASK.md", "(O) · (S) · (H)"],
+        example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
+      },
+      {
+        label: "스킬 · 에이전트",
+        owner: "claude" as const,
+        text: "반복되는 절차는 스킬로, 관점이 다른 일은 서브에이전트로 나눠 동시에 돌립니다.",
+        evidence: ["스킬 12개", "4대 거장 병렬 에이전트", "ui-builder · qa-reviewer"],
+        example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
+      },
+      {
+        label: "멈춤 지점",
+        owner: "me" as const,
+        text: "방향이 갈리는 자리에서는 AI가 멈추고 제가 통과시킵니다. 통과 전에는 다음 단계로 넘어가지 않습니다.",
+        evidence: ["주제 → 골격 → 문안 ⛳"],
+        example: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
+      },
+      {
+        label: "3중 검증",
+        owner: "both" as const,
+        text: "셀 수 있는 것은 스크립트가, 읽히는지는 다른 모델이, 마지막은 사람이 봅니다. 계산은 LLM 대신 코드로 합니다.",
+        evidence: ["check-text → read-text(GPT)", "Python Decimal", "build · lint"],
+        example: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
+      },
+      {
+        label: "기록 → 규칙",
+        owner: "claude" as const,
+        text: "훅이 결과를 자동 커밋하고, 판단은 수정할 수 없는 원장에 남깁니다. 되돌린 자리는 날짜와 함께 규칙 문서로 올려 다음 작업이 먼저 읽게 합니다.",
+        evidence: ["Stop 훅 자동 커밋", "calls.jsonl 원장", "회고 문서"],
+        example: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
+      },
+    ],
+    loopBack: "6 → 1 · 회고에서 나온 규칙이 다음 작업의 CLAUDE.md가 됩니다",
+  },
+  checks: {
+    caption: "AI가 만든 결과를 세 겹으로 확인합니다",
+    columns: ["프로젝트", "자동 검사", "다른 눈", "최종 확인"],
+    rows: [
+      ["카드뉴스 에이전트", "줄표 · 문장 길이 · 줄바꿈 규칙 스크립트", "GPT가 소리 내어 읽고 걸리는 자리만 짚음", "사람 검토 + 식품표시광고법 심의"],
+      ["서학개미클럽", "Python Decimal 계산 · 콜 기록 게이트", "4대 거장 에이전트끼리 반박", "Yahoo 실측가 자동 채점 · 실계좌 매수"],
+      ["이 포트폴리오", "build · lint", "qa-reviewer 에이전트 리뷰", "배포 사이트 직접 확인"],
+    ],
+  },
+};

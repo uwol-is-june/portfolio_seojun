@@ -3,6 +3,7 @@ import Link from "next/link";
 import CategoryBadge from "@/components/ui/category-badge";
 import Tag from "@/components/ui/tag";
 import type { Project } from "@/content/types";
+import { affiliations } from "@/lib/affiliation";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 
@@ -32,6 +33,9 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
           )}
           <CategoryBadge category={project.category} status={project.status} deployment={project.deployment} />
         </div>
+        <p className="text-caption text-muted">
+          <span className="font-semibold text-fg">{affiliations[project.affiliation]}</span> · {project.organization}
+        </p>
         <h3 className={cn("font-semibold text-fg text-balance", large ? "text-h2" : "text-h3")}>
           {project.title}
           <span
@@ -42,7 +46,20 @@ export default function ProjectCard({ project, index, size = "default" }: Projec
           </span>
         </h3>
         <p className="text-small font-medium text-fg">{project.subtitle}</p>
-        <p className="text-small text-muted text-pretty md:text-body">{project.summary}</p>
+        {project.cardPoints?.length ? (
+          <ul className="flex flex-col gap-1.5">
+            {project.cardPoints.map((point) => (
+              <li key={point} className="flex gap-2 text-small text-muted text-pretty md:text-body">
+                <span aria-hidden className="text-subtle">
+                  ·
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-small text-muted text-pretty md:text-body">{project.summary}</p>
+        )}
         <p className="text-caption text-subtle">
           {project.role} · {project.period}
         </p>

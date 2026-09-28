@@ -6,12 +6,17 @@ export const dietSaju: Project = {
   subtitle: "사주로 읽는 나의 기질과 생활 습관, Gemini 기반 분석 서비스",
   summary:
     "생년월일시로 사주 원국을 계산하고 Gemini로 해석문을 만드는 서비스입니다. 틀리면 안 되는 사주 계산은 코드가, 문장 생성만 LLM이 맡도록 경계를 나눴습니다.",
+  cardPoints: [
+    "생년월일시로 사주 원국을 계산하고 Gemini로 해석문 생성",
+    "틀리면 안 되는 계산은 코드가, 문장 생성만 LLM이 맡도록 분리",
+  ],
   category: "ai",
   deployment: "live",
   positions: ["ai-product-builder"],
   role: "기획 · 개발 (1인)",
   period: "2026.08",
-  organization: "AI 사이드 프로젝트 · 다시(DASII)",
+  affiliation: "personal",
+  organization: "사이드 프로젝트 · 다시(DASII)",
   tags: ["Next.js", "TypeScript", "Gemini API", "Vitest"],
   thumbnail: { src: "/projects/diet-saju/cover.webp", alt: "다이어트 사주 첫 화면" },
   highlights: [

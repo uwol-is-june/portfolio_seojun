@@ -12,6 +12,9 @@ export type Deployment = "live" | "local";
 /** 협업(초록) · 창업(보라) · AI(빨강). 포트폴리오 표지의 구분과 같습니다. */
 export type Category = "collab" | "startup" | "ai";
 
+/** 어디서 한 프로젝트인지: 회사 · 창업 · 동아리 · 개인 */
+export type Affiliation = "company" | "startup" | "club" | "personal";
+
 export interface ImageAsset {
   src: string;
   alt: string;
@@ -132,6 +135,8 @@ export interface Project {
   subtitle: string;
   /** 카드와 메타 description에 쓰는 1~2문장 요약 */
   summary: string;
+  /** 포지션 페이지 프로젝트 카드에 보여줄 불릿 2~3개. 없으면 summary 문단을 보여줍니다. */
+  cardPoints?: string[];
   category: Category;
   /** 이 프로젝트를 근거로 보여줄 포지션. 첫 번째가 대표 포지션입니다. */
   positions: PositionId[];
@@ -142,7 +147,9 @@ export interface Project {
 
   role: string;
   period: string;
-  organization?: string;
+  affiliation: Affiliation;
+  /** 소속 이름. 예: "인카금융서비스 · AI Lab" */
+  organization: string;
   /** 직군별 인원. 예: [{ role: "PM", count: 1 }] */
   team?: { role: string; count: number }[];
   tags: string[];
@@ -180,6 +187,8 @@ export interface Build {
   positions: PositionId[];
   description: string;
   category: Category;
+  affiliation: Affiliation;
+  organization: string;
   status?: string;
   deployment: Deployment;
   /** 맡은 역할 (직접 만든 경우 생략) */

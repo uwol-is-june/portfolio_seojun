@@ -6,13 +6,19 @@ export const cardnewsAgent: Project = {
   subtitle: "인스타그램 카드뉴스를 만드는 Claude Code 스킬",
   summary:
     "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구입니다. Claude Code 스킬로 불러 쓰며, '다시(DASII)' 인스타그램 카드뉴스 20편을 이 도구로 만들어 운영하고 있습니다.",
+  cardPoints: [
+    "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구",
+    "Claude Code 스킬로 불러 쓰고, 규칙 검사 → GPT 읽기 검사 → 사람 검토로 검수",
+    "'다시(DASII)' 인스타그램 카드뉴스 20편을 이 도구로 운영",
+  ],
   category: "ai",
   deployment: "local",
   status: "운영 중",
   positions: ["ai-product-builder"],
   role: "기획 · 개발 (1인)",
   period: "2026.08 – 2026.09",
-  organization: "AI 사이드 프로젝트 · 다시(DASII)",
+  affiliation: "personal",
+  organization: "사이드 프로젝트 · 다시(DASII)",
   tags: ["Claude Code 스킬", "Node.js", "Headless Edge", "GPT 검수"],
   thumbnail: { src: "/projects/cardnews-agent/cover.webp", alt: "카드뉴스 에이전트로 만든 '다시' 카드뉴스 표지 모음" },
   highlights: [

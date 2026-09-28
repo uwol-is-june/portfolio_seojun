@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import BuilderShowcase from "@/components/position/builder-showcase";
 import PlannerShowcase from "@/components/position/planner-showcase";
 import PmShowcase from "@/components/position/pm-showcase";
 import PositionTemplate from "@/components/position/position-template";
@@ -19,11 +20,11 @@ export async function generateMetadata(props: PageProps<"/[position]">): Promise
   return pageMetadata({ title: position.title, description: position.tagline, path: `/${position.id}` });
 }
 
-/** 포지션별 강조 섹션. AI Product Builder는 프로젝트만 보여줍니다. */
+/** 포지션별 강조 섹션 */
 const showcases: Record<PositionId, React.ReactNode> = {
   "product-manager": <PmShowcase />,
   "service-planner": <PlannerShowcase />,
-  "ai-product-builder": null,
+  "ai-product-builder": <BuilderShowcase />,
 };
 
 export default async function PositionPage(props: PageProps<"/[position]">) {

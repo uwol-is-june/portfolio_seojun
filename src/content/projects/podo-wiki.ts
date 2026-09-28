@@ -6,13 +6,19 @@ export const podoWiki: Project = {
   subtitle: "공연단체 인수인계 위키 (웹 · 네이티브 앱)",
   summary:
     "공연단체의 인수인계 문서를 위키로 모으는 서비스입니다. 웹 편집기와 모바일 앱을 함께 만들어 현재 3개 공연단체가 쓰고 있습니다.",
+  cardPoints: [
+    "공연단체의 인수인계 문서를 모으는 위키 서비스",
+    "웹 편집기와 모바일 앱을 함께 개발",
+    "현재 3개 공연단체 사용 중",
+  ],
   category: "ai",
   deployment: "live",
   status: "운영 중",
   positions: ["ai-product-builder"],
   role: "기획 · 개발 (1인)",
   period: "2026.05 – 2026.08",
-  organization: "AI 사이드 프로젝트",
+  affiliation: "personal",
+  organization: "사이드 프로젝트",
   tags: ["Next.js", "Supabase", "Expo", "Tiptap"],
   thumbnail: { src: "/projects/podo-wiki/cover.webp", alt: "포도위키 첫 화면" },
   highlights: [

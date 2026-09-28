@@ -6,13 +6,19 @@ export const coverageAnalysis: Project = {
   subtitle: "흩어진 보험 계약을 모아 부족한 보장을 보여주는 서비스",
   summary:
     "고객이 가입한 보험을 한 번에 불러와 보장 현황을 시각화하고, 권장 보장액과 비교해 부족한 부분을 보여주는 서비스입니다. 금융감독원 공인 '내보험다보여' 연동(CODEF API)과 보장분석 PDF 업로드 두 가지 방식을 설계했습니다.",
+  cardPoints: [
+    "가입한 보험을 한 번에 불러와 보장 현황을 시각화",
+    "권장 보장액과 비교해 부족한 보장을 표시",
+    "'내보험다보여' 연동(CODEF API)과 PDF 업로드 두 경로 설계",
+  ],
   category: "ai",
   deployment: "live",
   positions: ["ai-product-builder"],
   featured: true,
   role: "기획 · 개발 (1인)",
   period: "2026.05 – 2026.06",
-  organization: "(주)인카금융서비스 · AI Lab",
+  affiliation: "company",
+  organization: "인카금융서비스 · AI Lab",
   tags: ["Next.js 16", "TypeScript", "CODEF API", "데이터 시각화"],
   thumbnail: { src: "/projects/coverage-analysis/cover.webp", alt: "보장분석 결과: 보장 점수와 가입 보험 목록 (데모 데이터)" },
   highlights: [

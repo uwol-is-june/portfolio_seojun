@@ -36,7 +36,7 @@ export const positions: Position[] = [
       "회사에서는 경영진 주가 보고 자동화, 위촉 사전 진단 시뮬레이터, 보장분석 프로그램을 Claude Code로 직접 만들어 배포했고, 개인적으로도 DevTier, 다이어트 사주, 포도위키, 카드뉴스 에이전트를 만들어 운영하고 있습니다.",
     ],
     emphasis: ["실투자 검증", "멀티 에이전트", "업무 자동화", "LLM 서비스", "직접 배포"],
-    cover: { src: "/projects/seohak-gaemi-club/cover.webp", alt: "서학개미클럽 대시보드" },
+    cover: { src: "/projects/seohak-gaemi-club/cover-dashboard.webp", alt: "서학개미클럽 대시보드 포트폴리오 화면 (목 데이터)" },
   },
 ];
 

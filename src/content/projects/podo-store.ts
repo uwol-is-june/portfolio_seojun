@@ -6,6 +6,11 @@ export const podoStore: Project = {
   subtitle: "스토리 IP 거래 플랫폼",
   summary:
     "작가의 스토리 IP와 공연 단체를 잇는 거래 플랫폼입니다. 출시 후 거래 0건의 원인을 '플랫폼 신뢰 부족'으로 찾아내고 개선해 거래 13건, 매출 1,595,000원을 만들었습니다.",
+  cardPoints: [
+    "작가의 스토리 IP와 공연 단체를 잇는 거래 플랫폼",
+    "출시 후 거래 0건의 원인을 '플랫폼 신뢰 부족'으로 진단",
+    "개선 후 거래 13건 · 매출 1,595,000원",
+  ],
   category: "startup",
   deployment: "live",
   positions: ["product-manager", "service-planner"],
@@ -13,7 +18,8 @@ export const podoStore: Project = {
   status: "운영 중",
   role: "Founder & Product Manager",
   period: "2025.01 – 2026.03",
-  organization: "창업 · 포도상점",
+  affiliation: "startup",
+  organization: "포도상점",
   team: [
     { role: "PM", count: 1 },
     { role: "디자이너", count: 1 },

@@ -6,12 +6,18 @@ export const podoTicket: Project = {
   subtitle: "NFC 기반 O2O 티켓 발권 서비스",
   summary:
     "소규모 공연의 수기 발권을 NFC 발권으로 바꿔 발권 시간을 평균 73.5% 줄였습니다. 현장에서 찾은 혼선은 예매 방식 자동 판별로 풀어 VOC를 80% 줄였습니다.",
+  cardPoints: [
+    "소규모 공연의 수기 발권을 NFC 발권으로 전환",
+    "발권 시간 평균 73.5% 단축",
+    "예매 방식 자동 판별로 현장 VOC 80% 감소",
+  ],
   category: "startup",
   positions: ["service-planner", "product-manager"],
   featured: true,
   role: "Product Manager",
   period: "2025.01 – 2025.07",
-  organization: "창업 · 포도상점",
+  affiliation: "startup",
+  organization: "포도상점",
   team: [
     { role: "PM", count: 1 },
     { role: "디자이너", count: 1 },

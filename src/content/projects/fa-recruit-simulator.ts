@@ -6,6 +6,11 @@ export const faRecruitSimulator: Project = {
   subtitle: "보험설계사(FA) 위촉 가능 여부를 미리 판정하는 사내 도구",
   summary:
     "지점 담당자가 설계사 위촉 신청 전에 경력 요건과 제한 사유를 계산해 위촉 가능 여부를 미리 판정하는 도구입니다. 8,859줄짜리 단일 HTML 파일을 Next.js로 다시 만들고, 업무 매뉴얼 · 사규와 대조해 판정 규칙을 정리했습니다.",
+  cardPoints: [
+    "설계사 위촉 신청 전 경력 요건 · 제한 사유로 위촉 가능 여부를 미리 판정",
+    "8,859줄 단일 HTML 도구를 Next.js로 재구축",
+    "업무 매뉴얼 · 사규와 대조해 판정 규칙 정리",
+  ],
   category: "ai",
   deployment: "live",
   status: "사내용 · 비밀번호 필요",
@@ -13,7 +18,8 @@ export const faRecruitSimulator: Project = {
   featured: true,
   role: "기획 · 개발 (1인)",
   period: "2026.08 – 2026.09",
-  organization: "(주)인카금융서비스 · AI Lab",
+  affiliation: "company",
+  organization: "인카금융서비스 · AI Lab",
   tags: ["Next.js 16", "TypeScript", "Vitest", "도메인 규칙 설계", "엑셀 · PNG 내보내기"],
   thumbnail: { src: "/projects/fa-recruit-simulator/cover.webp", alt: "위촉 사전 진단 시뮬레이션 첫 화면" },
   highlights: [
