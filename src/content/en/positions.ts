@@ -22,11 +22,8 @@ const text: Record<Position["id"], Pick<Position, "tagline" | "intro" | "emphasi
   },
   "ai-product-builder": {
     tagline: "An AI Product Builder who builds with AI and validates by actually using it",
-    intro: [
-      "I rebuilt a 14.7k-star GitHub investment-analysis tool for the US market, connected a real brokerage account through the Toss Securities API, and validated its picks by buying them with real money: a +21.0% return.",
-      "At work, I built and shipped an executive stock-report automation, a pre-appointment diagnosis simulator, and a coverage analysis program with Claude Code. On my own, I build and run DevTier, Diet Saju, Podo Wiki, and a Card News Agent.",
-    ],
-    emphasis: ["Real-money validation", "Multi-agent", "Work automation", "LLM services", "Self-deployed"],
+    intro: [],
+    emphasis: [],
     alt: "Screens from services I built as an AI Product Builder: Card News Agent · Coverage Analysis · DevTier · FA Recruit Simulator and more",
   },
 };

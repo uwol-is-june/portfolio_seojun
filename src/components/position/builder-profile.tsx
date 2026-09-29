@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { ButtonLink } from "@/components/ui/button";
 import Text from "@/components/ui/text";
 import { getT } from "@/i18n/server";
 import { getProfile } from "@/lib/content";
 
-/** AI Product Builder 소개 아래 프로필: 사진 · 이름 · AI 관련 소개 · 연락처 · 이력서 */
+/** AI Product Builder 소개 아래 프로필: 사진 · 이름 · AI 관련 소개 · 연락처 */
 export default function BuilderProfile() {
   const t = getT();
   const profile = getProfile();
@@ -52,11 +51,6 @@ export default function BuilderProfile() {
             </div>
           ))}
         </dl>
-        <div>
-          <ButtonLink href={profile.resume.href} size="sm">
-            {t.resumePdf} ↗
-          </ButtonLink>
-        </div>
       </div>
     </section>
   );

@@ -39,11 +39,8 @@ export const positions: Position[] = [
     title: "AI Product Builder",
     shortTitle: "AI PRODUCT BUILDER",
     tagline: "AI로 직접 만들고, 실제로 써서 검증하는 AI Product Builder",
-    intro: [
-      "GitHub 14.7k★ 투자 분석 오픈소스를 미국장 버전으로 다시 만들고 토스증권 API로 실계좌를 연동해, 추천 종목을 실제로 매수해 수익률 +21.0%로 검증했습니다.",
-      "회사에서는 경영진 주가 보고 자동화, 위촉 사전 진단 시뮬레이터, 보장분석 프로그램을 Claude Code로 직접 만들어 배포했고, 개인적으로도 DevTier, 다이어트 사주, 포도위키, 카드뉴스 에이전트를 만들어 운영하고 있습니다.",
-    ],
-    emphasis: ["실투자 검증", "멀티 에이전트", "업무 자동화", "LLM 서비스", "직접 배포"],
+    intro: [],
+    emphasis: [],
     cover: {
       src: "/home/ai-product-builder.svg",
       still: "/home/ai-product-builder-still.webp",
