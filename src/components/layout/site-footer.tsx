@@ -1,9 +1,13 @@
-import Link from "next/link";
 import Container from "@/components/ui/container";
-import { site } from "@/content/site";
+import Link from "@/components/ui/locale-link";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/ui";
+import { getSite } from "@/lib/content";
 import { isTodo } from "@/lib/todo";
 
-export default function SiteFooter() {
+export default function SiteFooter({ locale }: { locale: Locale }) {
+  const site = getSite(locale);
+  const t = getDictionary(locale);
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-line pb-safe px-safe">
@@ -20,7 +24,7 @@ export default function SiteFooter() {
             {site.links.map((link) => (
               <li key={link.label}>
                 {isTodo(link.href) ? (
-                  <span className="text-small text-subtle" title="[TODO] 링크 준비 중">
+                  <span className="text-small text-subtle" title={t.linkPending}>
                     {link.label}
                   </span>
                 ) : (
@@ -39,7 +43,7 @@ export default function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-4 md:items-end">
-          <nav aria-label="푸터 메뉴">
+          <nav aria-label={t.footerNav}>
             <ul className="flex flex-wrap gap-x-6 gap-y-2">
               {site.nav.map((item) => (
                 <li key={item.href}>

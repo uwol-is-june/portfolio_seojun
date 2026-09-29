@@ -1,4 +1,5 @@
 import type { Category } from "@/content/types";
+import type { Dict } from "@/i18n/ui";
 
 /** 프로젝트 구분별 이름과 색 클래스 (색은 globals.css의 --color-collab / startup / ai) */
 export const categories: Record<Category, { label: string; text: string; bg: string; border: string }> = {
@@ -13,3 +14,8 @@ export const categoryHex: Record<Category, string> = {
   startup: "#b18cff",
   ai: "#ff4d6d",
 };
+
+/** 구분 이름을 현재 언어로 (협업 · 창업 · AI) */
+export function categoryLabel(category: Category, t: Dict): string {
+  return category === "collab" ? t.catCollab : category === "startup" ? t.catStartup : "AI";
+}

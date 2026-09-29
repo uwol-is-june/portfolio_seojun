@@ -12,20 +12,20 @@
  */
 @theme {
   /* Color */
-  --color-bg: #000000;
-  --color-surface: #0e0f10;
-  --color-surface-raised: #17191b;
-  --color-fg: #ffffff;
-  --color-muted: #a3a8ad;
-  --color-subtle: #80868c; /* 캡션, 라벨 등 읽어야 하는 보조 텍스트 (대비 5.7:1) */
-  --color-dim: #51565a; /* 홈 메뉴 비활성 항목 등 장식용. 본문 텍스트에는 쓰지 않습니다 (대비 2.8:1) */
-  --color-line: #232629;
+  --color-bg: light-dark(#ffffff, #000000);
+  --color-surface: light-dark(#f4f5f6, #0e0f10);
+  --color-surface-raised: light-dark(#eaecee, #17191b);
+  --color-fg: light-dark(#0b0c0d, #ffffff);
+  --color-muted: light-dark(#4a5055, #a3a8ad);
+  --color-subtle: light-dark(#646a70, #80868c); /* 캡션, 라벨 등 읽어야 하는 보조 텍스트 (대비 5.7:1) */
+  --color-dim: light-dark(#b9bec3, #51565a); /* 홈 메뉴 비활성 항목 등 장식용. 본문 텍스트에는 쓰지 않습니다 (대비 2.8:1) */
+  --color-line: light-dark(#e1e4e7, #232629);
 
   /* 프로젝트 구분 (포트폴리오 표지와 같은 색). 검은 배경 대비 모두 6:1 이상 */
-  --color-collab: #12d18e; /* 협업 */
-  --color-startup: #b18cff; /* 창업 */
-  --color-ai: #ff4d6d; /* AI */
-  --color-line-strong: #3a3e42;
+  --color-collab: light-dark(#08875c, #12d18e); /* 협업 */
+  --color-startup: light-dark(#6d43d6, #b18cff); /* 창업 */
+  --color-ai: light-dark(#d6173f, #ff4d6d); /* AI */
+  --color-line-strong: light-dark(#c9ced3, #3a3e42);
 
   /* Type scale (모바일 → 데스크톱 fluid) */
   --text-display: clamp(2rem, 8vw, 3.8125rem); /* 32 → 61px, 홈 메뉴 */
@@ -83,6 +83,23 @@
 }
 
 :root {
+  color-scheme: dark;
+}
+
+/*
+ * 라이트 모드 (TASK-116 · TASK-129)
+ * 색 토큰은 @theme에 light-dark(라이트, 다크)로 한 번만 적고, 여기서는 어느 쪽을 쓸지(color-scheme)만 정합니다.
+ * 기본은 다크, 기기가 라이트면 라이트. 헤더의 테마 버튼으로 고르면 <html data-theme>이 우선합니다.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
   color-scheme: dark;
 }
 

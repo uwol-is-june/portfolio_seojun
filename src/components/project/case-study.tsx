@@ -1,13 +1,14 @@
 import Image from "next/image";
-import Link from "next/link";
 import Reveal from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
 import Container from "@/components/ui/container";
+import Link from "@/components/ui/locale-link";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
 import type { Evidence, ImageAsset, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
-import { affiliations } from "@/lib/affiliation";
+import { getT } from "@/i18n/server";
+import { affiliationLabel } from "@/lib/affiliation";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 import ArchitectureDiagram from "./architecture-diagram";
@@ -20,16 +21,17 @@ type CaseStudyProps = {
 };
 
 /**
- * 프로젝트 상세(케이스 스터디) 템플릿
+ * 프로젝트 상세 템플릿
  * 포트폴리오 PDF와 같은 순서: Overview → Problem & Hypothesis → Action → Result → 실패 분석 · 개선 → 재결과
  */
 export default function CaseStudy({ project, positions }: CaseStudyProps) {
+  const t = getT();
   const accent = categories[project.category];
   const meta = [
     { label: "Role", value: project.role },
     { label: "Period", value: project.period },
-    { label: "Organization", value: `${affiliations[project.affiliation]} · ${project.organization}` },
-    { label: "Team", value: project.team?.map((t) => `${t.role} ${t.count}`).join(" · ") },
+    { label: "Organization", value: `${affiliationLabel(project.affiliation, t)} · ${project.organization}` },
+    { label: "Team", value: project.team?.map((m) => `${m.role} ${m.count}`).join(" · ") },
   ].filter((m): m is { label: string; value: string } => Boolean(m.value));
 
   // 가설 · 지표가 없는 프로젝트는 문제 카드만 한 줄로
@@ -43,10 +45,10 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
       <article>
         {/* Overview */}
         <Container className="flex flex-col gap-8 pt-10 pb-12 md:pt-16">
-          {positions[0] && <BackLink fallbackHref={`/${positions[0].id}`} fallbackLabel={`${positions[0].title} 페이지`} />}
+          {positions[0] && <BackLink fallbackHref={`/${positions[0].id}`} fallbackLabel={`${positions[0].title} ${t.pageSuffix}`} />}
           <div className="flex flex-wrap items-center gap-3">
             <CategoryBadge category={project.category} status={project.status} deployment={project.deployment} />
-            <ul className="flex flex-wrap gap-2" aria-label="관련 포지션">
+            <ul className="flex flex-wrap gap-2" aria-label={t.relatedPositions}>
               {positions.map((p) => (
                 <li key={p.id}>
                   <Link href={`/${p.id}`}>
@@ -77,8 +79,8 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           {project.deployment === "local" && (
             <p className="text-small text-subtle">
               {project.links?.some((l) => l.href.startsWith("/demo/"))
-                ? "로컬에서 실행하는 프로젝트라, 실제 결과물로 만든 공개 데모를 이 사이트에 붙였습니다. 코드와 문서는 GitHub에서 볼 수 있습니다."
-                : "로컬에서 실행하는 프로젝트라 공개 주소가 없습니다. 코드와 문서는 GitHub에서 볼 수 있습니다."}
+                ? t.localWithDemo
+                : t.localNoDemo}
             </p>
           )}
           {project.links && project.links.length > 0 && (
@@ -98,7 +100,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
               </div>
             ))}
           </dl>
-          <ul className="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2" aria-label="주요 성과">
+          <ul className="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2" aria-label={t.keyResults}>
             {project.highlights.map((h) => (
               <li key={h} className="flex gap-3 bg-bg p-5 text-small text-fg sm:odd:last:col-span-2 md:text-body">
                 <span aria-hidden className={cn("mt-2 size-1.5 shrink-0 rounded-pill", accent.bg)} />
@@ -176,20 +178,20 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           </Chapter>
 
           {/* Action */}
-          <Chapter number={nextChapter()} label="Action" title="무엇을 했나">
+          <Chapter number={nextChapter()} label="Action" title={t.chAction}>
             <Steps steps={project.actions} />
           </Chapter>
 
           {/* Architecture: 코드에서 읽어낸 서비스 구조 */}
           {project.architecture && (
-            <Chapter number={nextChapter()} label="Architecture" title="서비스 구조">
+            <Chapter number={nextChapter()} label="Architecture" title={t.chArchitecture}>
               <ArchitectureDiagram architecture={project.architecture} />
             </Chapter>
           )}
 
           {/* Result */}
           {project.outcome.metrics.length > 0 && (
-            <Chapter number={nextChapter()} label="Result" title={project.outcome.verdict ?? "결과"}>
+            <Chapter number={nextChapter()} label="Result" title={project.outcome.verdict ?? t.chResult}>
               <MetricGrid metrics={project.outcome.metrics} />
               {project.outcome.summary && <Text>{project.outcome.summary}</Text>}
             </Chapter>
@@ -203,7 +205,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           ))}
 
           {project.gallery && project.gallery.length > 0 && (
-            <Chapter number={nextChapter()} label="Gallery" title="화면과 현장">
+            <Chapter number={nextChapter()} label="Gallery" title={t.chGallery}>
               <div className="flex flex-col gap-3 md:gap-4">
                 {project.galleryLayout === "wide" ? (
                   <Gallery images={project.gallery} wide />
@@ -218,7 +220,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           )}
 
           {project.retrospective && project.retrospective.length > 0 && (
-            <Chapter number={nextChapter()} label="Retrospective" title="회고">
+            <Chapter number={nextChapter()} label="Retrospective" title={t.chRetro}>
               <ul className="flex flex-col gap-4">
                 {project.retrospective.map((r) => (
                   <li key={r} className="rounded-card bg-surface p-5 text-body text-muted">
@@ -313,7 +315,7 @@ function EvidenceCard({ label, evidence }: { label: string; evidence: Evidence }
           </li>
         ))}
       </ul>
-      {evidence.source && <p className="text-caption text-subtle">출처 · {evidence.source}</p>}
+      {evidence.source && <p className="text-caption text-subtle">{getT().source} · {evidence.source}</p>}
     </Card>
   );
 }
@@ -351,7 +353,7 @@ function Steps({ steps }: { steps: ProcessStep[] }) {
           )}
           {step.artifact && (
             <p className="mt-auto pt-2 text-caption text-subtle">
-              산출물 · <span className="text-muted">{step.artifact}</span>
+              {getT().artifact} · <span className="text-muted">{step.artifact}</span>
             </p>
           )}
         </li>
@@ -375,7 +377,7 @@ function MetricGrid({ metrics }: { metrics: Metric[] }) {
 }
 
 function IterationBlock({ iteration, accent }: { iteration: Iteration; accent: string }) {
-  const failed = iteration.verdict.includes("실패");
+  const failed = Boolean(iteration.failed);
   return (
     <div className="flex flex-col gap-10">
       <div className="grid gap-4 lg:grid-cols-2">
@@ -400,12 +402,12 @@ function IterationBlock({ iteration, accent }: { iteration: Iteration; accent: s
       {iteration.flow && <FlowCompare flow={iteration.flow} />}
 
       <div className="flex flex-col gap-4">
-        <p className="text-small font-medium text-fg">개선 액션</p>
+        <p className="text-small font-medium text-fg">{getT().improveAction}</p>
         <Steps steps={iteration.actions} />
       </div>
 
       <div className="flex flex-col gap-4">
-        <p className="text-small font-medium text-fg">다시 측정한 결과</p>
+        <p className="text-small font-medium text-fg">{getT().remeasured}</p>
         <MetricGrid metrics={iteration.after.metrics} />
         {iteration.after.note && <p className="text-caption text-subtle">{iteration.after.note}</p>}
       </div>

@@ -88,6 +88,7 @@ export const podoStore: Project = {
   iterations: [
     {
       verdict: "핵심 가설 검증 실패",
+      failed: true,
       findings: [
         "작품 공급 측면에서 의미 있는 초기 활성 조짐 관찰 (회원 60명, 작품 10편)",
         "작품 탐색과 상호작용 지표도 긍정적 (작품 열람 3,891회, 공연 단체 MOU 5건)",

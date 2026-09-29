@@ -89,12 +89,14 @@ const ex = {
 export const builderShowcase: {
   flow: {
     label: string;
+    /** 단계 3D 아이콘 (public/icons/loop, Fluent Emoji 3D · MIT) */
+    icon: string;
     owner: Owner;
     text: string;
     tags: string[];
     branches?: Branch[];
     /** 단계에서 실제로 쓰는 문서 한 토막 (코드 블록으로 보여줌) */
-    snippet?: string[];
+    snippet?: { title: string; lines: string[] };
     /** 동시에 도는 세션 (레인으로 보여줌) */
     lanes?: string[];
   }[];
@@ -102,12 +104,18 @@ export const builderShowcase: {
   flow: [
     {
       label: "기획안 · 프로젝트 세팅",
+      icon: "/icons/loop/plan.webp",
       owner: "me",
       text: "코드보다 기획안을 먼저 씁니다. CLAUDE.md에 목표 · 규칙 · 구조를 적고, 그 문서를 기준으로 프로젝트를 세팅합니다.",
       tags: ["CLAUDE.md", "AGENTS.md"],
+      snippet: {
+        title: "CLAUDE.md (이 포트폴리오)",
+        lines: ["# Project", "- 개인 포트폴리오 · Next.js · TypeScript · Tailwind", "- 포지션: PM · Service Planner · AI Product Builder", "", "# Tasks", "- 태스크는 docs/TASK.md에 기록", "- 모델은 난이도에 맞게 (O) · (S) · (H)"],
+      },
     },
     {
       label: "인프라 셋업",
+      icon: "/icons/loop/infra.webp",
       owner: "both",
       text: "기획안에 필요한 것만 골라 붙입니다. 쓰지 않을 도구는 처음부터 넣지 않습니다.",
       tags: ["Vercel", "Supabase", "GitHub Actions"],
@@ -123,19 +131,29 @@ export const builderShowcase: {
     },
     {
       label: "에이전트 구축",
+      icon: "/icons/loop/agents.webp",
       owner: "both",
       text: "기획안의 역할대로 서브에이전트와 스킬을 만듭니다. 화면 · 문구 · QA처럼 관점이 다른 일을 나눠 맡깁니다.",
       tags: [".claude/agents", "스킬"],
+      snippet: {
+        title: ".claude/agents (이 포트폴리오)",
+        lines: ["ui-builder       섹션 · 컴포넌트 · 애니메이션", "content-writer   소개 · 프로젝트 문구", "seo-performance  메타데이터 · 성능 · 배포", "qa-reviewer      빌드 · 반응형 · 접근성 점검"],
+      },
     },
     {
       label: "TASK.md 생성",
+      icon: "/icons/loop/tasks.webp",
       owner: "me",
       text: "요청을 태스크 한 줄로 쪼개고 난이도에 맞는 모델과 에이전트를 붙입니다. 동시에 할 수 있는 태스크는 따로 묶습니다.",
       tags: ["docs/TASK.md"],
-      snippet: ["- [ ] [TASK-01] (O) 결제 흐름 설계 @ui-builder", "- [ ] [TASK-02] (S) 소개 문구 @content-writer", "- [ ] [TASK-03] (H) 링크 교체"],
+      snippet: {
+        title: "docs/TASK.md",
+        lines: ["- [ ] [TASK-01] (O) 결제 흐름 설계 @ui-builder", "- [ ] [TASK-02] (S) 소개 문구 @content-writer", "- [ ] [TASK-03] (H) 링크 교체"],
+      },
     },
     {
       label: "세션 병렬 작업",
+      icon: "/icons/loop/parallel.webp",
       owner: "claude",
       text: "파일이 겹치지 않는 태스크는 세션을 나눠 동시에 진행합니다.",
       tags: ["병렬 세션"],
@@ -143,6 +161,7 @@ export const builderShowcase: {
     },
     {
       label: "QA · 코드리뷰",
+      icon: "/icons/loop/qa.webp",
       owner: "both",
       text: "QA · 코드리뷰 에이전트가 빌드 · 린트 · 반응형을 점검하고, 방향이 갈리는 자리는 제가 통과시킵니다.",
       tags: ["qa-reviewer", "code-review", "build · lint"],
@@ -150,6 +169,7 @@ export const builderShowcase: {
     },
     {
       label: "지속 개선 · 운영",
+      icon: "/icons/loop/operate.webp",
       owner: "me",
       text: "배포한 뒤에도 같은 루프를 다시 돕니다. 되돌린 자리는 날짜와 함께 규칙 문서로 올려 다음 작업이 먼저 읽게 합니다.",
       tags: ["회고 문서"],

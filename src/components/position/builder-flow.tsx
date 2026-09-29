@@ -1,166 +1,194 @@
 "use client";
 
-import Link from "next/link";
-import { useRef, useState } from "react";
-import { builderShowcase } from "@/content/showcases";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { useRef, useState, type KeyboardEvent } from "react";
+import Link from "@/components/ui/locale-link";
+import type { builderShowcase } from "@/content/showcases";
+import { useT } from "@/i18n/locale-provider";
 import { cn } from "@/lib/cn";
+import { easeOutExpo } from "@/lib/motion";
 
 type Step = (typeof builderShowcase.flow)[number];
 type Owner = Step["owner"];
 
-const owners: Record<Owner, { label: string; text: string; border: string }> = {
-  me: { label: "내가 판단", text: "text-collab", border: "border-collab/60" },
-  claude: { label: "Claude Code", text: "text-ai", border: "border-ai/60" },
-  both: { label: "함께", text: "text-fg", border: "border-line-strong" },
+const owners: Record<Owner, { text: string; border: string; ring: string }> = {
+  me: { text: "text-collab", border: "border-collab/60", ring: "border-collab" },
+  claude: { text: "text-ai", border: "border-ai/60", ring: "border-ai" },
+  both: { text: "text-fg", border: "border-line-strong", ring: "border-fg" },
 };
 
 const num = (i: number) => String(i + 1).padStart(2, "0");
 
 /**
- * Building Loop: 큰 흐름 7단계를 가로 한 줄로 보여주고, 단계를 누르면 세부 내용을 모달로 엽니다.
- * 모달은 브라우저 기본 <dialog>(showModal)라 Esc로 닫히고, 열린 동안 뒤 화면은 조작되지 않으며,
- * 닫으면 포커스가 누른 단계로 돌아갑니다. 좁은 화면에서는 흐름이 가로로 스크롤됩니다.
+ * Building Loop: 큰 흐름 7단계를 가로 한 줄로 보여주고, 고른 단계의 세부 내용을 흐름도 아래 패널에 펼칩니다.
+ * 단계는 마우스를 올리거나(데스크톱) 탭하거나(모바일) 포커스를 옮기면(키보드 ← →) 바뀝니다.
+ * 처음엔 1단계를 펼쳐 두고 패널 최소 높이를 잡아 둬서, 단계를 옮길 때 아래 내용이 들썩이지 않습니다.
+ * 탭(tablist) 구조라 스크린리더에서도 단계와 패널이 이어져 읽힙니다. 동작 줄이기 설정은 MotionProvider가 처리합니다.
  */
-export default function BuilderFlow() {
-  const { flow } = builderShowcase;
-  const dialogRef = useRef<HTMLDialogElement>(null);
+/** 데이터는 서버(builder-showcase)가 현재 언어로 골라 넘깁니다. */
+export default function BuilderFlow({ flow }: { flow: Step[] }) {
+  const t = useT();
+  const ownerLabel: Record<Owner, string> = { me: t.ownerMe, claude: "Claude Code", both: t.ownerBoth };
   const [active, setActive] = useState(0);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const open = (i: number) => {
-    setActive(i);
-    dialogRef.current?.showModal();
+  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
+    const next = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : e.key === "Home" ? 0 : e.key === "End" ? flow.length - 1 : null;
+    if (next === null) return;
+    e.preventDefault();
+    const target = (next + flow.length) % flow.length;
+    setActive(target);
+    tabs.current[target]?.focus();
   };
-  const close = () => dialogRef.current?.close();
+
   const step = flow[active];
   const o = owners[step.owner];
 
   return (
-    <>
-      <ol className="-mx-gutter flex snap-x scroll-px-gutter gap-2 overflow-x-auto px-gutter pb-2 md:mx-0 md:px-0 md:pb-0" aria-label="Claude Code Building Loop 단계">
-        {flow.map((s, i) => (
-          <li key={s.label} className="flex shrink-0 snap-start items-center gap-2 md:flex-1 md:shrink">
-            <button
-              type="button"
-              onClick={() => open(i)}
-              aria-haspopup="dialog"
-              className={cn(
-                "group flex h-full w-36 flex-col items-start gap-2 rounded-card border bg-bg p-4 text-left transition-colors hover:bg-surface md:w-full",
-                owners[s.owner].border,
-              )}
-            >
-              <span className={cn("text-caption font-semibold", owners[s.owner].text)}>{num(i)}</span>
-              <span className="text-small font-semibold text-fg text-balance break-keep">{s.label}</span>
-              <span className="mt-auto text-caption text-subtle group-hover:text-muted">자세히 +</span>
-            </button>
-            {i < flow.length - 1 && (
-              <span aria-hidden className="text-subtle">
-                →
-              </span>
-            )}
-          </li>
-        ))}
-      </ol>
-
-      <dialog
-        ref={dialogRef}
-        aria-labelledby="loop-step-title"
-        onClick={(e) => {
-          // 바깥(백드롭)을 누르면 닫힘: 클릭 대상이 dialog 자신일 때만
-          if (e.target === e.currentTarget) close();
-        }}
-        className="m-auto w-[min(40rem,calc(100vw-2rem))] rounded-card border border-line bg-bg p-0 text-fg backdrop:bg-black/70"
+    <div className="flex flex-col gap-6">
+      <div
+        role="tablist"
+        aria-label={t.loopSteps}
+        className="-mx-gutter flex snap-x scroll-px-gutter gap-2 overflow-x-auto px-gutter pt-1 pb-2 md:mx-0 md:overflow-visible md:px-0 md:pb-0"
       >
-        <div className="flex max-h-[85dvh] flex-col">
-          <div className="flex items-start justify-between gap-4 border-b border-line p-5">
-            <div className="flex flex-col gap-1">
-              <span className="flex items-center gap-2 text-caption">
-                <span className={cn("font-semibold", o.text)}>{num(active)}</span>
-                <span className="text-subtle">{o.label}</span>
-              </span>
-              <h3 id="loop-step-title" className="text-h3 font-semibold text-fg">
-                {step.label}
-              </h3>
+        {flow.map((s, i) => {
+          const selected = i === active;
+          return (
+            <div key={s.label} className="flex shrink-0 snap-start items-center gap-2 md:flex-1 md:shrink">
+              <button
+                ref={(el) => {
+                  tabs.current[i] = el;
+                }}
+                type="button"
+                role="tab"
+                id={`loop-tab-${i}`}
+                aria-selected={selected}
+                aria-controls="loop-panel"
+                tabIndex={selected ? 0 : -1}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setActive(i)}
+                onKeyDown={(e) => onKeyDown(e, i)}
+                className={cn(
+                  "flex h-full w-36 flex-col items-start gap-2 rounded-card border p-4 text-left transition-[background-color,border-color,transform] duration-300 ease-out-expo md:w-full",
+                  selected ? cn("-translate-y-1 bg-surface-raised", owners[s.owner].ring) : cn("bg-bg hover:bg-surface", owners[s.owner].border),
+                )}
+              >
+                <Image
+                  src={s.icon}
+                  alt=""
+                  width={44}
+                  height={44}
+                  className={cn("size-11 transition-transform duration-300 ease-out-expo", selected && "scale-110")}
+                />
+                <span className={cn("text-caption font-semibold", owners[s.owner].text)}>{num(i)}</span>
+                <span className="text-small font-semibold text-fg text-balance break-keep">{s.label}</span>
+              </button>
+              {i < flow.length - 1 && (
+                <span aria-hidden className="text-subtle">
+                  →
+                </span>
+              )}
             </div>
-            <button type="button" onClick={close} className="rounded-pill px-2 py-1 text-small text-muted hover:text-fg" aria-label="닫기">
-              ✕
-            </button>
-          </div>
+          );
+        })}
+      </div>
 
-          <div className="flex flex-col gap-5 overflow-y-auto p-5">
-            <p className="text-body text-muted">{step.text}</p>
-
-            {step.snippet && (
-              <pre className="overflow-x-auto rounded-card border border-line bg-surface-raised px-4 py-3 font-mono text-small leading-relaxed text-muted">
-                {step.snippet.join("\n")}
-              </pre>
-            )}
-
-            {step.lanes && (
-              <ul className="flex flex-col gap-2 rounded-card border border-line p-4" aria-label="동시에 도는 세션">
-                {step.lanes.map((lane, j) => (
-                  <li key={lane} className="grid grid-cols-[9rem_1fr] items-center gap-3">
-                    <span className="font-mono text-caption text-subtle">{lane}</span>
-                    <span aria-hidden className="h-1.5 overflow-hidden rounded-pill bg-surface-raised">
-                      <span
-                        className="block h-full rounded-pill bg-ai/70 motion-safe:animate-pulse"
-                        style={{ width: `${[82, 64, 91][j % 3]}%`, animationDelay: `${j * 200}ms` }}
-                      />
-                    </span>
+      {/* 세부 내용 패널: 고른 단계로 부드럽게 바뀝니다 */}
+      <div
+        id="loop-panel"
+        role="tabpanel"
+        aria-labelledby={`loop-tab-${active}`}
+        className="relative overflow-hidden rounded-card border border-line bg-surface md:min-h-[22rem]"
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.28, ease: easeOutExpo }}
+            className="grid gap-8 p-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:p-8"
+          >
+            {/* 왼쪽: 단계 설명 */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-4">
+                <Image src={step.icon} alt="" width={64} height={64} className="size-16" />
+                <div className="flex flex-col gap-1">
+                  <span className="flex items-center gap-2 text-caption">
+                    <span className={cn("font-semibold", o.text)}>STEP {num(active)}</span>
+                    <span className="text-subtle">·</span>
+                    <span className="text-muted">{ownerLabel[step.owner]}</span>
+                  </span>
+                  <h3 className="text-h3 font-semibold text-fg break-keep">{step.label}</h3>
+                </div>
+              </div>
+              <p className="text-body leading-relaxed text-fg/85 break-keep">{step.text}</p>
+              <ul className="mt-auto flex flex-wrap gap-1.5" aria-label={t.loopTools}>
+                {step.tags.map((t) => (
+                  <li key={t} className="rounded-sm border border-line bg-bg px-2 py-1 font-mono text-caption text-muted">
+                    {t}
                   </li>
                 ))}
               </ul>
-            )}
+            </div>
 
-            {step.branches && (
-              <div className="flex flex-col gap-2">
-                <span className="text-caption text-subtle">필요할 때만 붙이는 도구</span>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {step.branches.map((b) => (
-                    <li key={b.tool} className="flex flex-col gap-1 rounded-sm border border-dashed border-line-strong p-3">
-                      <span className="text-caption text-subtle">{b.need}</span>
-                      <span className="text-small font-medium text-fg">{b.tool}</span>
-                      <span className="flex flex-wrap gap-x-2 gap-y-0.5 text-caption">
-                        {b.examples.map((e) => (
-                          <Link key={e.slug} href={`/projects/${e.slug}`} className="text-muted underline-offset-4 hover:text-fg hover:underline">
-                            {e.title}
-                          </Link>
-                        ))}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <ul className="flex flex-wrap gap-1" aria-label="쓰는 도구 · 문서">
-              {step.tags.map((t) => (
-                <li key={t} className="rounded-sm bg-surface-raised px-1.5 py-0.5 font-mono text-caption text-muted">
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex items-center justify-between gap-2 border-t border-line p-4 text-small">
-            <button
-              type="button"
-              onClick={() => setActive((i) => i - 1)}
-              disabled={active === 0}
-              className="rounded-pill px-3 py-1.5 text-muted hover:text-fg disabled:opacity-30"
-            >
-              ← {active > 0 ? flow[active - 1].label : "이전"}
-            </button>
-            <button
-              type="button"
-              onClick={() => setActive((i) => i + 1)}
-              disabled={active === flow.length - 1}
-              className="rounded-pill px-3 py-1.5 text-muted hover:text-fg disabled:opacity-30"
-            >
-              {active < flow.length - 1 ? flow[active + 1].label : "다음"} →
-            </button>
-          </div>
-        </div>
-      </dialog>
-    </>
+            {/* 오른쪽: 예시 (TASK.md 한 줄 · 세션 레인 · 붙이는 도구) */}
+            <div className="flex flex-col gap-3">
+              {step.snippet && (
+                <>
+                  <span className="font-mono text-caption font-semibold text-subtle">{step.snippet.title}</span>
+                  <pre className="overflow-x-auto rounded-card border border-line bg-bg px-5 py-4 font-mono text-small leading-loose text-fg/85">
+                    {step.snippet.lines.join("\n")}
+                  </pre>
+                </>
+              )}
+              {step.lanes && (
+                <>
+                  <span className="text-caption font-semibold text-subtle uppercase">{t.loopLanes}</span>
+                  <ul className="flex flex-col gap-3 rounded-card border border-line bg-bg p-5">
+                    {step.lanes.map((lane, j) => (
+                      <li key={lane} className="grid grid-cols-[9.5rem_1fr] items-center gap-4">
+                        <span className="font-mono text-small text-fg/85">{lane}</span>
+                        <span aria-hidden className="h-2 overflow-hidden rounded-pill bg-surface-raised">
+                          <span
+                            className="block h-full rounded-pill bg-ai/80 motion-safe:animate-pulse"
+                            style={{ width: `${[82, 64, 91][j % 3]}%`, animationDelay: `${j * 200}ms` }}
+                          />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {step.branches && (
+                <>
+                  <span className="text-caption font-semibold text-subtle uppercase">{t.loopBranches}</span>
+                  <ul className="grid gap-2 sm:grid-cols-2">
+                    {step.branches.map((b) => (
+                      <li key={b.tool} className="flex flex-col gap-1.5 rounded-sm border border-line bg-bg p-4">
+                        <span className="text-caption text-subtle">{b.need}</span>
+                        <span className="text-body font-semibold text-fg break-keep">{b.tool}</span>
+                        <span className="flex flex-wrap gap-x-3 gap-y-1 text-small">
+                          {b.examples.map((e) => (
+                            <Link key={e.slug} href={`/projects/${e.slug}`} className="text-muted underline decoration-line-strong underline-offset-4 hover:text-fg">
+                              {e.title}
+                            </Link>
+                          ))}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {!step.snippet && !step.lanes && !step.branches && (
+                <p className="text-small text-subtle">{t.loopHint}</p>
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }

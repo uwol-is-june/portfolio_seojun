@@ -1,21 +1,23 @@
-import Link from "next/link";
 import Heading from "@/components/ui/heading";
+import Link from "@/components/ui/locale-link";
 import Section from "@/components/ui/section";
-import { pmShowcase } from "@/content/showcases";
+import { getT } from "@/i18n/server";
+import { getShowcases } from "@/lib/content";
 import { cn } from "@/lib/cn";
 import { DataTable, ShowcaseBlock } from "./showcase-parts";
 
 /** Product Manager: 가설 검증 루프 → 지표 정의 → OKR */
 export default function PmShowcase() {
-  const { loop, metricTable, okr } = pmShowcase;
+  const t = getT();
+  const { loop, metricTable, okr } = getShowcases().pmShowcase;
   return (
     <Section bordered aria-labelledby="how-i-work">
       <Heading id="how-i-work" eyebrow="How I Work">
-        실패에서 다시 설계합니다
+        {t.pmHeading}
       </Heading>
 
       <div className="mt-12 flex flex-col gap-20">
-        <ShowcaseBlock title="가설 검증 루프" caption={`${loop.project.title}: 거래 0건에서 13건까지`}>
+        <ShowcaseBlock title={t.pmLoop} caption={`${loop.project.title}: ${t.pmLoopCaption}`}>
           <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {loop.steps.map((s, i) => (
               <li
@@ -40,15 +42,15 @@ export default function PmShowcase() {
             ))}
           </ol>
           <Link href={`/projects/${loop.project.slug}`} className="text-small text-muted underline-offset-4 hover:text-fg hover:underline">
-            {loop.project.title} 케이스 스터디 보기 →
+            {t.viewDetail(loop.project.title)}
           </Link>
         </ShowcaseBlock>
 
-        <ShowcaseBlock title="지표 정의" caption={metricTable.caption}>
+        <ShowcaseBlock title={t.pmMetrics} caption={metricTable.caption}>
           <DataTable columns={metricTable.columns} rows={metricTable.rows} highlightLast />
         </ShowcaseBlock>
 
-        <ShowcaseBlock title="OKR 스프린트" caption={okr.caption}>
+        <ShowcaseBlock title={t.pmOkr} caption={okr.caption}>
           <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {okr.steps.map((s, i) => (
               <li key={s} className="flex items-center gap-3">

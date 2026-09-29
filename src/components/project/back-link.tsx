@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/ui/locale-link";
 import { useRouter } from "next/navigation";
+import { useT } from "@/i18n/locale-provider";
 
 /**
  * 프로젝트 상세 상단의 뒤로가기
@@ -10,6 +11,7 @@ import { useRouter } from "next/navigation";
  */
 export default function BackLink({ fallbackHref, fallbackLabel }: { fallbackHref: string; fallbackLabel: string }) {
   const router = useRouter();
+  const t = useT();
 
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
@@ -29,7 +31,7 @@ export default function BackLink({ fallbackHref, fallbackLabel }: { fallbackHref
       <span aria-hidden className="transition-transform group-hover:-translate-x-1">
         ←
       </span>
-      목록으로
+      {t.backToList}
       <span className="sr-only">({fallbackLabel})</span>
     </Link>
   );

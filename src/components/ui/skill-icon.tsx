@@ -65,6 +65,10 @@ const generic: Record<string, React.ReactNode> = {
   ),
 };
 
+// 영어판 스킬 이름도 같은 아이콘을 씁니다.
+generic["Test case design"] = generic["Test Case 설계"];
+generic["Bug report writing"] = generic["버그 리포트 문서화"];
+
 export default function SkillIcon({ name, className }: { name: string; className?: string }) {
   const icon = brand[name];
   if (icon) {

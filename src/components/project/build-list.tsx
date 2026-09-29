@@ -2,11 +2,12 @@ import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
 import Tag from "@/components/ui/tag";
 import type { Build } from "@/content/types";
-import { affiliationChip, affiliations } from "@/lib/affiliation";
-import { categories } from "@/lib/category";
+import { getT } from "@/i18n/server";
+import { affiliationChip, affiliationLabel } from "@/lib/affiliation";
 
 /** 직접 만든 작은 결과물 카드 목록 */
 export default function BuildList({ builds }: { builds: Build[] }) {
+  const t = getT();
   return (
     <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
       {builds.map((b) => (
@@ -17,8 +18,8 @@ export default function BuildList({ builds }: { builds: Build[] }) {
               status={b.status}
               deployment={b.deployment}
               affiliation={{
-                label: affiliationChip(b.affiliation, b.organization, categories[b.category].label === affiliations[b.affiliation]),
-                title: `${affiliations[b.affiliation]} · ${b.organization}`,
+                label: affiliationChip(b.affiliation, b.organization, t, b.category === "startup" && b.affiliation === "startup"),
+                title: `${affiliationLabel(b.affiliation, t)} · ${b.organization}`,
               }}
             />
             {b.stat && <span className="font-mono text-caption text-subtle">{b.stat}</span>}
@@ -26,7 +27,7 @@ export default function BuildList({ builds }: { builds: Build[] }) {
           <div className="flex flex-col gap-1">
             <h4 className="text-h3 font-semibold text-fg">{b.name}</h4>
             <p className="text-small text-muted">{b.description}</p>
-            {b.role && <p className="text-caption text-subtle">역할 · {b.role}</p>}
+            {b.role && <p className="text-caption text-subtle">{t.role} · {b.role}</p>}
           </div>
           <ul className="flex flex-col gap-1.5">
             {b.points.map((p) => (

@@ -32,12 +32,12 @@ const colors = [
 const typeScale = [
   { token: "text-display", size: "32 → 61px", sample: "PRODUCT MANAGER", className: "text-display uppercase" },
   { token: "text-h1", size: "32 → 48px", sample: "문제를 정의하는 사람", className: "text-h1 font-semibold" },
-  { token: "text-h2", size: "24 → 36px", sample: "프로젝트 케이스 스터디", className: "text-h2 font-semibold" },
+  { token: "text-h2", size: "24 → 36px", sample: "프로젝트 자세히 보기", className: "text-h2 font-semibold" },
   { token: "text-h3", size: "18 → 24px", sample: "결과와 회고", className: "text-h3 font-semibold" },
   { token: "text-body-lg", size: "18px", sample: "사용자 문제에서 출발해 지표로 검증합니다.", className: "text-body-lg" },
   { token: "text-body", size: "16px", sample: "사용자 문제에서 출발해 지표로 검증합니다.", className: "text-body" },
   { token: "text-small", size: "14px", sample: "2024.03 – 2024.09 · 6개월", className: "text-small" },
-  { token: "text-caption", size: "12px", sample: "CASE STUDY 01", className: "text-caption uppercase" },
+  { token: "text-caption", size: "12px", sample: "PROJECT 01", className: "text-caption uppercase" },
 ];
 
 const spacing = [
@@ -165,7 +165,7 @@ export default function DesignSystemPage() {
 
           <Showcase name="Heading / Text">
             <div className="flex flex-col gap-6">
-              <Heading level="h2" eyebrow="Case Study 01">
+              <Heading level="h2" eyebrow="Project 01">
                 가입 전환율 18% 개선
               </Heading>
               <Text>

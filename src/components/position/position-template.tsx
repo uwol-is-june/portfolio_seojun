@@ -1,17 +1,19 @@
-import Link from "next/link";
 import Reveal from "@/components/motion/reveal";
 import BuildList from "@/components/project/build-list";
 import ProjectCard, { ProjectVisual } from "@/components/project/project-card";
+import ProjectTabs from "@/components/position/project-tabs";
 import Container from "@/components/ui/container";
 import Heading from "@/components/ui/heading";
+import Link from "@/components/ui/locale-link";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
 import type { Build, Position, Project } from "@/content/types";
+import { getT } from "@/i18n/server";
 import { cn } from "@/lib/cn";
 
 /** 프로젝트를 소속별로 나눠 보여줄 때의 묶음 (예: 개인 / 회사) */
-export type ProjectGroup = { title: string; description?: string; projects: Project[] };
+export type ProjectGroup = { id: string; title: string; description?: string; projects: Project[] };
 
 type PositionTemplateProps = {
   position: Position;
@@ -103,6 +105,7 @@ function ProjectList({ projects, showCategory, start = 0 }: { projects: Project[
 }
 
 export default function PositionTemplate({ position, projects, projectGroups, builds = [], related, showcase }: PositionTemplateProps) {
+  const t = getT();
   // 프로젝트가 모두 같은 구분이면(예: AI Product Builder는 전부 AI) 구분 칩이 정보가 없어 숨깁니다.
   const showCategory = new Set(projects.map((p) => p.category)).size > 1;
   const groups = projectGroups?.filter((g) => g.projects.length > 0);
@@ -110,7 +113,7 @@ export default function PositionTemplate({ position, projects, projectGroups, bu
   return (
     <main className="pt-header">
       {/* 소개 */}
-      <Container className="flex flex-col gap-8 pt-16 pb-section md:pt-24">
+      <Container className="flex flex-col gap-8 pt-16 pb-12 md:pt-24 md:pb-16">
         <h1 className="text-display uppercase text-fg">{position.title}</h1>
         {/* 소개 문단 · 강조 태그가 없는 포지션은 한 줄 소개만 넓게 보여줍니다. */}
         {position.intro.length > 0 || position.emphasis.length > 0 ? (
@@ -123,7 +126,7 @@ export default function PositionTemplate({ position, projects, projectGroups, bu
                 </Text>
               ))}
               {position.emphasis.length > 0 && (
-                <ul className="mt-2 flex flex-wrap gap-2" aria-label="강조 역량">
+                <ul className="mt-2 flex flex-wrap gap-2" aria-label={t.emphasis}>
                   {position.emphasis.map((item) => (
                     <li key={item}>
                       <Tag variant="solid">{item}</Tag>
@@ -143,34 +146,33 @@ export default function PositionTemplate({ position, projects, projectGroups, bu
       {/* 프로젝트: 케이스 스터디는 카드, 케이스 스터디가 없는 서비스는 작은 카드 */}
       <Section bordered aria-labelledby="projects">
         <Heading id="projects" eyebrow="Projects">
-          프로젝트
+          {t.projects}
         </Heading>
-        {groups && groups.length > 0 ? (
-          groups.map((group, g) => (
-            <div key={group.title} className={g === 0 ? "mt-10" : "mt-24"}>
-              <div className="flex flex-col gap-1 border-b border-line pb-4">
-                <h3 className="text-h3 font-semibold text-fg">
-                  {group.title}
-                  <span className="ml-2 text-body font-normal text-subtle">{group.projects.length}</span>
-                </h3>
-                {group.description && <p className="text-small text-subtle">{group.description}</p>}
-              </div>
-              <ProjectList
-                projects={group.projects}
-                showCategory={showCategory}
-                start={groups.slice(0, g).reduce((n, prev) => n + prev.projects.length, 0)}
-              />
-            </div>
-          ))
+        {groups && groups.length > 1 ? (
+          <ProjectTabs
+            tabs={groups.map((group, g) => ({
+              id: group.id,
+              title: group.title,
+              count: group.projects.length,
+              description: group.description,
+              panel: (
+                <ProjectList
+                  projects={group.projects}
+                  showCategory={showCategory}
+                  start={groups.slice(0, g).reduce((n, prev) => n + prev.projects.length, 0)}
+                />
+              ),
+            }))}
+          />
         ) : (
           <ProjectList projects={projects} showCategory={showCategory} />
         )}
         {builds.length > 0 && (
           <div className="mt-20 flex flex-col gap-6">
             <div className="flex flex-col gap-1">
-              <h3 className="text-h3 font-semibold text-fg">그 밖의 프로젝트</h3>
+              <h3 className="text-h3 font-semibold text-fg">{t.otherProjects}</h3>
               <p className="text-small text-subtle">
-                배포: 누구나 접속할 수 있는 서비스 · 로컬: 내 PC에서 실행하는 도구 (코드는 GitHub 공개)
+                {t.otherProjectsNote}
               </p>
             </div>
             <BuildList builds={builds} />
@@ -182,7 +184,7 @@ export default function PositionTemplate({ position, projects, projectGroups, bu
         <Section bordered aria-labelledby="related">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <Heading id="related" eyebrow="More">
-              다른 포지션의 대표 프로젝트
+              {t.relatedTitle}
             </Heading>
             <ul className="flex flex-wrap gap-3">
               {related.positions.map((p) => (
@@ -191,7 +193,7 @@ export default function PositionTemplate({ position, projects, projectGroups, bu
                     href={`/${p.id}`}
                     className="inline-flex h-10 items-center gap-2 rounded-pill border border-line-strong px-4 text-small font-medium text-fg transition-colors hover:border-fg"
                   >
-                    {p.title} 보기 →
+                    {p.title} {t.viewPosition}
                   </Link>
                 </li>
               ))}

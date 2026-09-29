@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import { useT } from "@/i18n/locale-provider";
 
 /** 이만큼 내려오면 버튼이 나타납니다 (px) */
 const SHOW_AFTER = 600;
@@ -14,6 +15,7 @@ const SHOW_AFTER = 600;
  * - 모바일 메뉴(z-50)가 열리면 그 아래에 가려짐
  */
 export default function ScrollToTop() {
+  const t = useT();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function ScrollToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      aria-label="맨 위로 이동"
+      aria-label={t.toTop}
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
       className={cn(

@@ -4,6 +4,8 @@ import SiteFooter from "@/components/layout/site-footer";
 import SiteHeader from "@/components/layout/site-header";
 import MotionProvider from "@/components/motion/motion-provider";
 import { site } from "@/content/site";
+import LocaleFromPath, { ByLocale } from "@/i18n/locale-from-path";
+import { THEME_SCRIPT } from "@/lib/theme";
 import { fontVariables } from "./(site)/fonts";
 import NotFound from "./(site)/not-found";
 import "./(site)/globals.css";
@@ -15,16 +17,21 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFound() {
   return (
-    <html lang="ko" className={`${fontVariables} h-full`}>
+    <html lang="ko" className={`${fontVariables} h-full`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col">
+        <LocaleFromPath>
         <MotionProvider>
           <SiteHeader />
           <div className="flex-1">
             <NotFound />
           </div>
-          <SiteFooter />
+          <ByLocale ko={<SiteFooter locale="ko" />} en={<SiteFooter locale="en" />} />
           <ScrollToTop />
         </MotionProvider>
+        </LocaleFromPath>
       </body>
     </html>
   );

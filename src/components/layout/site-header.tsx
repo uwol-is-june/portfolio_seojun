@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/locale-link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import LanguageSwitch from "@/components/layout/language-switch";
+import ThemeToggle, { ThemeColorSync } from "@/components/layout/theme-toggle";
+import { localizePath } from "@/i18n/config";
+import { useLocale, useT } from "@/i18n/locale-provider";
 import { site } from "@/content/site";
 import { cn } from "@/lib/cn";
 import { duration, revealUp, stagger } from "@/lib/motion";
@@ -13,6 +17,10 @@ const SOLID_AFTER = 16;
 
 export default function SiteHeader() {
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useT();
+  // 메뉴 주소는 한국어 기준이라, 현재 언어의 주소로 바꿔 비교합니다.
+  const isActive = (href: string) => pathname === localizePath(href, locale);
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState(pathname);
   const [scrolled, setScrolled] = useState(false);
@@ -80,11 +88,12 @@ export default function SiteHeader() {
           {site.name}
         </Link>
 
-        <nav aria-label="주요 메뉴" className="hidden lg:block">
+        <div className="flex items-center gap-2 lg:gap-6">
+        <nav aria-label={t.mainNav} className="hidden lg:block">
           <ul className="flex items-center gap-8">
             {site.nav.map((item) => (
               <li key={item.href}>
-                <NavLink href={item.href} active={pathname === item.href}>
+                <NavLink href={item.href} active={isActive(item.href)}>
                   {item.label}
                 </NavLink>
               </li>
@@ -92,13 +101,20 @@ export default function SiteHeader() {
           </ul>
         </nav>
 
+        {/* 화면 설정: 언어 · 테마. 모바일에서는 헤더 바가 붐비지 않게 메뉴 안으로 옮깁니다. */}
+        <ThemeColorSync />
+        <div className="hidden items-center gap-1 lg:flex lg:border-l lg:border-line lg:pl-4">
+          <LanguageSwitch />
+          <ThemeToggle />
+        </div>
+
         <button
           ref={buttonRef}
           type="button"
           onClick={toggle}
           aria-expanded={open}
           aria-controls="mobile-menu"
-          aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+          aria-label={open ? t.menuClose : t.menuOpen}
           className="-mr-2 flex size-11 items-center justify-center lg:hidden"
         >
           <span className="relative block h-3 w-6" aria-hidden>
@@ -116,6 +132,7 @@ export default function SiteHeader() {
             />
           </span>
         </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -130,7 +147,7 @@ export default function SiteHeader() {
             transition={{ duration: duration.base }}
           >
             <motion.nav
-              aria-label="모바일 메뉴"
+              aria-label={t.mobileNav}
               className="flex h-full flex-col justify-center px-gutter pb-safe"
               variants={stagger(0.05, 0.05)}
               initial="hidden"
@@ -143,10 +160,10 @@ export default function SiteHeader() {
                       <Link
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        aria-current={pathname === item.href ? "page" : undefined}
+                        aria-current={isActive(item.href) ? "page" : undefined}
                         className={cn(
                           "block text-h1 font-medium",
-                          pathname === item.href ? "text-fg" : "text-subtle hover:text-fg",
+                          isActive(item.href) ? "text-fg" : "text-subtle hover:text-fg",
                         )}
                       >
                         {item.label}
@@ -155,6 +172,10 @@ export default function SiteHeader() {
                   </li>
                 ))}
               </ul>
+              <motion.div variants={revealUp} className="mt-12 flex items-center gap-2 border-t border-line pt-6">
+                <LanguageSwitch />
+                <ThemeToggle />
+              </motion.div>
             </motion.nav>
           </motion.div>
         )}

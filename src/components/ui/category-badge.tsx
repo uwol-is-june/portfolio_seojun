@@ -1,11 +1,10 @@
 import type { Category, Deployment } from "@/content/types";
-import { categories } from "@/lib/category";
+import { getT } from "@/i18n/server";
+import { categories, categoryLabel } from "@/lib/category";
 import { cn } from "@/lib/cn";
 
-const deployments: Record<Deployment, { label: string; title: string; icon: React.ReactNode }> = {
+const deployments: Record<Deployment, { icon: React.ReactNode }> = {
   live: {
-    label: "배포",
-    title: "누구나 접속할 수 있게 배포된 서비스",
     icon: (
       <>
         <circle cx="12" cy="12" r="9" />
@@ -14,8 +13,6 @@ const deployments: Record<Deployment, { label: string; title: string; icon: Reac
     ),
   },
   local: {
-    label: "로컬",
-    title: "내 PC에서 실행하는 프로젝트 (공개 주소 없음)",
     icon: (
       <>
         <rect x="4" y="5" width="16" height="11" rx="1.5" />
@@ -43,14 +40,19 @@ export default function CategoryBadge({
   affiliation?: { label: string; title: string };
   className?: string;
 }) {
+  const t = getT();
   const c = categories[category];
-  const d = deployment && deployments[deployment];
+  const d =
+    deployment &&
+    (deployment === "live"
+      ? { ...deployments.live, label: t.deployed, title: t.deployedTitle }
+      : { ...deployments.local, label: t.local, title: t.localTitle });
   return (
     <span className={cn("inline-flex flex-wrap items-center gap-2 text-caption font-medium", className)}>
       {showCategory && (
         <span className={cn("inline-flex h-6 items-center gap-1.5 rounded-pill border px-2.5", c.border, c.text)}>
           <span aria-hidden className={cn("size-1.5 rounded-pill", c.bg)} />
-          {c.label}
+          {categoryLabel(category, t)}
         </span>
       )}
       {d && (

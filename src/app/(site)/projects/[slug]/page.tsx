@@ -21,7 +21,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const { slug } = await props.params;
   const project = getProject(slug);
   if (!project) notFound();
-  const positions = project.positions.map(getPosition).filter((p): p is Position => Boolean(p));
+  const positions = project.positions.map((id) => getPosition(id)).filter((p): p is Position => Boolean(p));
 
   return <CaseStudy project={project} positions={positions} />;
 }

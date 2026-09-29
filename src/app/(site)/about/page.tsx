@@ -6,25 +6,27 @@ import Heading from "@/components/ui/heading";
 import Section from "@/components/ui/section";
 import SkillIcon from "@/components/ui/skill-icon";
 import Text from "@/components/ui/text";
-import { profile } from "@/content/profile";
-import { site } from "@/content/site";
 import type { DatedItem, TimelineItem } from "@/content/types";
+import { getT } from "@/i18n/server";
+import { getProfile, getSite } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = pageMetadata({
-  title: "About",
-  description: `${profile.headline} ${profile.name}의 경력, 활동, 수상, 자격증`,
-  path: "/about",
-});
+export function generateMetadata(): Metadata {
+  const profile = getProfile();
+  return pageMetadata({ title: "About", description: getT().aboutDescription(profile.headline, profile.name), path: "/about" });
+}
 
 /** About: 소개 · 연락처 → 경력 → 활동 · 학력 → 수상 · 자격증 → 스킬 */
 export default function AboutPage() {
+  const t = getT();
+  const profile = getProfile();
+  const site = getSite();
   const { contact } = profile;
   const contactRows = [
-    { label: "이메일", value: contact.email, href: `mailto:${contact.email}` },
-    { label: "연락처", value: contact.phone, href: `tel:${contact.phone.replace(/-/g, "")}` },
-    { label: "생년월일", value: contact.birth },
-    { label: "주소", value: contact.address },
+    { label: t.email, value: contact.email, href: `mailto:${contact.email}` },
+    { label: t.phone, value: contact.phone, href: `tel:${contact.phone.replace(/-/g, "")}` },
+    { label: t.birth, value: contact.birth },
+    { label: t.address, value: contact.address },
   ];
 
   return (
@@ -40,10 +42,15 @@ export default function AboutPage() {
           <div className="flex flex-col gap-3">
             <p className="text-caption uppercase text-subtle">About</p>
             <h1 className="text-h1 font-semibold text-fg">
-              {profile.name} <span className="text-h3 font-medium text-subtle">{profile.nameEn}</span>
+              {profile.name}{" "}
+              {/* 영어판은 이름이 곧 영문 이름이라 한 번만 */}
+              {profile.name.toUpperCase() !== profile.nameEn && <span className="text-h3 font-medium text-subtle">{profile.nameEn}</span>}
             </h1>
             <p className="text-h3 font-medium text-fg text-balance">
-              <span className="text-collab">협업</span>을 좋아해서, <span className="text-startup">창업</span>을 해버린{" "}
+              <span className="text-collab">{t.heroCollab}</span>
+              {t.aboutComma}
+              <span className="text-startup">{t.heroStartup}</span>
+              {t.heroMid2}
               <span className="text-ai">AI</span> PM
             </p>
           </div>
@@ -84,13 +91,13 @@ export default function AboutPage() {
       </Container>
 
       <Section bordered aria-labelledby="experience">
-        <TwoColumn id="experience" eyebrow="Work Experience" title="경력">
+        <TwoColumn id="experience" eyebrow="Work Experience" title={t.experience}>
           <Timeline items={profile.timeline} />
         </TwoColumn>
       </Section>
 
       <Section bordered aria-labelledby="activities">
-        <TwoColumn id="activities" eyebrow="Activities · Education" title="활동과 학력">
+        <TwoColumn id="activities" eyebrow="Activities · Education" title={t.activities}>
           <div className="flex flex-col gap-16">
             <Timeline items={profile.activities} />
             <Timeline items={profile.education} />
@@ -99,16 +106,16 @@ export default function AboutPage() {
       </Section>
 
       <Section bordered aria-labelledby="awards">
-        <TwoColumn id="awards" eyebrow="Awards · Certificates" title="수상과 자격증">
+        <TwoColumn id="awards" eyebrow="Awards · Certificates" title={t.awardsCerts}>
           <div className="flex flex-col gap-12">
-            <DatedList title={`수상 ${profile.awards.length}회`} items={profile.awards} />
-            <DatedList title={`자격증 ${profile.certificates.length}개`} items={profile.certificates} />
+            <DatedList title={t.awardsCount(profile.awards.length)} items={profile.awards} />
+            <DatedList title={t.certsCount(profile.certificates.length)} items={profile.certificates} />
           </div>
         </TwoColumn>
       </Section>
 
       <Section bordered aria-labelledby="skills">
-        <TwoColumn id="skills" eyebrow="Skills" title="스킬">
+        <TwoColumn id="skills" eyebrow="Skills" title={t.skills}>
           <dl className="flex flex-col divide-y divide-line border-y border-line">
             {profile.skills.map((group) => (
               <div key={group.category} className="grid gap-3 py-5 sm:grid-cols-[8rem_1fr] sm:gap-6">

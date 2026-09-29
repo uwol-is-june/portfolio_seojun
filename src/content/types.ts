@@ -121,6 +121,8 @@ export interface Architecture {
 export interface Iteration {
   /** 1차 결과 요약 (예: "핵심 가설 검증 실패") */
   verdict: string;
+  /** 1차 결과가 가설 검증 실패인가. true면 결론을 강조색(빨강)으로 보여줍니다. 문구가 아닌 이 값으로 판단합니다. */
+  failed?: boolean;
   findings: string[];
   analysis: Evidence;
   insight: string;

@@ -1,10 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
+import Link from "@/components/ui/locale-link";
 import Tag from "@/components/ui/tag";
 import type { Project } from "@/content/types";
-import { affiliationChip, affiliations } from "@/lib/affiliation";
+import { getT } from "@/i18n/server";
+import { affiliationChip, affiliationLabel } from "@/lib/affiliation";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 
@@ -20,6 +21,7 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project, index, size = "default", showCategory = true }: ProjectCardProps) {
   const large = size === "large";
+  const t = getT();
   // 카드 전체는 제목 링크를 늘려 덮고(stretched link), 바로가기 버튼은 그 위에 따로 둡니다.
   const links = project.links?.slice(0, 2) ?? [];
   return (
@@ -43,9 +45,11 @@ export default function ProjectCard({ project, index, size = "default", showCate
               label: affiliationChip(
                 project.affiliation,
                 project.organization,
-                showCategory && categories[project.category].label === affiliations[project.affiliation],
+                t,
+                // 구분 칩과 같은 말(창업 · 창업)이면 소속은 이름만
+                showCategory && project.category === "startup" && project.affiliation === "startup",
               ),
-              title: `${affiliations[project.affiliation]} · ${project.organization}`,
+              title: `${affiliationLabel(project.affiliation, t)} · ${project.organization}`,
             }}
           />
         </div>
@@ -90,7 +94,7 @@ export default function ProjectCard({ project, index, size = "default", showCate
           // 같은 줄 카드끼리 버튼 줄이 맞도록 카드 아래쪽에 붙입니다.
           <div className={cn("relative z-10 flex flex-wrap gap-2", large ? "mt-2" : "mt-auto pt-2")}>
             {links.map((l) => (
-              <ButtonLink key={l.href} href={l.href} size="sm" variant="secondary" aria-label={`${project.title} ${l.label} 새 탭에서 열기`}>
+              <ButtonLink key={l.href} href={l.href} size="sm" variant="secondary" aria-label={`${project.title} ${l.label} (${t.newTab})`}>
                 {l.label} ↗
               </ButtonLink>
             ))}

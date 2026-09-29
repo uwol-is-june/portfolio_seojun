@@ -46,7 +46,7 @@ export default function CardnewsDemoPage() {
           </dl>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/projects/cardnews-agent" size="sm">
-              케이스 스터디
+              프로젝트 자세히 보기
             </ButtonLink>
             <ButtonLink href="https://github.com/uwol-is-june/cardnews-agent" size="sm" variant="secondary">
               GitHub ↗

@@ -1,11 +1,20 @@
 import type { Architecture, ArchitectureStage } from "@/content/types";
+import { getT } from "@/i18n/server";
 import { cn } from "@/lib/cn";
 
-const kinds: Record<NonNullable<ArchitectureStage["kind"]>, { label: string; className: string }> = {
-  screen: { label: "화면", className: "border-line-strong" },
-  system: { label: "자동 처리", className: "border-ai/60 bg-ai/5" },
-  store: { label: "저장 · 배포", className: "border-dashed border-line-strong" },
+const kindClass: Record<NonNullable<ArchitectureStage["kind"]>, string> = {
+  screen: "border-line-strong",
+  system: "border-ai/60 bg-ai/5",
+  store: "border-dashed border-line-strong",
 };
+
+function kindsFor(t: ReturnType<typeof getT>): Record<NonNullable<ArchitectureStage["kind"]>, { label: string; className: string }> {
+  return {
+    screen: { label: t.archScreen, className: kindClass.screen },
+    system: { label: t.archSystem, className: kindClass.system },
+    store: { label: t.archStore, className: kindClass.store },
+  };
+}
 
 /**
  * 서비스 구조도 (코드에서 읽어낸 데이터 흐름)
@@ -13,6 +22,7 @@ const kinds: Record<NonNullable<ArchitectureStage["kind"]>, { label: string; cla
  */
 export default function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
   const { stages, extras, caption } = architecture;
+  const kinds = kindsFor(getT());
   return (
     <figure className="flex flex-col gap-5">
       <ol className="flex flex-col lg:flex-row lg:items-stretch">

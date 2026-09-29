@@ -1,19 +1,16 @@
-import { getPosition, getPositions } from "@/lib/content";
-import { ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { getDictionary } from "@/i18n/ui";
+import { getPositions } from "@/lib/content";
+import { ogContentType, ogSize } from "@/lib/og";
+import { positionOg } from "@/lib/og-pages";
 
-export const alt = "포지션 소개";
+export const alt = getDictionary("ko").positionOgAlt;
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export function generateStaticParams() {
-  return getPositions().map((p) => ({ position: p.id }));
+  return getPositions("ko").map((p) => ({ position: p.id }));
 }
 
 export default async function Image({ params }: { params: Promise<{ position: string }> }) {
-  const position = getPosition((await params).position);
-  return renderOgImage({
-    eyebrow: "Position",
-    title: position?.title ?? "Position",
-    description: position?.tagline,
-  });
+  return positionOg((await params).position, "ko");
 }

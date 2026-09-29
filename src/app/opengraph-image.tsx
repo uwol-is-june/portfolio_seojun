@@ -1,11 +1,12 @@
-import { profile } from "@/content/profile";
-import { site } from "@/content/site";
-import { ogContentType, ogSize, renderOgImage } from "@/lib/og";
+import { getProfile } from "@/lib/content";
+import { ogContentType, ogSize } from "@/lib/og";
+import { homeOg } from "@/lib/og-pages";
 
+const profile = getProfile("ko");
 export const alt = `${profile.name} — ${profile.headline}`;
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
-  return renderOgImage({ eyebrow: "Portfolio", title: profile.headline, description: `${profile.name} · ${site.roles}` });
+  return homeOg("ko");
 }

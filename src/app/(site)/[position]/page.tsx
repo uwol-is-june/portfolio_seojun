@@ -6,6 +6,7 @@ import PmShowcase from "@/components/position/pm-showcase";
 import PositionTemplate from "@/components/position/position-template";
 import type { PositionId } from "@/content/types";
 import { getBuildsByPosition, getPosition, getPositions, getProjects, getProjectsByPosition } from "@/lib/content";
+import { getT } from "@/i18n/server";
 import { pageMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
@@ -32,6 +33,7 @@ export default async function PositionPage(props: PageProps<"/[position]">) {
   if (!position) notFound();
 
   // AI Product Builder 하단: PM · Service Planner의 대표 프로젝트로 넘어가는 블록
+  const t = getT();
   const isAi = position.id === "ai-product-builder";
   const related = isAi
     ? {
@@ -44,10 +46,11 @@ export default async function PositionPage(props: PageProps<"/[position]">) {
   // AI Product Builder: 개인 프로젝트와 회사(인카금융서비스)에서 만든 프로젝트를 나눠 보여줍니다.
   const projectGroups = isAi
     ? [
-        { title: "개인 프로젝트", projects: projects.filter((p) => p.affiliation !== "company") },
+        { id: "personal", title: t.personalProjects, projects: projects.filter((p) => p.affiliation !== "company") },
         {
-          title: "회사 프로젝트",
-          description: "(주)인카금융서비스에서 직접 개발 · 배포한 사내 서비스",
+          id: "company",
+          title: t.companyProjects,
+          description: t.companyProjectsNote,
           projects: projects.filter((p) => p.affiliation === "company"),
         },
       ]
