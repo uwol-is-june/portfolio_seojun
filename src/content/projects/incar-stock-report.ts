@@ -8,7 +8,7 @@ export const incarStockReport: Project = {
     "경영진에게 매일 올리던 주가 보고를 자동화했습니다. 평일 장 마감 후 데이터를 모으고 Gemini로 분석해 대시보드와 PDF로 보여주며, 보고 업무를 연 16 영업일 줄였습니다.",
   cardPoints: [
     "경영진에게 매일 올리던 주가 보고를 자동화",
-    "평일 장 마감 후 수집 → Gemini 분석 → 대시보드 · PDF",
+    "장 마감 후 수집 → Gemini 분석 → 대시보드 · PDF",
     "보고 업무 연 16 영업일 절감",
   ],
   category: "ai",

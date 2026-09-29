@@ -8,6 +8,7 @@ import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
 import type { Build, Position, Project } from "@/content/types";
+import { cn } from "@/lib/cn";
 
 /** 프로젝트를 소속별로 나눠 보여줄 때의 묶음 (예: 개인 / 회사) */
 export type ProjectGroup = { title: string; description?: string; projects: Project[] };
@@ -29,15 +30,57 @@ type PositionTemplateProps = {
  * 포지션 페이지 공통 템플릿
  * 순서: 소개 → 포지션별 강조 섹션 → 프로젝트 → (그 밖의 프로젝트 또는 다른 포지션 둘러보기)
  */
+/** 카드 한 칸 (같은 줄 카드끼리 높이를 맞추도록 h-full) */
+function Cell({ project, index, showCategory }: { project: Project; index: number; showCategory: boolean }) {
+  return (
+    <li className="h-full">
+      <Reveal className="h-full">
+        <ProjectCard project={project} index={index} showCategory={showCategory} />
+      </Reveal>
+    </li>
+  );
+}
+
 /**
- * 프로젝트 목록: 첫 카드는 크게, 나머지는 2열. 홀수 개면 마지막 하나는 반쪽 빈칸이 생기지 않게 큰 카드로
+ * 첫 카드 뒤 나머지를 cols열로 놓습니다. 마지막 줄에 남는 개수에 따라:
+ * 1개 남으면 반쪽 빈칸이 생기지 않게 큰 카드로, (3열에서) 2개 남으면 그 줄만 2열로.
+ */
+function Rest({ projects, cols, start, showCategory }: { projects: Project[]; cols: 2 | 3; start: number; showCategory: boolean }) {
+  const left = projects.length % cols;
+  const full = projects.slice(0, projects.length - left);
+  const tail = projects.slice(projects.length - left);
+  return (
+    <>
+      {full.length > 0 && (
+        <ul className={cn("mt-16 grid gap-12 md:grid-cols-2 md:gap-10", cols === 3 && "xl:grid-cols-3")}>
+          {full.map((p, i) => (
+            <Cell key={p.slug} project={p} index={start + i} showCategory={showCategory} />
+          ))}
+        </ul>
+      )}
+      {tail.length === 1 && (
+        <Reveal className="mt-16">
+          <ProjectCard project={tail[0]} index={start + full.length} size="large" showCategory={showCategory} />
+        </Reveal>
+      )}
+      {tail.length === 2 && (
+        <ul className="mt-16 grid gap-12 md:grid-cols-2 md:gap-10">
+          {tail.map((p, i) => (
+            <Cell key={p.slug} project={p} index={start + full.length + i} showCategory={showCategory} />
+          ))}
+        </ul>
+      )}
+    </>
+  );
+}
+
+/**
+ * 프로젝트 목록: 첫 카드는 크게, 나머지는 넓은 화면(xl)에서 3열 · 그보다 좁으면 2열.
+ * 마지막 줄 처리가 열 수마다 달라 두 배치를 모두 그리고 화면 폭으로 하나만 보여줍니다.
  * start는 카드 번호가 묶음을 넘어 이어지도록 앞 묶음까지의 개수입니다.
  */
 function ProjectList({ projects, showCategory, start = 0 }: { projects: Project[]; showCategory: boolean; start?: number }) {
   const [lead, ...rest] = projects;
-  const odd = rest.length % 2 === 1;
-  const grid = odd ? rest.slice(0, -1) : rest;
-  const tail = odd ? rest[rest.length - 1] : undefined;
   return (
     <>
       {lead && (
@@ -45,21 +88,15 @@ function ProjectList({ projects, showCategory, start = 0 }: { projects: Project[
           <ProjectCard project={lead} index={start} size="large" showCategory={showCategory} />
         </Reveal>
       )}
-      {grid.length > 0 && (
-        <ul className="mt-16 grid gap-12 md:grid-cols-2 md:gap-10">
-          {grid.map((project, i) => (
-            <li key={project.slug}>
-              <Reveal>
-                <ProjectCard project={project} index={start + i + 1} showCategory={showCategory} />
-              </Reveal>
-            </li>
-          ))}
-        </ul>
-      )}
-      {tail && (
-        <Reveal className="mt-16">
-          <ProjectCard project={tail} index={start + rest.length} size="large" showCategory={showCategory} />
-        </Reveal>
+      {rest.length > 0 && (
+        <>
+          <div className="xl:hidden">
+            <Rest projects={rest} cols={2} start={start + 1} showCategory={showCategory} />
+          </div>
+          <div className="hidden xl:block">
+            <Rest projects={rest} cols={3} start={start + 1} showCategory={showCategory} />
+          </div>
+        </>
       )}
     </>
   );

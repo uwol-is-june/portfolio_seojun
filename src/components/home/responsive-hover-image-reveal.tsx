@@ -57,7 +57,7 @@ function useReducedMotion() {
 type ItemImage = { src?: string; still?: string };
 type Item = { image?: ItemImage };
 
-/** 항목마다 움직이는 이미지(src)와 첫 프레임 정지 이미지(still)가 있으면, 쓸 쪽 하나로 고릅니다. */
+/** 항목마다 움직이는 이미지(src)와 첫 화면 정지 이미지(still)가 있으면, 쓸 쪽 하나로 고릅니다. */
 function pickImages(items: Props["items"], useMotion: (src: string) => boolean): Props["items"] {
   if (!items) return items;
   return Object.fromEntries(
@@ -158,11 +158,11 @@ export default function ResponsiveHoverImageReveal({
     setTapOffset({ x: Math.round(cx - px), y: Math.round(cy - py) });
   };
 
-  // 움직이는 이미지(각 1MB 안팎)는 첫 화면에서 받지 않고, 마우스가 메뉴에 처음 올라올 때 받습니다.
-  // 다 받은 뒤에 바꿔 끼우고, 정지 이미지가 첫 프레임이라 바뀌는 순간이 튀지 않습니다.
-  // 터치 기기 · 동작 줄이기 설정에서는 정지 이미지를 그대로 씁니다.
-  const onPointerEnter = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse" || reducedMotion || motionRequested.current || !items) return;
+  // 움직이는 SVG 콜라주(각 200~350KB)는 첫 화면에서 받지 않고, 메뉴에 처음 마우스를 올리거나 탭할 때 받습니다.
+  // 다 받은 뒤에 바꿔 끼우고, 정지 이미지가 SVG의 첫 화면과 같아 바뀌는 순간이 튀지 않습니다.
+  // 동작 줄이기 설정에서는 정지 이미지를 그대로 씁니다.
+  const onPointerEnter = () => {
+    if (reducedMotion || motionRequested.current || !items) return;
     motionRequested.current = true;
     for (const value of Object.values(items)) {
       const image = (value as Item | undefined)?.image;
@@ -173,7 +173,7 @@ export default function ResponsiveHoverImageReveal({
       img.src = src;
     }
   };
-  const shownItems = pickImages(items, (src) => !isTouch && !reducedMotion && loaded.has(src));
+  const shownItems = pickImages(items, (src) => !reducedMotion && loaded.has(src));
 
   // 터치: 링크 항목은 첫 탭에서 미리보기만 보여주고 두 번째 탭에서 이동합니다.
   const onClickCapture = (e: MouseEvent<HTMLDivElement>) => {

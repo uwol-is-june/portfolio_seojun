@@ -8,7 +8,7 @@ export const podoWiki: Project = {
     "공연단체의 인수인계 문서를 위키로 모으는 서비스입니다. 웹 편집기와 iOS · Android 앱을 함께 만들어 스토어에 출시했고, 현재 3개 공연단체가 쓰고 있습니다.",
   cardPoints: [
     "공연단체의 인수인계 문서를 모으는 위키 서비스",
-    "웹 편집기와 iOS · Android 앱을 함께 개발해 스토어 출시",
+    "웹 편집기 + iOS · Android 앱 스토어 출시",
     "현재 3개 공연단체 사용 중",
   ],
   category: "ai",

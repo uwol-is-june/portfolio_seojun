@@ -7,9 +7,9 @@ export const cardnewsAgent: Project = {
   summary:
     "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구입니다. Claude Code 스킬로 불러 쓰며, '다시(DASII)' 인스타그램 카드뉴스 31편을 이 도구로 만들어 운영하고 있습니다.",
   cardPoints: [
-    "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구",
-    "Claude Code 스킬로 불러 쓰고, 규칙 검사 → GPT 읽기 검사 → 사람 검토로 검수",
-    "'다시(DASII)' 인스타그램 카드뉴스 31편을 이 도구로 운영 (알룰로스 편부터 전부)",
+    "cards.json 한 벌로 카드 이미지 · 캡션 생성",
+    "스킬로 불러 쓰고 규칙 · GPT · 사람이 3단 검수",
+    "'다시' 인스타 카드뉴스 31편을 이 도구로 운영",
   ],
   category: "ai",
   deployment: "local",

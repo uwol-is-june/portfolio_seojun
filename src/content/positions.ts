@@ -13,7 +13,7 @@ export const positions: Position[] = [
     ],
     emphasis: ["문제 정의", "가설 검증", "지표 정의", "우선순위", "OKR"],
     cover: {
-      src: "/home/product-manager.webp",
+      src: "/home/product-manager.svg",
       still: "/home/product-manager-still.webp",
       alt: "Product Manager로 만든 프로젝트 화면 모음: 포도상점 · 포도티켓 · 서학개미클럽 · 멍멍멍멍멍",
     },
@@ -29,7 +29,7 @@ export const positions: Position[] = [
     ],
     emphasis: ["유저 플로우", "화면 설계", "정책 설계", "현장 운영", "QA"],
     cover: {
-      src: "/home/service-planner.webp",
+      src: "/home/service-planner.svg",
       still: "/home/service-planner-still.webp",
       alt: "서비스 기획으로 만든 앱 화면 모음: 포도티켓 · 멍멍멍멍멍 · 포도상점",
     },
@@ -42,7 +42,7 @@ export const positions: Position[] = [
     intro: [],
     emphasis: [],
     cover: {
-      src: "/home/ai-product-builder.webp",
+      src: "/home/ai-product-builder.svg",
       still: "/home/ai-product-builder-still.webp",
       alt: "AI Product Builder로 만든 서비스 화면 모음: 카드뉴스 에이전트 · 보장분석 · DevTier · 위촉 시뮬레이터 외",
     },

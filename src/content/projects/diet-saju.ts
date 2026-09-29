@@ -7,8 +7,8 @@ export const dietSaju: Project = {
   summary:
     "생년월일시로 사주 원국을 계산하고 Gemini로 해석문을 만드는 서비스입니다. 틀리면 안 되는 사주 계산은 코드가, 문장 생성만 LLM이 맡도록 경계를 나눴습니다.",
   cardPoints: [
-    "생년월일시로 사주 원국을 계산하고 Gemini로 해석문 생성",
-    "틀리면 안 되는 계산은 코드가, 문장 생성만 LLM이 맡도록 분리",
+    "생년월일시로 사주를 계산, Gemini로 해석",
+    "계산은 코드가, 문장 생성만 LLM이 담당",
   ],
   category: "ai",
   deployment: "live",

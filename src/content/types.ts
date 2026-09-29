@@ -39,9 +39,9 @@ export interface Position {
   intro: string[];
   /** 이 포지션에서 강조할 관점 */
   emphasis: string[];
-  /** 홈 HoverImageReveal에 뜨는 이미지 (실제 프로젝트 화면이 흐르는 움직이는 WebP, scripts/position-collage.cjs) */
+  /** 홈 HoverImageReveal에 뜨는 이미지 (실제 프로젝트 화면이 흐르는 SVG 콜라주, scripts/position-collage.cjs) */
   cover: ImageAsset & {
-    /** 첫 프레임 정지 이미지. 처음 로드 · 터치 기기 · 동작 줄이기 설정에서 씁니다. */
+    /** 첫 화면 정지 이미지. 처음 로드와 동작 줄이기 설정에서 씁니다. */
     still: string;
   };
 }

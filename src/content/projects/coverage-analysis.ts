@@ -9,7 +9,7 @@ export const coverageAnalysis: Project = {
   cardPoints: [
     "가입한 보험을 한 번에 불러와 보장 현황을 시각화",
     "권장 보장액과 비교해 부족한 보장을 표시",
-    "'내보험다보여' 연동(CODEF API)과 PDF 업로드 두 경로 설계",
+    "내보험다보여(CODEF) 연동과 PDF 업로드 설계",
   ],
   category: "ai",
   deployment: "live",

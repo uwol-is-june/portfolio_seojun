@@ -7,9 +7,9 @@ export const devtier: Project = {
   summary:
     "GitHub 공개 활동 데이터를 모아 개발자 전투력 점수와 티어를 매기는 서비스입니다. 평가 지표와 점수 공식을 직접 정의하고, README에 붙이는 티어 뱃지와 랭킹 · 비교 기능까지 만들었습니다.",
   cardPoints: [
-    "GitHub 공개 활동으로 개발자 점수와 티어를 매기는 서비스",
+    "GitHub 활동으로 개발자 점수 · 티어 산정",
     "평가 지표와 점수 공식을 직접 정의",
-    "README 티어 뱃지 · 랭킹 · 유저 비교 기능 제공",
+    "README 티어 뱃지 · 랭킹 · 유저 비교",
   ],
   category: "ai",
   deployment: "live",

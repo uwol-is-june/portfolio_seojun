@@ -25,12 +25,12 @@ export default function ProjectCard({ project, index, size = "default", showCate
   return (
     <article
       className={cn(
-        "group relative flex flex-col gap-5",
+        "group relative flex h-full flex-col gap-5",
         large && "md:grid md:grid-cols-[1.2fr_1fr] md:items-center md:gap-10",
       )}
     >
-      <ProjectVisual project={project} sizes={large ? "(min-width: 768px) 55vw, 100vw" : "(min-width: 768px) 45vw, 100vw"} />
-      <div className="flex flex-col gap-3">
+      <ProjectVisual project={project} sizes={large ? "(min-width: 768px) 55vw, 100vw" : "(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"} />
+      <div className="flex flex-1 flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
           {index !== undefined && (
             <span className="font-mono text-caption text-subtle">{String(index + 1).padStart(2, "0")}</span>
@@ -67,7 +67,7 @@ export default function ProjectCard({ project, index, size = "default", showCate
         {project.cardPoints?.length ? (
           <ul className="flex flex-col gap-1.5">
             {project.cardPoints.map((point) => (
-              <li key={point} className="flex gap-2 text-small text-muted text-pretty md:text-body">
+              <li key={point} className={cn("flex gap-2 text-small text-muted text-pretty md:text-body", !large && "xl:text-small")}>
                 <span aria-hidden className="text-subtle">
                   ·
                 </span>
@@ -79,14 +79,16 @@ export default function ProjectCard({ project, index, size = "default", showCate
           <p className="text-small text-muted text-pretty md:text-body">{project.summary}</p>
         )}
         <ul className="mt-1 flex flex-wrap gap-2">
-          {project.tags.slice(0, 4).map((tag) => (
+          {/* 카드에는 3개까지, 나머지는 상세 페이지에서 */}
+          {project.tags.slice(0, 3).map((tag) => (
             <li key={tag}>
               <Tag>{tag}</Tag>
             </li>
           ))}
         </ul>
         {links.length > 0 && (
-          <div className="relative z-10 mt-2 flex flex-wrap gap-2">
+          // 같은 줄 카드끼리 버튼 줄이 맞도록 카드 아래쪽에 붙입니다.
+          <div className={cn("relative z-10 flex flex-wrap gap-2", large ? "mt-2" : "mt-auto pt-2")}>
             {links.map((l) => (
               <ButtonLink key={l.href} href={l.href} size="sm" variant="secondary" aria-label={`${project.title} ${l.label} 새 탭에서 열기`}>
                 {l.label} ↗
