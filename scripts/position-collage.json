@@ -1,0 +1,42 @@
+{
+  "_comment": "홈 포지션 호버 콜라주에 넣는 실제 프로젝트 화면 (public/ 기준). PM은 지표 · 운영, 서비스 기획은 앱 화면 · 사용 흐름 위주로 나눠 서로 달라 보이게 고름 (TASK-102)",
+  "product-manager": [
+    "projects/podo-store/cover.webp",
+    "projects/seohak-gaemi-club/cover-dashboard.webp",
+    "projects/podo-ticket/screen-admin.webp",
+    "projects/podo-store/photo-conference.webp",
+    "projects/seohak-gaemi-club/dash-track-record.webp",
+    "projects/mungx5/screen-report.webp",
+    "projects/podo-ticket/photo-onsite.webp",
+    "projects/seohak-gaemi-club/screen-nasdaq.webp",
+    "projects/podo-store/photo-workshop.webp",
+    "projects/seohak-gaemi-club/screen-before.webp",
+    "projects/mungx5/photo-demoday.webp"
+  ],
+  "service-planner": [
+    "projects/podo-ticket/cover.webp",
+    "projects/mungx5/screen-home.webp",
+    "projects/podo-ticket/screen-seat.webp",
+    "projects/mungx5/cover.webp",
+    "projects/podo-ticket/photo-nfc-cards.webp",
+    "projects/mungx5/screen-calendar.webp",
+    "projects/podo-ticket/screen-ticket.webp",
+    "projects/podo-store/photo-matching.webp",
+    "projects/podo-ticket/photo-tagging.webp",
+    "projects/mungx5/photo-demoday-booth.webp"
+  ],
+  "ai-product-builder": [
+    "projects/seohak-gaemi-club/dash-portfolio.webp",
+    "projects/cardnews-agent/card-sugarlabel-01.webp",
+    "projects/coverage-analysis/cover.webp",
+    "projects/devtier/cover.webp",
+    "projects/fa-recruit-simulator/cover.webp",
+    "projects/cardnews-agent/card-sugarlabel-04.webp",
+    "projects/incar-stock-report/cover.webp",
+    "projects/diet-saju/cover.webp",
+    "projects/podo-wiki/cover.webp",
+    "projects/devtier/screen-result.webp",
+    "projects/incar-stock-report/screen-chart.webp",
+    "projects/coverage-analysis/screen-coverage.webp"
+  ]
+}

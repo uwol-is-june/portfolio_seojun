@@ -1,0 +1,468 @@
+[
+  {
+    "id": "c_mum65dzz_0",
+    "info": {
+      "partner": "가온지점",
+      "name": "김가온",
+      "birth": "19950312",
+      "empno": "D10001"
+    },
+    "diagnosis": {
+      "selfDiagnosis": {
+        "role": "sales",
+        "assocHistory": false
+      },
+      "specialCondition": {
+        "condition": null,
+        "foreignerCode": null
+      },
+      "precheck": {
+        "bond": "done",
+        "eclean": null
+      },
+      "careerForm": {
+        "targetDate": "20261020",
+        "examDate": "20260610",
+        "eduDateNew": "20260701",
+        "eduDateSr": "",
+        "careerRecords": [],
+        "otherCareerRecords": [],
+        "assocMalsoDate": ""
+      },
+      "careerResult": {
+        "verdict": "ok",
+        "icon": "✅",
+        "title": "등록 요건 충족",
+        "desc": "유효기간 내 접수 가능 (두 증서가 각각 취득일 + 1년 이내)",
+        "basis": [
+          {
+            "label": "시험 합격일",
+            "value": "2026-06-10"
+          },
+          {
+            "label": "등록교육 이수일",
+            "value": "2026-07-01"
+          },
+          {
+            "label": "유효기간 만료일",
+            "value": "2027-06-10",
+            "dday": "D-233",
+            "highlight": true
+          },
+          {
+            "label": "등록예정일",
+            "value": "2026-10-20"
+          }
+        ],
+        "alternatives": [],
+        "note": "유효기간은 먼저 만료되는 증서(시험 합격증) 기준입니다 — 두 증서가 각각 취득일로부터 1년 유효합니다",
+        "expiresAt": "2027-06-09T15:00:00.000Z"
+      },
+      "typeOverride": null,
+      "reentry": {
+        "count": "0",
+        "repayment": null,
+        "repaymentExpected": null,
+        "reasonLong": false,
+        "reasonForced": false
+      },
+      "diagAnswers": {
+        "pasan": "ok",
+        "fin_acc_reg": "ok",
+        "rehab": "ok"
+      },
+      "qualifyResult": {
+        "isSonboLimit": false,
+        "exemptNotes": [],
+        "needsTransferDocs": false,
+        "hasA": false,
+        "hasB": false,
+        "hasBlocked": false,
+        "reentry": {
+          "isReentry": false,
+          "isReentryReview": false,
+          "isReentryBothExist": false,
+          "isReentryBlocked": false,
+          "isUnder6": false,
+          "isBranchChange": false,
+          "isNewIdGrant": false,
+          "limitReasons": []
+        },
+        "grade": "ok",
+        "icon": "✅",
+        "title": "최종 적격",
+        "desc": "모든 위촉 적격 기준을 충족합니다."
+      },
+      "judgedAt": "2026-09-29T04:21:15.081Z",
+      "docChecks": {}
+    },
+    "updatedAt": "2026-09-29T04:21:15.082Z"
+  },
+  {
+    "id": "c_mum65eta_1",
+    "info": {
+      "partner": "나래지점",
+      "name": "이나래",
+      "birth": "19920804",
+      "empno": "D10002"
+    },
+    "diagnosis": {
+      "selfDiagnosis": {
+        "role": "sales",
+        "assocHistory": false
+      },
+      "specialCondition": {
+        "condition": null,
+        "foreignerCode": null
+      },
+      "precheck": {
+        "bond": "done",
+        "eclean": null
+      },
+      "careerForm": {
+        "targetDate": "20261020",
+        "examDate": "20260610",
+        "eduDateNew": "20260701",
+        "eduDateSr": "",
+        "careerRecords": [],
+        "otherCareerRecords": [],
+        "assocMalsoDate": ""
+      },
+      "careerResult": {
+        "verdict": "ok",
+        "icon": "✅",
+        "title": "등록 요건 충족",
+        "desc": "유효기간 내 접수 가능 (두 증서가 각각 취득일 + 1년 이내)",
+        "basis": [
+          {
+            "label": "시험 합격일",
+            "value": "2026-06-10"
+          },
+          {
+            "label": "등록교육 이수일",
+            "value": "2026-07-01"
+          },
+          {
+            "label": "유효기간 만료일",
+            "value": "2027-06-10",
+            "dday": "D-233",
+            "highlight": true
+          },
+          {
+            "label": "등록예정일",
+            "value": "2026-10-20"
+          }
+        ],
+        "alternatives": [],
+        "note": "유효기간은 먼저 만료되는 증서(시험 합격증) 기준입니다 — 두 증서가 각각 취득일로부터 1년 유효합니다",
+        "expiresAt": "2027-06-09T15:00:00.000Z"
+      },
+      "typeOverride": null,
+      "reentry": {
+        "count": "0",
+        "repayment": null,
+        "repaymentExpected": null,
+        "reasonLong": false,
+        "reasonForced": false
+      },
+      "diagAnswers": {
+        "pasan": "ok",
+        "fin_acc_reg": "bad",
+        "rehab": "ok"
+      },
+      "qualifyResult": {
+        "isSonboLimit": false,
+        "exemptNotes": [],
+        "needsTransferDocs": false,
+        "hasA": false,
+        "hasB": true,
+        "hasBlocked": false,
+        "reentry": {
+          "isReentry": false,
+          "isReentryReview": false,
+          "isReentryBothExist": false,
+          "isReentryBlocked": false,
+          "isUnder6": false,
+          "isBranchChange": false,
+          "isNewIdGrant": false,
+          "limitReasons": []
+        },
+        "grade": "warn",
+        "icon": "⚠️",
+        "title": "심사 대상",
+        "desc": "심사 대상 규정에 해당하여 심사를 통해 승인 여부를 판단해야 합니다.\n세부사항은 담당자에게 문의하세요."
+      },
+      "judgedAt": "2026-09-29T04:21:23.345Z",
+      "docChecks": {}
+    },
+    "updatedAt": "2026-09-29T04:21:23.345Z"
+  },
+  {
+    "id": "c_mum65fmz_2",
+    "info": {
+      "partner": "다솜지점",
+      "name": "박다솜",
+      "birth": "19880127",
+      "empno": "D10003"
+    },
+    "diagnosis": {
+      "selfDiagnosis": {
+        "role": "sales",
+        "assocHistory": false
+      },
+      "specialCondition": {
+        "condition": null,
+        "foreignerCode": null
+      },
+      "precheck": {
+        "bond": "done",
+        "eclean": null
+      },
+      "careerForm": {
+        "targetDate": "20261020",
+        "examDate": "20260610",
+        "eduDateNew": "20260701",
+        "eduDateSr": "",
+        "careerRecords": [],
+        "otherCareerRecords": [],
+        "assocMalsoDate": ""
+      },
+      "careerResult": {
+        "verdict": "ok",
+        "icon": "✅",
+        "title": "등록 요건 충족",
+        "desc": "유효기간 내 접수 가능 (두 증서가 각각 취득일 + 1년 이내)",
+        "basis": [
+          {
+            "label": "시험 합격일",
+            "value": "2026-06-10"
+          },
+          {
+            "label": "등록교육 이수일",
+            "value": "2026-07-01"
+          },
+          {
+            "label": "유효기간 만료일",
+            "value": "2027-06-10",
+            "dday": "D-233",
+            "highlight": true
+          },
+          {
+            "label": "등록예정일",
+            "value": "2026-10-20"
+          }
+        ],
+        "alternatives": [],
+        "note": "유효기간은 먼저 만료되는 증서(시험 합격증) 기준입니다 — 두 증서가 각각 취득일로부터 1년 유효합니다",
+        "expiresAt": "2027-06-09T15:00:00.000Z"
+      },
+      "typeOverride": null,
+      "reentry": {
+        "count": "0",
+        "repayment": null,
+        "repaymentExpected": null,
+        "reasonLong": false,
+        "reasonForced": false
+      },
+      "diagAnswers": {
+        "pasan": "bad",
+        "fin_acc_reg": "ok",
+        "rehab": "ok"
+      },
+      "qualifyResult": {
+        "isSonboLimit": false,
+        "exemptNotes": [],
+        "needsTransferDocs": false,
+        "hasA": true,
+        "hasB": false,
+        "hasBlocked": false,
+        "reentry": {
+          "isReentry": false,
+          "isReentryReview": false,
+          "isReentryBothExist": false,
+          "isReentryBlocked": false,
+          "isUnder6": false,
+          "isBranchChange": false,
+          "isNewIdGrant": false,
+          "limitReasons": []
+        },
+        "grade": "bad",
+        "icon": "🛑",
+        "title": "위촉 불가",
+        "desc": "대외비 대외비 대외비\n\n세부사항은 담당자에게 문의 바랍니다."
+      },
+      "judgedAt": "2026-09-29T04:21:31.416Z",
+      "docChecks": {}
+    },
+    "updatedAt": "2026-09-29T04:21:31.416Z"
+  },
+  {
+    "id": "c_mum65gee_3",
+    "info": {
+      "partner": "바다지점",
+      "name": "최바다",
+      "birth": "19900615",
+      "empno": "D10004"
+    },
+    "diagnosis": {
+      "selfDiagnosis": {
+        "role": "sales",
+        "assocHistory": true
+      },
+      "specialCondition": {
+        "condition": null,
+        "foreignerCode": null
+      },
+      "precheck": {
+        "bond": "done",
+        "eclean": "done"
+      },
+      "careerForm": {
+        "targetDate": "20261020",
+        "examDate": "",
+        "eduDateNew": "",
+        "eduDateSr": "20260915",
+        "careerRecords": [
+          {
+            "id": "1790655696963-0",
+            "start": "20210302",
+            "end": "20260601"
+          }
+        ],
+        "otherCareerRecords": [],
+        "assocMalsoDate": ""
+      },
+      "careerResult": {
+        "verdict": "ok",
+        "icon": "✅",
+        "title": "경력자 인정",
+        "desc": "최근 3년 내 956일 충족 · 유효기간 만료 2027-09-15 (보수교육 기준)",
+        "basis": [
+          {
+            "label": "등록예정일",
+            "value": "2026-10-20"
+          },
+          {
+            "label": "경력 조회 기간",
+            "value": "2023-10-20 ~ 2026-10-20"
+          },
+          {
+            "label": "누적 경력일수",
+            "value": "956일 (기준 365일 이상 · 설계사)"
+          },
+          {
+            "label": "경력등록교육(보수교육) 만료일",
+            "value": "2027-09-15"
+          },
+          {
+            "label": "경력 인정 마감일",
+            "value": "2028-06-02"
+          },
+          {
+            "label": "유효기간 만료일",
+            "value": "2027-09-15",
+            "dday": "D-330",
+            "highlight": true
+          }
+        ],
+        "alternatives": [],
+        "expiresAt": "2027-09-14T15:00:00.000Z"
+      },
+      "typeOverride": null,
+      "reentry": {
+        "count": "1",
+        "repayment": "none",
+        "repaymentExpected": "none",
+        "reasonLong": false,
+        "reasonForced": false
+      },
+      "diagAnswers": {
+        "sonbo_limit": "ok",
+        "pasan": "ok",
+        "ins_acc": "ok",
+        "repay_bad_grade": "ok",
+        "repay_unpaid": "ok",
+        "bad_recruit": "ok",
+        "law_violation": "ok",
+        "fin_acc_person": "ok",
+        "eclean_ins": "ok",
+        "transfer_limit_b": "ok",
+        "incomplete_sale": "ok",
+        "repay_ok": "ok",
+        "fin_acc_reg": "ok",
+        "rehab": "ok"
+      },
+      "qualifyResult": {
+        "isSonboLimit": false,
+        "exemptNotes": [],
+        "needsTransferDocs": true,
+        "hasA": false,
+        "hasB": false,
+        "hasBlocked": false,
+        "reentry": {
+          "isReentry": true,
+          "isReentryReview": false,
+          "isReentryBothExist": false,
+          "isReentryBlocked": false,
+          "isUnder6": true,
+          "isBranchChange": false,
+          "isNewIdGrant": false,
+          "limitReasons": []
+        },
+        "grade": "pending",
+        "icon": "🔔",
+        "title": "조건부 입사 가능",
+        "desc": "대외비 대외비 대외비\n대외비 대외비 대외비 대외비 대외비 대외비 대외비\n대외비 대외비\n\n대외비 대외비 대외비 대외비 대외비 대외비 대외비 대외비 대외비 대외비"
+      },
+      "judgedAt": "2026-09-29T04:21:43.922Z",
+      "docChecks": {}
+    },
+    "updatedAt": "2026-09-29T04:21:43.922Z"
+  },
+  {
+    "id": "c_mum65h5p_4",
+    "info": {
+      "partner": "라온지점",
+      "name": "정라온",
+      "birth": "19970921",
+      "empno": "D10005"
+    },
+    "diagnosis": {
+      "selfDiagnosis": {
+        "role": "sales",
+        "assocHistory": false
+      },
+      "specialCondition": {
+        "condition": null,
+        "foreignerCode": null
+      },
+      "precheck": {
+        "bond": "done",
+        "eclean": null
+      },
+      "careerForm": {
+        "targetDate": "",
+        "examDate": "",
+        "eduDateNew": "",
+        "eduDateSr": "",
+        "careerRecords": [],
+        "otherCareerRecords": [],
+        "assocMalsoDate": ""
+      },
+      "careerResult": null,
+      "typeOverride": null,
+      "reentry": {
+        "count": "0",
+        "repayment": null,
+        "repaymentExpected": null,
+        "reasonLong": false,
+        "reasonForced": false
+      },
+      "diagAnswers": {},
+      "qualifyResult": null,
+      "judgedAt": null,
+      "docChecks": {}
+    },
+    "updatedAt": "2026-09-29T04:21:48.858Z"
+  }
+]

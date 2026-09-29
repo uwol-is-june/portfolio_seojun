@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     "demos/**",
     "src/demos/**",
     "src/app/api/seohak/**",
+    // 에셋 · 데모 생성용 Node 스크립트 (CommonJS, 앱 번들에 들어가지 않음)
+    "scripts/**",
   ]),
 ]);
 

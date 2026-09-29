@@ -38,6 +38,38 @@ function useIsTouch() {
   );
 }
 
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onChange: () => void) {
+  const mql = window.matchMedia(REDUCED_MOTION_QUERY);
+  mql.addEventListener("change", onChange);
+  return () => mql.removeEventListener("change", onChange);
+}
+
+function useReducedMotion() {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false,
+  );
+}
+
+type ItemImage = { src?: string; still?: string };
+type Item = { image?: ItemImage };
+
+/** 항목마다 움직이는 이미지(src)와 첫 프레임 정지 이미지(still)가 있으면, 쓸 쪽 하나로 고릅니다. */
+function pickImages(items: Props["items"], useMotion: (src: string) => boolean): Props["items"] {
+  if (!items) return items;
+  return Object.fromEntries(
+    Object.entries(items).map(([key, value]) => {
+      const image = (value as Item | undefined)?.image;
+      if (!image?.src || !image.still) return [key, value];
+      const src = useMotion(image.src) ? image.src : image.still;
+      return [key, { ...(value as object), image: { ...image, src } }];
+    }),
+  ) as Props["items"];
+}
+
 const clamp = (v: number, min: number, max: number) =>
   Math.min(max, Math.max(min, v));
 
@@ -53,6 +85,7 @@ export default function ResponsiveHoverImageReveal({
   minFontSize = 20,
   font,
   style,
+  items,
   ...rest
 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -61,6 +94,9 @@ export default function ResponsiveHoverImageReveal({
   const [width, setWidth] = useState(0);
   const [fontSize, setFontSize] = useState<number | null>(null);
   const [tapOffset, setTapOffset] = useState({ x: 0, y: 0 });
+  const reducedMotion = useReducedMotion();
+  const motionRequested = useRef(false);
+  const [loaded, setLoaded] = useState<ReadonlySet<string>>(() => new Set());
 
   const imageWidth = width ? clamp(Math.round(width * 0.38), 140, 300) : 300;
   const imageHeight = Math.round((imageWidth * 4) / 3);
@@ -122,6 +158,23 @@ export default function ResponsiveHoverImageReveal({
     setTapOffset({ x: Math.round(cx - px), y: Math.round(cy - py) });
   };
 
+  // 움직이는 이미지(각 1MB 안팎)는 첫 화면에서 받지 않고, 마우스가 메뉴에 처음 올라올 때 받습니다.
+  // 다 받은 뒤에 바꿔 끼우고, 정지 이미지가 첫 프레임이라 바뀌는 순간이 튀지 않습니다.
+  // 터치 기기 · 동작 줄이기 설정에서는 정지 이미지를 그대로 씁니다.
+  const onPointerEnter = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse" || reducedMotion || motionRequested.current || !items) return;
+    motionRequested.current = true;
+    for (const value of Object.values(items)) {
+      const image = (value as Item | undefined)?.image;
+      if (!image?.src || !image.still) continue;
+      const src = image.src;
+      const img = new Image();
+      img.onload = () => setLoaded((prev) => new Set(prev).add(src));
+      img.src = src;
+    }
+  };
+  const shownItems = pickImages(items, (src) => !isTouch && !reducedMotion && loaded.has(src));
+
   // 터치: 링크 항목은 첫 탭에서 미리보기만 보여주고 두 번째 탭에서 이동합니다.
   const onClickCapture = (e: MouseEvent<HTMLDivElement>) => {
     if (!isTouch) return;
@@ -138,10 +191,12 @@ export default function ResponsiveHoverImageReveal({
       ref={wrapperRef}
       className="h-full w-full"
       onPointerDownCapture={onPointerDownCapture}
+      onPointerEnter={onPointerEnter}
       onClickCapture={onClickCapture}
     >
       <HoverImageReveal
         {...rest}
+        items={shownItems}
         font={{
           fontFamily: "var(--font-sans), sans-serif",
           fontWeight: 400,

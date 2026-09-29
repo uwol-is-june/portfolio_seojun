@@ -110,5 +110,8 @@ export const faRecruitSimulator: Project = {
     { src: "/projects/fa-recruit-simulator/screen-malso.webp", alt: "말소 셀프 가이드 케이스 진단 화면", caption: "말소 셀프 가이드" },
     { src: "/projects/fa-recruit-simulator/cover.webp", alt: "모드 선택 화면", caption: "모드 선택 · 개인 진단 / 단체 진단" },
   ],
-  links: [{ label: "서비스 (사내용 · 비밀번호 필요)", href: "https://fa-recruit-simulator.vercel.app" }],
+  links: [
+    { label: "데모 열기", href: "/demo/fa-recruit" },
+    { label: "서비스 (사내용 · 비밀번호 필요)", href: "https://fa-recruit-simulator.vercel.app" },
+  ],
 };

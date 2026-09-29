@@ -12,7 +12,11 @@ export const positions: Position[] = [
       "IT 연합동아리에서는 개발자 10명 · 디자이너 1명과 OKR 스프린트로 앱을 출시해 데모데이 최우수상을 받았습니다.",
     ],
     emphasis: ["문제 정의", "가설 검증", "지표 정의", "우선순위", "OKR"],
-    cover: { src: "/projects/podo-store/cover.webp", alt: "포도상점 서비스 화면" },
+    cover: {
+      src: "/home/product-manager.webp",
+      still: "/home/product-manager-still.webp",
+      alt: "Product Manager로 만든 프로젝트 화면 모음: 포도상점 · 포도티켓 · 서학개미클럽 · 멍멍멍멍멍",
+    },
   },
   {
     id: "service-planner",
@@ -24,7 +28,11 @@ export const positions: Position[] = [
       "12인 팀의 기획자로 PRD와 화면설계서를 쓰고 앱을 출시했고, 결제 도입을 위해 PG사 비교부터 결제 예외 처리, 약관 개정까지 정책을 설계했습니다.",
     ],
     emphasis: ["유저 플로우", "화면 설계", "정책 설계", "현장 운영", "QA"],
-    cover: { src: "/projects/podo-ticket/cover.webp", alt: "포도티켓 모바일 화면" },
+    cover: {
+      src: "/home/service-planner.webp",
+      still: "/home/service-planner-still.webp",
+      alt: "서비스 기획으로 만든 앱 화면 모음: 포도티켓 · 멍멍멍멍멍 · 포도상점",
+    },
   },
   {
     id: "ai-product-builder",
@@ -33,7 +41,11 @@ export const positions: Position[] = [
     tagline: "AI로 직접 만들고, 실제로 써서 검증하는 AI Product Builder",
     intro: [],
     emphasis: [],
-    cover: { src: "/projects/seohak-gaemi-club/cover-dashboard.webp", alt: "서학개미클럽 대시보드 포트폴리오 화면 (목 데이터)" },
+    cover: {
+      src: "/home/ai-product-builder.webp",
+      still: "/home/ai-product-builder-still.webp",
+      alt: "AI Product Builder로 만든 서비스 화면 모음: 카드뉴스 에이전트 · 보장분석 · DevTier · 위촉 시뮬레이터 외",
+    },
   },
 ];
 

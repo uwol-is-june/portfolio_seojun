@@ -40,10 +40,24 @@ export default async function PositionPage(props: PageProps<"/[position]">) {
       }
     : undefined;
 
+  const projects = getProjectsByPosition(position.id);
+  // AI Product Builder: 개인 프로젝트와 회사(인카금융서비스)에서 만든 프로젝트를 나눠 보여줍니다.
+  const projectGroups = isAi
+    ? [
+        { title: "개인 프로젝트", projects: projects.filter((p) => p.affiliation !== "company") },
+        {
+          title: "회사 프로젝트",
+          description: "(주)인카금융서비스에서 직접 개발 · 배포한 사내 서비스",
+          projects: projects.filter((p) => p.affiliation === "company"),
+        },
+      ]
+    : undefined;
+
   return (
     <PositionTemplate
       position={position}
-      projects={getProjectsByPosition(position.id)}
+      projects={projects}
+      projectGroups={projectGroups}
       builds={getBuildsByPosition(position.id)}
       related={related}
       showcase={showcases[position.id]}

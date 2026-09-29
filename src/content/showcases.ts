@@ -65,10 +65,11 @@ export const plannerShowcase = {
 };
 
 /**
- * AI Product Builder: 혼자 Claude Code로 만드는 흐름 (처음 → 배포)
- * 갈래(branches)의 예시는 각 저장소 코드로 확인한 것만 적습니다:
- * Supabase(devtier · Podo-Wiki package.json), GitHub Actions cron(incar_stock daily-collect · devtier batch),
- * GitHub Actions CI(diet-saju ci.yml), Expo EAS(Podo-Wiki/mobile).
+ * AI Product Builder: Claude Code Building Loop (7단계)
+ * 갈래(branches)의 예시는 각 저장소 코드 · 배포 주소로 확인한 것만 적습니다:
+ * Vercel(각 프로젝트 서비스 링크), Supabase(devtier · Podo-Wiki package.json),
+ * GitHub Actions cron(incar_stock daily-collect · devtier batch), GitHub Actions CI(diet-saju ci.yml),
+ * Expo EAS(Podo-Wiki/mobile), 공개 데모(/demo/*).
  */
 type Owner = "me" | "claude" | "both";
 type Example = { title: string; slug: string };
@@ -82,61 +83,80 @@ const ex = {
   stock: { title: "경영진 주가 보고", slug: "incar-stock-report" },
   saju: { title: "다이어트 사주", slug: "diet-saju" },
   coverage: { title: "보장분석", slug: "coverage-analysis" },
+  fa: { title: "위촉 시뮬레이터", slug: "fa-recruit-simulator" },
 };
 
 export const builderShowcase: {
-  flow: { label: string; owner: Owner; text: string; tags: string[]; branches?: Branch[] }[];
+  flow: {
+    label: string;
+    owner: Owner;
+    text: string;
+    tags: string[];
+    branches?: Branch[];
+    /** 단계에서 실제로 쓰는 문서 한 토막 (코드 블록으로 보여줌) */
+    snippet?: string[];
+    /** 동시에 도는 세션 (레인으로 보여줌) */
+    lanes?: string[];
+  }[];
 } = {
   flow: [
     {
-      label: "규칙 문서",
+      label: "기획안 · 프로젝트 세팅",
       owner: "me",
-      text: "코드보다 규칙을 먼저 씁니다. CLAUDE.md 하나를 규칙의 단일 소스로 둡니다.",
-      tags: ["CLAUDE.md"],
+      text: "코드보다 기획안을 먼저 씁니다. CLAUDE.md에 목표 · 규칙 · 구조를 적고, 그 문서를 기준으로 프로젝트를 세팅합니다.",
+      tags: ["CLAUDE.md", "AGENTS.md"],
     },
     {
-      label: "태스크 쪼개기",
-      owner: "me",
-      text: "요청을 TASK-NN으로 나누고 난이도에 맞춰 Opus · Sonnet · Haiku를 붙입니다.",
-      tags: ["docs/TASK.md"],
-    },
-    {
-      label: "에이전트로 개발",
-      owner: "claude",
-      text: "반복 절차는 스킬로, 관점이 다른 일은 서브에이전트로 나눠 동시에 돌립니다.",
-      tags: ["스킬", "서브에이전트"],
-      branches: [
-        { need: "DB가 필요하면", tool: "Supabase", examples: [ex.devtier, ex.wiki] },
-        { need: "정기 실행이 필요하면", tool: "GitHub Actions cron", examples: [ex.stock, ex.devtier] },
-        { need: "외부 데이터가 필요하면", tool: "API 연동 (DART · SEC · CODEF · 토스증권)", examples: [ex.stock, ex.seohak, ex.coverage] },
-        { need: "문장 생성이 필요하면", tool: "Gemini · Claude (계산은 코드로)", examples: [ex.saju, ex.stock] },
-      ],
-    },
-    {
-      label: "멈춤 · 검증",
+      label: "인프라 셋업",
       owner: "both",
-      text: "방향이 갈리는 자리는 제가 통과시키고, 셀 수 있는 것은 스크립트 · 테스트가 봅니다.",
-      tags: ["build · lint", "Vitest"],
+      text: "기획안에 필요한 것만 골라 붙입니다. 쓰지 않을 도구는 처음부터 넣지 않습니다.",
+      tags: ["Vercel", "Supabase", "GitHub Actions"],
       branches: [
-        { need: "테스트를 매번 돌리려면", tool: "GitHub Actions CI", examples: [ex.saju] },
-        { need: "문장을 다른 눈으로 보려면", tool: "GPT 읽기 검사", examples: [ex.cardnews] },
+        { need: "배포", tool: "Vercel", examples: [ex.devtier, ex.saju, ex.stock, ex.coverage] },
+        { need: "DB · 로그인", tool: "Supabase", examples: [ex.devtier, ex.wiki] },
+        { need: "정기 실행", tool: "cron job (GitHub Actions)", examples: [ex.stock, ex.devtier] },
+        { need: "테스트 자동화", tool: "GitHub Actions CI", examples: [ex.saju] },
+        { need: "문장 생성", tool: "Gemini · Claude API (계산은 코드로)", examples: [ex.saju, ex.stock] },
+        { need: "외부 데이터", tool: "API 연동 (DART · SEC · CODEF · 토스증권)", examples: [ex.stock, ex.seohak, ex.coverage] },
+        { need: "앱 빌드", tool: "Expo EAS", examples: [ex.wiki] },
       ],
     },
     {
-      label: "배포",
-      owner: "claude",
-      text: "웹은 Vercel에, 앱은 스토어에 올립니다. 키가 필요한 도구는 로컬에서 돌립니다.",
-      tags: ["Vercel"],
-      branches: [
-        { need: "앱이면", tool: "Expo EAS → App Store · Google Play", examples: [ex.wiki] },
-        { need: "실계좌 · 로컬 전용이면", tool: "로컬 실행 + 공개 데모", examples: [ex.seohak] },
-      ],
+      label: "에이전트 구축",
+      owner: "both",
+      text: "기획안의 역할대로 서브에이전트와 스킬을 만듭니다. 화면 · 문구 · QA처럼 관점이 다른 일을 나눠 맡깁니다.",
+      tags: [".claude/agents", "스킬"],
     },
     {
-      label: "운영 · 회고",
+      label: "TASK.md 생성",
       owner: "me",
-      text: "되돌린 자리를 날짜와 함께 규칙 문서로 올려, 다음 작업이 먼저 읽게 합니다.",
+      text: "요청을 태스크 한 줄로 쪼개고 난이도에 맞는 모델과 에이전트를 붙입니다. 동시에 할 수 있는 태스크는 따로 묶습니다.",
+      tags: ["docs/TASK.md"],
+      snippet: ["- [ ] [TASK-01] (O) 결제 흐름 설계 @ui-builder", "- [ ] [TASK-02] (S) 소개 문구 @content-writer", "- [ ] [TASK-03] (H) 링크 교체"],
+    },
+    {
+      label: "세션 병렬 작업",
+      owner: "claude",
+      text: "파일이 겹치지 않는 태스크는 세션을 나눠 동시에 진행합니다.",
+      tags: ["병렬 세션"],
+      lanes: ["세션 A · TASK-01", "세션 B · TASK-02", "세션 C · TASK-03"],
+    },
+    {
+      label: "QA · 코드리뷰",
+      owner: "both",
+      text: "QA · 코드리뷰 에이전트가 빌드 · 린트 · 반응형을 점검하고, 방향이 갈리는 자리는 제가 통과시킵니다.",
+      tags: ["qa-reviewer", "code-review", "build · lint"],
+      branches: [{ need: "문장을 다른 눈으로 보려면", tool: "GPT 읽기 검사", examples: [ex.cardnews] }],
+    },
+    {
+      label: "지속 개선 · 운영",
+      owner: "me",
+      text: "배포한 뒤에도 같은 루프를 다시 돕니다. 되돌린 자리는 날짜와 함께 규칙 문서로 올려 다음 작업이 먼저 읽게 합니다.",
       tags: ["회고 문서"],
+      branches: [
+        { need: "앱이면", tool: "App Store · Google Play 출시", examples: [ex.wiki] },
+        { need: "실계좌 · 사내용이면", tool: "로컬 · 사내 운영 + 공개 데모", examples: [ex.seohak, ex.coverage, ex.fa] },
+      ],
     },
   ],
 };
