@@ -69,14 +69,18 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
               <p className={cn("text-body-lg font-medium", accent.text)}>{project.subtitle}</p>
             </div>
           </div>
+          {/* 문장마다 줄을 바꿔 한 문장씩 읽히게 합니다. */}
           <Text size="lg" className="max-w-3xl">
-            {project.summary}
+            {project.summary.split(/(?<=[.!?])\s+/).map((sentence) => (
+              <span key={sentence} className="block">
+                {sentence}
+              </span>
+            ))}
           </Text>
           {project.deployment === "local" && (
-            <p className="text-small text-subtle">
-              {project.links?.some((l) => l.href.startsWith("/demo/"))
-                ? t.localWithDemo
-                : t.localNoDemo}
+            <p className="max-w-3xl text-small text-subtle">
+              {project.localNote ??
+                (project.links?.some((l) => l.href.startsWith("/demo/")) ? t.localWithDemo : t.localNoDemo)}
             </p>
           )}
           {project.links && project.links.length > 0 && (

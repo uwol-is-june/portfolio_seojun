@@ -8,6 +8,8 @@ export const seohakGaemiClub: Project = {
   ...ko,
   title: "Seohak Gaemi Club",
   subtitle: "AI US stock research built on four legendary investors' strategies",
+  localNote:
+    "This project runs locally, so I attached a public demo. Only the Toss Securities API that loads the real account uses mock data; the stock reports and their content in the demo are real output from agents I ran myself. Code and docs are on GitHub.",
   summary:
     "I rebuilt a 14.7k-star GitHub open-source tool for Chinese stocks into a US-market version and connected a real brokerage account through the Toss Securities API. Buying its picks with real money returned +21.0% in two weeks.",
   cardPoints: [

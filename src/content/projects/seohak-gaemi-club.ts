@@ -4,6 +4,8 @@ export const seohakGaemiClub: Project = {
   slug: "seohak-gaemi-club",
   title: "서학개미클럽",
   subtitle: "4대 거장 투자 전략 기반, AI 미국장 종목 분석 서비스",
+  localNote:
+    "로컬에서 실행하는 프로젝트라 공개 데모를 이 사이트에 붙였습니다. 실계좌를 불러오는 토스증권 API만 목업 데이터로 바꿨고, 데모 속 종목 보고서와 본문은 제가 직접 에이전트를 돌려 만든 실제 결과물입니다. 코드와 문서는 GitHub에서 볼 수 있습니다.",
   summary:
     "GitHub 14.7k★ 중국장 투자 분석 오픈소스를 미국장 버전으로 다시 만들고, 토스증권 API로 실계좌를 연동했습니다. 추천 종목을 실제로 매수해 2주 만에 수익률 +21.0%를 확인했습니다.",
   cardPoints: [

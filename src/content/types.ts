@@ -192,6 +192,8 @@ export interface Project {
 
   actions: ProcessStep[];
   architecture?: Architecture;
+  /** 로컬 프로젝트 안내 문구를 프로젝트에 맞게 바꿀 때 (없으면 공통 문구) */
+  localNote?: string;
   infra?: Infra;
   /** metrics가 비어 있으면 결과 장을 생략합니다. */
   outcome: { verdict?: string; summary?: string; metrics: Metric[] };

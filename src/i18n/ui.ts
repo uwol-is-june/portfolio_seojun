@@ -68,7 +68,8 @@ const ko = {
   loopSteps: "Claude Code Building Loop 단계",
   loopTools: "쓰는 도구 · 문서",
   loopLanes: "동시에 도는 세션",
-  loopBranches: "필요할 때만 붙이는 도구",
+  loopBranches: "Infra spec",
+  loopKey: "핵심",
   loopHint: "단계에 마우스를 올리거나 눌러 다른 단계를 볼 수 있습니다.",
 
   // 프로젝트 카드 · 배지
@@ -188,7 +189,8 @@ const en: Dict = {
   loopSteps: "Claude Code Building Loop steps",
   loopTools: "Tools · docs",
   loopLanes: "Sessions running in parallel",
-  loopBranches: "Tools I add only when needed",
+  loopBranches: "Infra spec",
+  loopKey: "Key",
   loopHint: "Hover or tap a step to see the others.",
 
   deployed: "Live",

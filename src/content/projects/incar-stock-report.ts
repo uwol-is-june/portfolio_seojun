@@ -83,7 +83,7 @@ export const incarStockReport: Project = {
       },
     ],
     extras: ["로컬 관리자 화면에서 AI 분석 수동 갱신 (FastAPI)"],
-    caption: "incar_stock 저장소 코드 기준",
+    caption: "사내 저장소(비공개) 코드 기준",
   },
   infra: {
     client: [
@@ -98,7 +98,7 @@ export const incarStockReport: Project = {
       { name: "pykrx · DART", note: "주가 · 공시 데이터" },
       { name: "Gemini", note: "수집한 데이터 분석" },
     ],
-    caption: "incar_stock 저장소 기준",
+    caption: "사내 저장소(비공개) 기준",
   },
   outcome: {
     metrics: [
@@ -115,6 +115,5 @@ export const incarStockReport: Project = {
   ],
   links: [
     { label: "대시보드", href: "https://incar-stock.vercel.app" },
-    { label: "GitHub", href: "https://github.com/uwol-is-june/incar_stock" },
   ],
 };

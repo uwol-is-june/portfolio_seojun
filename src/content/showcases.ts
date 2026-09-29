@@ -65,11 +65,12 @@ export const plannerShowcase = {
 };
 
 /**
- * AI Product Builder: Claude Code Building Loop (7단계)
- * 갈래(branches)의 예시는 각 저장소 코드 · 배포 주소로 확인한 것만 적습니다:
+ * AI Product Builder: Claude Code Building Loop (6단계)
+ * 예시 · 에이전트 · 세팅은 각 저장소 코드와 배포 주소로 확인한 것만 적습니다:
  * Vercel(각 프로젝트 서비스 링크), Supabase(devtier · Podo-Wiki package.json),
- * GitHub Actions cron(incar_stock daily-collect · devtier batch), GitHub Actions CI(diet-saju ci.yml),
- * Expo EAS(Podo-Wiki/mobile), 공개 데모(/demo/*).
+ * GitHub Actions cron(경영진 주가 보고 daily-collect · devtier batch), GitHub Actions CI(diet-saju ci.yml),
+ * Expo EAS(Podo-Wiki/mobile), 공개 데모(/demo/*), 폴더별 CLAUDE.md(diet-saju · cardnews-agent),
+ * Stop 훅(seohak-gaemi-club .claude/settings.json), 태스크 3분할(Podo-Wiki TASK_W · TASK_M · TASK_A).
  */
 type Example = { title: string; slug: string };
 type Branch = { need: string; tool: string; examples: Example[] };
@@ -90,26 +91,43 @@ export const builderShowcase: {
     label: string;
     /** 단계 3D 아이콘 (public/icons/loop, Fluent Emoji 3D · MIT) */
     icon: string;
+    /** 가장 중요한 단계면 true (강조 표시) */
+    key?: boolean;
     text: string;
     tags: string[];
+    /** 갈래 카드 묶음의 제목. 없으면 Infra spec */
+    branchesTitle?: string;
     branches?: Branch[];
     /** 단계에서 실제로 쓰는 문서 한 토막 (코드 블록으로 보여줌) */
     snippet?: { title: string; lines: string[] };
     /** 동시에 도는 세션 (레인으로 보여줌) */
     lanes?: string[];
-    /** 이 단계를 왜 하는지 뒷받침하는 외부 자료 (수치 카드 + 출처) */
-    research?: { title: string; stats: { value: string; label: string }[]; sources: { label: string; href: string }[] };
+    /** 나쁜 방식 → 내 방식 비교 */
+    contrast?: { bad: { title: string; points: string[] }; good: { title: string; points: string[] } };
+    /** 프로젝트별로 직접 만든 에이전트 · 스킬 */
+    agents?: { project: Example; items: { name: string; desc: string }[] }[];
+    /** 한 줄 흐름도 (예: AI 코드 → 코드리뷰 에이전트 → QA → 배포) */
+    pipeline?: string[];
+    /** 결론을 받치는 외부 근거 한 줄 */
+    evidence?: { text: string; source: string; href: string };
   }[];
 } = {
   flow: [
     {
       label: "기획안 · 프로젝트 세팅",
       icon: "/icons/loop/plan.webp",
-      text: "코드보다 기획안을 먼저 씁니다. CLAUDE.md에 목표 · 규칙 · 구조를 적고, 그 문서를 기준으로 프로젝트를 세팅합니다.",
-      tags: ["CLAUDE.md", "AGENTS.md"],
+      text: "코드보다 규칙 문서를 먼저 세웁니다. 루트 CLAUDE.md에는 구조 · 경계 · 명령어만 두고, 세부 규칙은 폴더별 문서로 나눠 그 폴더를 고칠 때만 읽게 합니다. 규칙은 한 곳에만 적고 베끼지 않아, 문서끼리 어긋나지 않게 합니다.",
+      tags: ["CLAUDE.md", "AGENTS.md", "settings.json", "hooks"],
       snippet: {
-        title: "CLAUDE.md (이 포트폴리오)",
-        lines: ["# Project", "- 개인 포트폴리오 · Next.js · TypeScript · Tailwind", "- 포지션: PM · Service Planner · AI Product Builder", "", "# Tasks", "- 태스크는 docs/TASK.md에 기록", "- 모델은 난이도에 맞게 (O) · (S) · (H)"],
+        title: "세팅 순서 (여러 저장소 공통)",
+        lines: [
+          "1. CLAUDE.md     구조 · 경계 · 명령어만",
+          "2. 폴더별 규칙   components/ · lib/ · docs/CLAUDE.md",
+          "3. docs/TASK.md  태스크 형식 · 모델 (O)(S)(H)",
+          "4. 검증 게이트   lint · test 수시, build는 커밋 직전",
+          "5. 훅 · 권한     Stop 훅으로 결과물 자동 커밋",
+          "6. 결정 기록     되돌린 이유를 날짜와 함께",
+        ],
       },
     },
     {
@@ -130,55 +148,69 @@ export const builderShowcase: {
     {
       label: "에이전트 구축",
       icon: "/icons/loop/agents.webp",
-      text: "기획안의 역할대로 서브에이전트와 스킬을 만듭니다. 화면 · 문구 · QA처럼 관점이 다른 일을 나눠 맡깁니다.",
-      tags: [".claude/agents", "스킬"],
-      snippet: {
-        title: ".claude/agents (이 포트폴리오)",
-        lines: ["ui-builder       섹션 · 컴포넌트 · 애니메이션", "content-writer   소개 · 프로젝트 문구", "seo-performance  메타데이터 · 성능 · 배포", "qa-reviewer      빌드 · 반응형 · 접근성 점검"],
-      },
+      text: "관점이 다른 일은 에이전트와 스킬로 나눠 맡깁니다. 한 에이전트가 화면 · 문구 · 검수를 다 하면 기준이 섞이기 때문입니다.",
+      tags: [".claude/agents", "스킬", "서브에이전트"],
+      agents: [
+        {
+          project: { title: "이 포트폴리오", slug: "" },
+          items: [
+            { name: "ui-builder", desc: "섹션 · 컴포넌트 · 애니메이션 구현" },
+            { name: "content-writer", desc: "소개 · 프로젝트 문구 (한국어 · 영어)" },
+            { name: "seo-performance", desc: "메타데이터 · OG 이미지 · 성능" },
+            { name: "qa-reviewer", desc: "빌드 · 반응형 · 접근성 점검" },
+          ],
+        },
+        {
+          project: ex.seohak,
+          items: [
+            { name: "/investment-team", desc: "버핏 · 멍거 · 단융핑 · 리루 관점 서브에이전트 4개가 병렬 분석" },
+            { name: "/news-pulse", desc: "주가 급변동 원인을 4개 에이전트가 나눠 탐색" },
+            { name: "/thesis-tracker", desc: "매수 뒤 투자 논제가 유효한지 추적" },
+          ],
+        },
+        {
+          project: ex.cardnews,
+          items: [{ name: "cardnews 스킬", desc: "기획 → 원고 → 검수 → 1080×1350 렌더까지 한 편 제작" }],
+        },
+      ],
     },
     {
-      label: "TASK.md 생성",
-      icon: "/icons/loop/tasks.webp",
-      text: "요청을 태스크 한 줄로 쪼개고 난이도에 맞는 모델과 에이전트를 붙입니다. 동시에 할 수 있는 태스크는 따로 묶습니다.",
-      tags: ["docs/TASK.md"],
+      label: "TASK.md · 병렬 작업",
+      icon: "/icons/loop/parallel.webp",
+      key: true,
+      text: "가장 중요한 단계입니다. 세션만 나눠 병렬로 돌리면 각 세션이 자기 태스크만 보고 같은 파일을 덮어써 충돌이 잦고, 충돌을 푸는 동안 버그와 토큰 낭비가 생깁니다. 그래서 TASK.md에서 먼저 태스크를 쪼개 파일이 겹치지 않는 것끼리 묶고, 묶음마다 세션을 나눠 동시에 돌립니다.",
+      tags: ["docs/TASK.md", "병렬 세션"],
+      contrast: {
+        bad: { title: "세션만 나누면", points: ["같은 파일을 서로 덮어씀", "충돌을 푸느라 버그 · 토큰 낭비"] },
+        good: { title: "TASK.md로 먼저 묶으면", points: ["파일이 겹치지 않는 묶음끼리 병렬", "예) 포도위키: 웹 · 앱 · 공통 태스크를 파일 3개로 분리"] },
+      },
       snippet: {
         title: "docs/TASK.md",
-        lines: ["- [ ] [TASK-01] (O) 결제 흐름 설계 @ui-builder", "- [ ] [TASK-02] (S) 소개 문구 @content-writer", "- [ ] [TASK-03] (H) 링크 교체"],
+        lines: ["### A · 웹 (src/)", "- [ ] [TASK-01] (O) 결제 흐름 @ui-builder", "### B · 앱 (mobile/)", "- [ ] [TASK-02] (S) 알림 문구 @content-writer", "### C · 공통 (docs/)", "- [ ] [TASK-03] (H) 약관 링크 교체"],
       },
-    },
-    {
-      label: "세션 병렬 작업",
-      icon: "/icons/loop/parallel.webp",
-      text: "파일이 겹치지 않는 태스크는 세션을 나눠 동시에 진행합니다.",
-      tags: ["병렬 세션"],
-      lanes: ["세션 A · TASK-01", "세션 B · TASK-02", "세션 C · TASK-03"],
+      lanes: ["세션 A · 웹", "세션 B · 앱", "세션 C · 공통"],
     },
     {
       label: "QA · 코드리뷰",
       icon: "/icons/loop/qa.webp",
-      text: "AI로 코드를 빠르게 만들수록 병목은 리뷰로 옮겨갑니다. 그래서 변경마다 코드리뷰 에이전트를 먼저 돌려 논리 오류를 잡고, 빌드 · 린트 · 반응형은 QA 에이전트가 점검합니다.",
+      text: "AI가 코드를 빠르게 쏟아낼수록 사람이 다 읽을 수 없어 리뷰가 병목이 됩니다. 그래서 저는 변경마다 코드리뷰 에이전트를 적극 활용합니다.",
       tags: ["/code-review", "qa-reviewer", "build · lint"],
-      research: {
-        title: "Anthropic이 사내 PR에 코드리뷰 에이전트를 돌린 결과",
-        stats: [
-          { value: "+200%", label: "1년 새 엔지니어 1인당 코드 산출량. 늘어난 코드를 사람이 다 읽지 못해 리뷰가 병목이 됨" },
-          { value: "16% → 54%", label: "실질적인 리뷰 코멘트를 받은 PR 비율" },
-          { value: "84%", label: "1,000줄 넘는 PR에서 문제를 찾아낸 비율 (평균 7.5건)" },
-          { value: "1% 미만", label: "엔지니어가 틀렸다고 표시한 지적" },
-        ],
-        sources: [
-          { label: "Anthropic · Code Review for Claude Code (2026.03)", href: "https://claude.com/blog/code-review" },
-          { label: "TechCrunch (2026.03.09)", href: "https://techcrunch.com/2026/03/09/anthropic-launches-code-review-tool-to-check-flood-of-ai-generated-code/" },
-        ],
+      pipeline: ["AI가 쓴 코드", "코드리뷰 에이전트 · 논리 오류 · 버그", "QA 에이전트 · 빌드 · 린트 · 반응형", "배포"],
+      evidence: {
+        text: "Anthropic이 사내 PR에 코드리뷰 에이전트를 붙이자, 실질적인 리뷰 코멘트를 받는 PR이 16%에서 54%로 늘었습니다.",
+        source: "Anthropic · 2026.03",
+        href: "https://claude.com/blog/code-review",
       },
     },
     {
       label: "지속 개선 · 운영",
       icon: "/icons/loop/operate.webp",
-      text: "배포한 뒤에도 같은 루프를 다시 돕니다. 되돌린 자리는 날짜와 함께 규칙 문서로 올려 다음 작업이 먼저 읽게 합니다.",
-      tags: ["회고 문서"],
+      text: "배포한 뒤에는 GA4 · Amplitude로 유입 · 전환 지표를 보고, 떨어지는 구간을 찾아 다시 루프를 돕니다. 되돌린 결정은 날짜와 근거를 붙여 규칙 문서에 남겨 다음 작업이 먼저 읽게 합니다.",
+      tags: ["GA4", "Amplitude", "회고 문서"],
+      branchesTitle: "운영 방식",
       branches: [
+        { need: "지표 분석", tool: "GA4 · Amplitude", examples: [] },
+        { need: "서버 지표", tool: "요청 로그 집계 (Vercel)", examples: [ex.saju] },
         { need: "앱이면", tool: "App Store · Google Play 출시", examples: [ex.wiki] },
         { need: "실계좌 · 사내용이면", tool: "로컬 · 사내 운영 + 공개 데모", examples: [ex.seohak, ex.coverage, ex.fa] },
       ],

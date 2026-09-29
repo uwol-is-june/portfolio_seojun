@@ -14,7 +14,7 @@ type Step = (typeof builderShowcase.flow)[number];
 const num = (i: number) => String(i + 1).padStart(2, "0");
 
 /**
- * Building Loop: 큰 흐름 7단계를 가로 한 줄로 보여주고, 고른 단계의 세부 내용을 흐름도 아래 패널에 펼칩니다.
+ * Building Loop: 큰 흐름 6단계를 가로 한 줄로 보여주고, 고른 단계의 세부 내용을 흐름도 아래 패널에 펼칩니다.
  * 단계는 마우스를 올리거나(데스크톱) 탭하거나(모바일) 포커스를 옮기면(키보드 ← →) 바뀝니다.
  * 처음엔 1단계를 펼쳐 두고 패널 최소 높이를 잡아 둬서, 단계를 옮길 때 아래 내용이 들썩이지 않습니다.
  * 탭(tablist) 구조라 스크린리더에서도 단계와 패널이 이어져 읽힙니다. 동작 줄이기 설정은 MotionProvider가 처리합니다.
@@ -73,7 +73,10 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   height={44}
                   className={cn("size-11 transition-transform duration-300 ease-out-expo", selected && "scale-110")}
                 />
-                <span className={cn("text-caption font-semibold", selected ? "text-fg" : "text-subtle")}>{num(i)}</span>
+                <span className="flex items-center gap-1.5">
+                  <span className={cn("text-caption font-semibold", selected ? "text-fg" : "text-subtle")}>{num(i)}</span>
+                  {s.key && <span className="rounded-pill bg-ai/15 px-1.5 text-caption font-semibold text-ai">{t.loopKey}</span>}
+                </span>
                 <span className="text-small font-semibold text-fg text-balance break-keep">{s.label}</span>
               </button>
               {i < flow.length - 1 && (
@@ -100,14 +103,17 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28, ease: easeOutExpo }}
-            className="grid gap-8 p-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:p-8"
+            className="grid grid-cols-1 gap-8 p-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:p-8"
           >
             {/* 왼쪽: 단계 설명 */}
-            <div className="flex flex-col gap-4">
+            <div className="flex min-w-0 flex-col gap-4">
               <div className="flex items-center gap-4">
                 <Image src={step.icon} alt="" width={64} height={64} className="size-16" />
                 <div className="flex flex-col gap-1">
-                  <span className="text-caption font-semibold text-subtle">STEP {num(active)}</span>
+                  <span className="flex items-center gap-2 text-caption font-semibold text-subtle">
+                    STEP {num(active)}
+                    {step.key && <span className="rounded-pill bg-ai/15 px-2 text-ai">{t.loopKey}</span>}
+                  </span>
                   <h3 className="text-h3 font-semibold text-fg break-keep">{step.label}</h3>
                 </div>
               </div>
@@ -122,7 +128,85 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
             </div>
 
             {/* 오른쪽: 예시 (TASK.md 한 줄 · 세션 레인 · 붙이는 도구) */}
-            <div className="flex flex-col gap-3">
+            <div className="flex min-w-0 flex-col gap-3">
+              {step.contrast && (
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {[
+                    { ...step.contrast.bad, mark: "✕", tone: "text-ai" },
+                    { ...step.contrast.good, mark: "✓", tone: "text-startup" },
+                  ].map((c) => (
+                    <li key={c.title} className="flex flex-col gap-2 rounded-sm border border-line bg-bg p-4">
+                      <span className={cn("text-small font-semibold break-keep", c.tone)}>
+                        {c.mark} {c.title}
+                      </span>
+                      <ul className="flex flex-col gap-1">
+                        {c.points.map((p) => (
+                          <li key={p} className="text-small text-muted break-keep">
+                            {p}
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {step.agents && (
+                <ul className="flex flex-col gap-2">
+                  {step.agents.map((a) => (
+                    <li key={a.project.title} className="flex flex-col gap-2 rounded-sm border border-line bg-bg p-4">
+                      {a.project.slug ? (
+                        <Link href={`/projects/${a.project.slug}`} className="text-caption font-semibold text-subtle underline decoration-line-strong underline-offset-4 hover:text-fg">
+                          {a.project.title}
+                        </Link>
+                      ) : (
+                        <span className="text-caption font-semibold text-subtle">{a.project.title}</span>
+                      )}
+                      <dl className="flex flex-col gap-1.5">
+                        {a.items.map((it) => (
+                          <div key={it.name} className="grid gap-0.5 sm:grid-cols-[9.5rem_1fr] sm:gap-3">
+                            <dt className="font-mono text-small text-fg">{it.name}</dt>
+                            <dd className="text-small text-muted break-keep">{it.desc}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {step.pipeline && (
+                <ol className="flex flex-col gap-2 rounded-card border border-line bg-bg p-5" aria-label={step.label}>
+                  {step.pipeline.map((node, j) => {
+                    const [head, ...rest] = node.split(/\s·\s/);
+                    const agent = j > 0 && j < step.pipeline!.length - 1;
+                    return (
+                      <li key={node} className="flex flex-col items-start gap-2">
+                        <span
+                          className={cn(
+                            "flex flex-col rounded-sm border px-3 py-2",
+                            agent ? "border-ai/60 bg-ai/5" : "border-line-strong",
+                          )}
+                        >
+                          <span className="text-small font-semibold text-fg break-keep">{head}</span>
+                          {rest.length > 0 && <span className="text-caption text-muted break-keep">{rest.join(" · ")}</span>}
+                        </span>
+                        {j < step.pipeline!.length - 1 && (
+                          <span aria-hidden className="pl-4 text-subtle">
+                            ↓
+                          </span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ol>
+              )}
+              {step.evidence && (
+                <p className="text-small text-muted break-keep">
+                  {step.evidence.text}{" "}
+                  <a href={step.evidence.href} target="_blank" rel="noreferrer" className="text-subtle underline decoration-line-strong underline-offset-4 hover:text-fg">
+                    {step.evidence.source} ↗
+                  </a>
+                </p>
+              )}
               {step.snippet && (
                 <>
                   <span className="font-mono text-caption font-semibold text-subtle">{step.snippet.title}</span>
@@ -151,7 +235,7 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
               )}
               {step.branches && (
                 <>
-                  <span className="text-caption font-semibold text-subtle uppercase">{t.loopBranches}</span>
+                  <span className="text-caption font-semibold text-subtle uppercase">{step.branchesTitle ?? t.loopBranches}</span>
                   <ul className="grid gap-2 sm:grid-cols-2">
                     {step.branches.map((b) => (
                       <li key={b.tool} className="flex flex-col gap-1.5 rounded-sm border border-line bg-bg p-4">
@@ -169,27 +253,7 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   </ul>
                 </>
               )}
-              {step.research && (
-                <>
-                  <span className="text-caption font-semibold text-subtle break-keep">{step.research.title}</span>
-                  <ul className="grid gap-2 sm:grid-cols-2">
-                    {step.research.stats.map((s) => (
-                      <li key={s.value} className="flex flex-col gap-1.5 rounded-sm border border-line bg-bg p-4">
-                        <span className="text-h3 font-semibold text-fg">{s.value}</span>
-                        <span className="text-small text-muted break-keep">{s.label}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="flex flex-wrap gap-x-3 gap-y-1 text-caption text-subtle">
-                    {step.research.sources.map((src) => (
-                      <a key={src.href} href={src.href} target="_blank" rel="noreferrer" className="underline decoration-line-strong underline-offset-4 hover:text-fg">
-                        {src.label} ↗
-                      </a>
-                    ))}
-                  </p>
-                </>
-              )}
-              {!step.snippet && !step.lanes && !step.branches && !step.research && (
+              {!step.snippet && !step.lanes && !step.branches && !step.agents && !step.pipeline && (
                 <p className="text-small text-subtle">{t.loopHint}</p>
               )}
             </div>
