@@ -124,4 +124,19 @@ export const seohakGaemiClub: Project = {
     l[1],
     { ...l[2], label: "Original open source" },
   ],
+  infra: {
+    client: [
+      { name: "Claude Code", note: "Analysis skills and 4 subagents" },
+      { name: "Next.js dashboard", note: "Local dashboard for reports and holdings" },
+    ],
+    runtime: [
+      { name: "Local PC", note: "npm run dev and Python tools" },
+    ],
+    data: [
+      { name: "reports · data files", note: "Report markdown and calls.jsonl pick log" },
+      { name: "SEC EDGAR · Yahoo Finance", note: "Financials and prices" },
+      { name: "Toss Securities Open API", note: "Real-account holdings and FX" },
+    ],
+    caption: "Based on the seohak-gaemi-club repo · runs locally with no external server",
+  },
 };

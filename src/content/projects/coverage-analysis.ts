@@ -79,6 +79,18 @@ export const coverageAnalysis: Project = {
     ],
     caption: "incar_ca_test 저장소 코드 기준 (비공개 저장소)",
   },
+  infra: {
+    client: [
+      { name: "Next.js 16 웹", note: "보험 연결 · 보장분석 대시보드" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "웹 · API 라우트(/api/codef) 배포" },
+    ],
+    data: [
+      { name: "CODEF API", note: "내보험다보여 계약 조회" },
+    ],
+    caption: "사내 저장소(비공개) · 배포 사이트에서 확인된 범위",
+  },
   outcome: { metrics: [] },
   galleryLayout: "wide",
   gallery: [
@@ -89,6 +101,6 @@ export const coverageAnalysis: Project = {
   ],
   links: [
     { label: "데모 열기", href: "/demo/coverage" },
-    { label: "서비스", href: "https://incar-ca-test.vercel.app" },
+    { label: "Web", href: "https://incar-ca-test.vercel.app" },
   ],
 };

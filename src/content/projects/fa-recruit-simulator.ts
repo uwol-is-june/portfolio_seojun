@@ -92,6 +92,18 @@ export const faRecruitSimulator: Project = {
     extras: ["말소 셀프 가이드", "협회등록 예상 캘린더", "사용법 가이드", "진단 결과 브라우저 저장 (localStorage)"],
     caption: "fa-recruit-simulator 저장소 코드 기준 (비공개 저장소)",
   },
+  infra: {
+    client: [
+      { name: "Next.js 16 웹", note: "개인 · 단체 진단 화면, 비밀번호 잠금" },
+    ],
+    runtime: [],
+    data: [
+      { name: "Supabase", note: "원본에서 연결 (공개 데모에서는 제외)" },
+      { name: "브라우저 저장소", note: "단체 진단 명단 보관" },
+      { name: "엑셀 · PNG 내보내기", note: "xlsx-js-style · 결과 이미지" },
+    ],
+    caption: "사내 저장소(비공개)에서 확인된 범위 · 배포 환경은 사내 비공개",
+  },
   outcome: {
     metrics: [
       { label: "진단 모드", value: "2가지", description: "개인 · 단체(최대 50명)" },

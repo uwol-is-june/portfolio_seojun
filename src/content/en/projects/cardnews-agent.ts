@@ -120,4 +120,20 @@ export const cardnewsAgent: Project = {
     "Reading feed views by topic type, \"action\" topics averaged 254 views versus 160 for \"standards\" topics. Now I check whether topic types repeat before proposing new ones.",
   ],
   links: [{ ...l[0], label: "Open demo" }, l[1], l[2]],
+  infra: {
+    client: [
+      { name: "Claude Code", note: "Planning and writing skills" },
+      { name: "Instagram", note: "Where finished card news is posted" },
+    ],
+    runtime: [
+      { name: "Local PC · Node.js", note: "Render and copy-check scripts" },
+      { name: "Headless Edge", note: "Renders 1080×1350 PNGs" },
+    ],
+    data: [
+      { name: "episodes/ files", note: "cards.json and PNGs per episode" },
+      { name: "Pexels API", note: "Photo search" },
+      { name: "Codex CLI (GPT)", note: "Read-through review via ChatGPT login" },
+    ],
+    caption: "Based on the cardnews-agent repo · runs locally with no server",
+  },
 };

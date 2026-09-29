@@ -127,6 +127,21 @@ export const seohakGaemiClub: Project = {
     extras: ["비밀번호 로그인 뒤에서만 금융 데이터 제공", "토스 API가 IP 허용목록을 요구해 로컬 전용으로 운영"],
     caption: "seohak-gaemi-club 저장소 코드 기준 · 스킬 12개 · Python 도구 · Next.js 대시보드",
   },
+  infra: {
+    client: [
+      { name: "Claude Code", note: "분석 스킬 · 서브에이전트 4개" },
+      { name: "Next.js 대시보드", note: "로컬에서 리포트 · 보유 종목 확인" },
+    ],
+    runtime: [
+      { name: "로컬 PC", note: "npm run dev · Python 도구" },
+    ],
+    data: [
+      { name: "reports · data 파일", note: "리포트 md · 추천 기록 calls.jsonl" },
+      { name: "SEC EDGAR · Yahoo Finance", note: "재무제표 · 시세" },
+      { name: "토스증권 Open API", note: "실계좌 보유 종목 · 환율" },
+    ],
+    caption: "seohak-gaemi-club 저장소 기준 · 외부 서버 없이 로컬에서 실행",
+  },
   outcome: {
     verdict: "추천 종목 실투자로 2주 만에 수익률 +21.0%",
     metrics: [

@@ -40,5 +40,20 @@ export const dietSaju: Project = {
     ],
     caption: "Based on the diet-saju repo",
   },
-  links: [{ ...l[0], label: "Service" }, l[1]],
+  links: [{ ...l[0], label: "Web" }, l[1]],
+  infra: {
+    client: [
+      { name: "Next.js web", note: "Input and reading screens" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "Hosts the web app and API routes; the Gemini key stays on the server" },
+      { name: "GitHub Actions", note: "Lint, typecheck, tests, and build on every push" },
+    ],
+    data: [
+      { name: "Gemini API", note: "Writes the reading" },
+      { name: "Upstash Redis", note: "View and like counters per reading type" },
+      { name: "No input storage", note: "Birth data is handled in memory only" },
+    ],
+    caption: "Based on the diet-saju repo and live site",
+  },
 };

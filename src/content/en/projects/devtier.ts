@@ -65,5 +65,20 @@ export const devtier: Project = {
     { ...g[0], alt: "DevTier start screen", caption: "Start · measure by GitHub username" },
     { ...g[1], alt: "DevTier result: tier and power score", caption: "Result · tier and power score" },
   ],
-  links: [{ ...l[0], label: "Service" }, l[1]],
+  links: [{ ...l[0], label: "Web" }, l[1]],
+  infra: {
+    client: [
+      { name: "Next.js web", note: "Rankings, results, and comparisons" },
+      { name: "SVG badge", note: "Tier image for your README" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "Hosts the web app and API routes" },
+      { name: "GitHub Actions", note: "Weekly collection, scoring, and tier batch" },
+    ],
+    data: [
+      { name: "Supabase", note: "Postgres and GitHub login (Auth)" },
+      { name: "GitHub GraphQL API", note: "Contributions, stars, and PR data" },
+    ],
+    caption: "Based on the devtier repo and live site",
+  },
 };

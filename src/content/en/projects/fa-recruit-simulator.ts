@@ -85,4 +85,16 @@ export const faRecruitSimulator: Project = {
     { ...g[7], alt: "Mode selection screen", caption: "Mode selection · individual / batch" },
   ],
   links: [{ ...(ko.links?.[0] ?? { href: "/demo/fa-recruit" }), label: "Open demo" }],
+  infra: {
+    client: [
+      { name: "Next.js 16 web", note: "Individual and batch diagnosis, password-locked" },
+    ],
+    runtime: [],
+    data: [
+      { name: "Supabase", note: "Connected in the original (removed from the public demo)" },
+      { name: "Browser storage", note: "Keeps the batch candidate list" },
+      { name: "Excel · PNG export", note: "xlsx-js-style and result images" },
+    ],
+    caption: "Only what's confirmed from the private repo · hosting is internal",
+  },
 };

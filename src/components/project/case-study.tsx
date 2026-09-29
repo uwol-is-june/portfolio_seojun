@@ -8,11 +8,11 @@ import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
 import type { Evidence, ImageAsset, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
 import { getT } from "@/i18n/server";
-import { affiliationLabel } from "@/lib/affiliation";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
 import ArchitectureDiagram from "./architecture-diagram";
 import BackLink from "./back-link";
+import InfraDiagram from "./infra-diagram";
 import FlowCompare from "./flow-compare";
 
 type CaseStudyProps = {
@@ -27,12 +27,8 @@ type CaseStudyProps = {
 export default function CaseStudy({ project, positions }: CaseStudyProps) {
   const t = getT();
   const accent = categories[project.category];
-  const meta = [
-    { label: "Role", value: project.role },
-    { label: "Period", value: project.period },
-    { label: "Organization", value: `${affiliationLabel(project.affiliation, t)} · ${project.organization}` },
-    { label: "Team", value: project.team?.map((m) => `${m.role} ${m.count}`).join(" · ") },
-  ].filter((m): m is { label: string; value: string } => Boolean(m.value));
+  // 상단 메타는 팀 구성만 (역할 · 기간 · 소속 · 하이라이트는 카드와 본문에서 드러나 뺐습니다)
+  const team = project.team?.map((m) => `${m.role} ${m.count}`).join(" · ");
 
   // 가설 · 지표가 없는 프로젝트는 문제 카드만 한 줄로
   const hasHypothesis = Boolean(project.hypothesis || project.metrics);
@@ -92,22 +88,12 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
               ))}
             </div>
           )}
-          <dl className="grid grid-cols-1 gap-x-6 gap-y-5 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
-            {meta.map((m) => (
-              <div key={m.label} className="flex flex-col gap-1">
-                <dt className="text-caption uppercase text-subtle">{m.label}</dt>
-                <dd className="text-small text-fg">{m.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <ul className="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2" aria-label={t.keyResults}>
-            {project.highlights.map((h) => (
-              <li key={h} className="flex gap-3 bg-bg p-5 text-small text-fg sm:odd:last:col-span-2 md:text-body">
-                <span aria-hidden className={cn("mt-2 size-1.5 shrink-0 rounded-pill", accent.bg)} />
-                {h}
-              </li>
-            ))}
-          </ul>
+          {team && (
+            <dl className="flex flex-col gap-1 border-t border-line pt-8">
+              <dt className="text-caption uppercase text-subtle">Team</dt>
+              <dd className="text-small text-fg">{team}</dd>
+            </dl>
+          )}
         </Container>
 
         {project.thumbnail && (
@@ -186,6 +172,13 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           {project.architecture && (
             <Chapter number={nextChapter()} label="Architecture" title={t.chArchitecture}>
               <ArchitectureDiagram architecture={project.architecture} />
+            </Chapter>
+          )}
+
+          {/* Infrastructure: 배포 · DB · 외부 API */}
+          {project.infra && (
+            <Chapter number={nextChapter()} label="Infrastructure" title={t.chInfra}>
+              <InfraDiagram infra={project.infra} />
             </Chapter>
           )}
 

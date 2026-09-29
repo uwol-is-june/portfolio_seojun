@@ -59,9 +59,24 @@ export const dietSaju: Project = {
     ],
     caption: "diet-saju 저장소 코드 기준",
   },
+  infra: {
+    client: [
+      { name: "Next.js 웹", note: "입력 · 사주 결과 화면" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "웹 · API 라우트 배포, Gemini 키는 서버에만" },
+      { name: "GitHub Actions", note: "push마다 린트 · 타입 · 테스트 · 빌드" },
+    ],
+    data: [
+      { name: "Gemini API", note: "해석 문장 생성" },
+      { name: "Upstash Redis", note: "유형별 조회수 · 좋아요 카운터" },
+      { name: "입력값 미저장", note: "생년월일시는 메모리에서만 처리" },
+    ],
+    caption: "diet-saju 저장소 · 배포 사이트 기준",
+  },
   outcome: { metrics: [] },
   links: [
-    { label: "서비스", href: "https://diet-saju.vercel.app" },
+    { label: "Web", href: "https://diet-saju.vercel.app" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/diet-saju" },
   ],
 };

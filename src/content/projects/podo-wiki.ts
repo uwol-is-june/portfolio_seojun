@@ -51,6 +51,20 @@ export const podoWiki: Project = {
     ],
     caption: "Podo-Wiki 저장소 코드 기준",
   },
+  infra: {
+    client: [
+      { name: "Next.js 웹", note: "문서 편집(Tiptap) · 열람" },
+      { name: "iOS · Android 앱", note: "Expo · 열람 · 검색 · 북마크" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "웹 배포 · wiki.podo-store.com" },
+      { name: "EAS Build · Submit", note: "앱 빌드 · 스토어 제출" },
+    ],
+    data: [
+      { name: "Supabase", note: "Postgres · 이메일 로그인 · 이미지 저장소" },
+    ],
+    caption: "Podo-Wiki 저장소 · 배포 사이트 기준",
+  },
   outcome: { metrics: [] },
   gallery: [
     { src: "/projects/podo-wiki/screen-home.webp", alt: "포도위키 앱 홈 화면: 공연단체 · 최근 변경 · 자주 묻는 질문", caption: "홈 · 공연단체와 최근 변경" },
@@ -60,7 +74,7 @@ export const podoWiki: Project = {
     { src: "/projects/podo-wiki/screen-diff.webp", alt: "포도위키 앱 버전 비교 화면: 이전 버전과 새 버전의 변경 내용", caption: "버전 비교(diff)" },
   ],
   links: [
-    { label: "서비스", href: "https://wiki.podo-store.com" },
+    { label: "Web", href: "https://wiki.podo-store.com" },
     { label: "App Store", href: "https://apps.apple.com/kr/app/id6790099095" },
     { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.podowiki.app" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/Podo-Wiki" },

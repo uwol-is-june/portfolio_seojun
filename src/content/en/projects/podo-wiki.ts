@@ -42,5 +42,19 @@ export const podoWiki: Project = {
     { ...g[3], alt: "Podo Wiki app table of contents", caption: "Table of contents" },
     { ...g[4], alt: "Podo Wiki app version diff between an older and newer revision", caption: "Version diff" },
   ],
-  links: [{ ...l[0], label: "Service" }, ...l.slice(1)],
+  links: [{ ...l[0], label: "Web" }, ...l.slice(1)],
+  infra: {
+    client: [
+      { name: "Next.js web", note: "Editing (Tiptap) and reading" },
+      { name: "iOS · Android apps", note: "Expo: reading, search, bookmarks" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "Hosts the web app at wiki.podo-store.com" },
+      { name: "EAS Build · Submit", note: "Builds the apps and submits them to the stores" },
+    ],
+    data: [
+      { name: "Supabase", note: "Postgres, email login, and image storage" },
+    ],
+    caption: "Based on the Podo-Wiki repo and live site",
+  },
 };

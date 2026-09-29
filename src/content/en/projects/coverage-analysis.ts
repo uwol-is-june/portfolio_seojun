@@ -64,6 +64,18 @@ export const coverageAnalysis: Project = {
   ],
   links: [
     { ...l[0], label: "Open demo" },
-    { ...l[1], label: "Service" },
+    { ...l[1], label: "Web" },
   ],
+  infra: {
+    client: [
+      { name: "Next.js 16 web", note: "Insurance connection and coverage dashboard" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "Hosts the web app and /api/codef routes" },
+    ],
+    data: [
+      { name: "CODEF API", note: "Looks up policies via the national insurance registry" },
+    ],
+    caption: "Only what's confirmed from the private repo and live site",
+  },
 };

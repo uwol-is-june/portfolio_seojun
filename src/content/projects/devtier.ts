@@ -61,6 +61,21 @@ export const devtier: Project = {
     extras: ["업적 시스템", "한국어 · 영어"],
     caption: "devtier 저장소 코드 기준",
   },
+  infra: {
+    client: [
+      { name: "Next.js 웹", note: "랭킹 · 결과 · 비교 화면" },
+      { name: "SVG 뱃지", note: "README에 붙는 티어 이미지" },
+    ],
+    runtime: [
+      { name: "Vercel", note: "웹 · API 라우트 배포" },
+      { name: "GitHub Actions", note: "주 1회 수집 · 점수 · 티어 배치" },
+    ],
+    data: [
+      { name: "Supabase", note: "Postgres · GitHub 로그인(Auth)" },
+      { name: "GitHub GraphQL API", note: "잔디 · 스타 · PR 데이터" },
+    ],
+    caption: "devtier 저장소 · 배포 사이트 기준",
+  },
   outcome: {
     metrics: [
       { label: "수집한 한국 개발자", value: "2,742명", description: "GitHub Actions 주간 배치 · 배포 사이트 기준" },
@@ -74,7 +89,7 @@ export const devtier: Project = {
     { src: "/projects/devtier/screen-result.webp", alt: "DevTier 결과 화면: 티어와 전투력 점수", caption: "결과 · 티어와 전투력" },
   ],
   links: [
-    { label: "서비스", href: "https://devtier-brown.vercel.app" },
+    { label: "Web", href: "https://devtier-brown.vercel.app" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/devtier" },
   ],
 };

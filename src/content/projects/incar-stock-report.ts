@@ -85,6 +85,21 @@ export const incarStockReport: Project = {
     extras: ["로컬 관리자 화면에서 AI 분석 수동 갱신 (FastAPI)"],
     caption: "incar_stock 저장소 코드 기준",
   },
+  infra: {
+    client: [
+      { name: "정적 대시보드", note: "HTML · Chart.js 주가 보고 화면" },
+    ],
+    runtime: [
+      { name: "GitHub Actions", note: "평일 16:10 수집 · 리포트 커밋" },
+      { name: "Vercel", note: "대시보드 배포 · AI 갱신 트리거 함수" },
+    ],
+    data: [
+      { name: "저장소 JSON", note: "DB 대신 reports/에 커밋" },
+      { name: "pykrx · DART", note: "주가 · 공시 데이터" },
+      { name: "Gemini", note: "수집한 데이터 분석" },
+    ],
+    caption: "incar_stock 저장소 기준",
+  },
   outcome: {
     metrics: [
       { label: "보고 업무 절감", value: "연 16 영업일", description: "약 410만 원" },

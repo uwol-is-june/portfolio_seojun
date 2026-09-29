@@ -117,6 +117,24 @@ export interface Architecture {
   extras?: string[];
 }
 
+/** 인프라 구성 요소 하나 (예: Vercel · 웹과 API 라우트 배포) */
+export interface InfraNode {
+  name: string;
+  /** 이 프로젝트에서 맡은 역할 */
+  note?: string;
+}
+
+/**
+ * 인프라 구조: 사용자 화면 → 실행 · 배포 → 데이터 · 외부 API 세 층.
+ * 저장소 · 배포 설정에서 확인한 것만 적고, 비어 있는 층은 그리지 않습니다.
+ */
+export interface Infra {
+  client: InfraNode[];
+  runtime: InfraNode[];
+  data: InfraNode[];
+  caption?: string;
+}
+
 /** 결과 → 실패 분석 → 인사이트 → 개선 액션 → 재결과 */
 export interface Iteration {
   /** 1차 결과 요약 (예: "핵심 가설 검증 실패") */
@@ -174,6 +192,7 @@ export interface Project {
 
   actions: ProcessStep[];
   architecture?: Architecture;
+  infra?: Infra;
   /** metrics가 비어 있으면 결과 장을 생략합니다. */
   outcome: { verdict?: string; summary?: string; metrics: Metric[] };
   iterations?: Iteration[];

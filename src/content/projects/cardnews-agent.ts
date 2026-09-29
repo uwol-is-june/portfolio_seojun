@@ -96,6 +96,22 @@ export const cardnewsAgent: Project = {
     ],
     caption: "cardnews-agent 저장소 코드 기준 · 로컬에서 실행하는 도구",
   },
+  infra: {
+    client: [
+      { name: "Claude Code", note: "기획 · 원고 작성 스킬" },
+      { name: "Instagram", note: "완성한 카드뉴스 게시" },
+    ],
+    runtime: [
+      { name: "로컬 PC · Node.js", note: "렌더 · 문안 검사 스크립트" },
+      { name: "Headless Edge", note: "1080×1350 PNG 렌더" },
+    ],
+    data: [
+      { name: "episodes/ 파일", note: "회차별 cards.json · PNG" },
+      { name: "Pexels API", note: "카드 사진 검색" },
+      { name: "Codex CLI (GPT)", note: "읽기 검수 · ChatGPT 로그인" },
+    ],
+    caption: "cardnews-agent 저장소 기준 · 서버 없이 로컬에서 실행",
+  },
   outcome: {
     verdict: "'다시' 인스타그램 카드뉴스 31편 운영",
     metrics: [

@@ -70,4 +70,19 @@ export const incarStockReport: Project = {
     { ...g[2], alt: "AI analysis tab: price · investors · volume · market comparison · overall", caption: "AI analysis · 5-part stock analysis" },
   ],
   links: [{ ...(ko.links?.[0] ?? { href: "" }), label: "Dashboard" }, ...(ko.links?.slice(1) ?? [])],
+  infra: {
+    client: [
+      { name: "Static dashboard", note: "Static HTML stock report with Chart.js" },
+    ],
+    runtime: [
+      { name: "GitHub Actions", note: "Collects at 16:10 on weekdays and commits the report" },
+      { name: "Vercel", note: "Hosts the dashboard and a function that triggers AI refresh" },
+    ],
+    data: [
+      { name: "JSON in the repo", note: "Committed to reports/ instead of a database" },
+      { name: "pykrx · DART", note: "Stock prices and disclosures" },
+      { name: "Gemini", note: "Analyzes the collected data" },
+    ],
+    caption: "Based on the incar_stock repo",
+  },
 };
