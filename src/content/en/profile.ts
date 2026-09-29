@@ -10,6 +10,10 @@ export const profile: Profile = {
     "I planned products such as Podo Store and Podo Ticket and led every stage from MVP to launch and early growth. Following a problem → hypothesis → metrics → data and VOC validation process, I won KRW 24.9M in startup grants, an excellence award at the Youth Arts Startup Festa Demo Day, and real revenue of about KRW 1.6M.",
     "Now I've picked up AI to go further. I rebuilt a 14.7k-star GitHub open-source project into a service connected to a real brokerage account, validated its stock picks with real money (+21.0% return), and keep building AI products.",
   ],
+  aiBio: [
+    "I love collaborating enough to have founded a startup, and now I've picked up AI to go further.",
+    "As an AI PM at Incar Financial Service's AI Lab, I build and ship the services I plan with Claude Code, then validate them by actually using them.",
+  ],
   contact: { ...ko.contact, address: "9 Soha-ro, Gwangmyeong-si, Gyeonggi-do, Korea" },
   portrait: ko.portrait && { ...ko.portrait, alt: "Portrait of Seo Jun" },
   timeline: [

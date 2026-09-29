@@ -52,6 +52,13 @@ export const podoWiki: Project = {
     caption: "Podo-Wiki 저장소 코드 기준",
   },
   outcome: { metrics: [] },
+  gallery: [
+    { src: "/projects/podo-wiki/screen-home.webp", alt: "포도위키 앱 홈 화면: 공연단체 · 최근 변경 · 자주 묻는 질문", caption: "홈 · 공연단체와 최근 변경" },
+    { src: "/projects/podo-wiki/screen-search.webp", alt: "포도위키 앱 문서 검색 화면", caption: "문서 검색" },
+    { src: "/projects/podo-wiki/screen-document.webp", alt: "포도위키 앱 문서 보기 화면: 광운극예술연구회 문서", caption: "문서 보기" },
+    { src: "/projects/podo-wiki/screen-toc.webp", alt: "포도위키 앱 문서 목차 화면", caption: "문서 목차" },
+    { src: "/projects/podo-wiki/screen-diff.webp", alt: "포도위키 앱 버전 비교 화면: 이전 버전과 새 버전의 변경 내용", caption: "버전 비교(diff)" },
+  ],
   links: [
     { label: "서비스", href: "https://wiki.podo-store.com" },
     { label: "App Store", href: "https://apps.apple.com/kr/app/id6790099095" },

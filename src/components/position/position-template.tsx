@@ -26,6 +26,8 @@ type PositionTemplateProps = {
   related?: { positions: Position[]; projects: Project[] };
   /** 포지션마다 다른 강조 섹션 */
   showcase?: React.ReactNode;
+  /** 소개 바로 아래에 놓는 프로필 블록 (AI Product Builder) */
+  profile?: React.ReactNode;
 };
 
 /**
@@ -104,7 +106,7 @@ function ProjectList({ projects, showCategory, start = 0 }: { projects: Project[
   );
 }
 
-export default function PositionTemplate({ position, projects, projectGroups, builds = [], related, showcase }: PositionTemplateProps) {
+export default function PositionTemplate({ position, projects, projectGroups, builds = [], related, showcase, profile }: PositionTemplateProps) {
   const t = getT();
   // 프로젝트가 모두 같은 구분이면(예: AI Product Builder는 전부 AI) 구분 칩이 정보가 없어 숨깁니다.
   const showCategory = new Set(projects.map((p) => p.category)).size > 1;
@@ -139,6 +141,7 @@ export default function PositionTemplate({ position, projects, projectGroups, bu
         ) : (
           <p className="max-w-3xl text-h3 font-medium text-fg text-balance">{position.tagline}</p>
         )}
+        {profile}
       </Container>
 
       {showcase}

@@ -232,6 +232,8 @@ export interface Profile {
   /** 홈과 메타 description에 쓰는 한 줄 소개 */
   headline: string;
   bio: string[];
+  /** AI Product Builder 페이지 프로필 블록에 쓰는 AI 관련 소개 */
+  aiBio: string[];
   contact: { birth: string; address: string; email: string; phone: string };
   portrait?: ImageAsset;
   timeline: TimelineItem[];

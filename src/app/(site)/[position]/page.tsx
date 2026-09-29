@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import BuilderProfile from "@/components/position/builder-profile";
 import BuilderShowcase from "@/components/position/builder-showcase";
 import PlannerShowcase from "@/components/position/planner-showcase";
 import PmShowcase from "@/components/position/pm-showcase";
@@ -64,6 +65,7 @@ export default async function PositionPage(props: PageProps<"/[position]">) {
       builds={getBuildsByPosition(position.id)}
       related={related}
       showcase={showcases[position.id]}
+      profile={isAi ? <BuilderProfile /> : undefined}
     />
   );
 }

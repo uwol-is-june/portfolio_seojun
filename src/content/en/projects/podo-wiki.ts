@@ -3,6 +3,7 @@ import type { Project } from "../../types";
 
 const s = ko.architecture?.stages ?? [];
 const l = ko.links ?? [];
+const g = ko.gallery ?? [];
 
 export const podoWiki: Project = {
   ...ko,
@@ -34,5 +35,12 @@ export const podoWiki: Project = {
     ],
     caption: "Based on the Podo-Wiki repo",
   },
+  gallery: [
+    { ...g[0], alt: "Podo Wiki app home: theater companies, recent changes, and FAQ", caption: "Home · companies and recent changes" },
+    { ...g[1], alt: "Podo Wiki app document search", caption: "Search" },
+    { ...g[2], alt: "Podo Wiki app document view: Kwangwoon Theater Club page", caption: "Document view" },
+    { ...g[3], alt: "Podo Wiki app table of contents", caption: "Table of contents" },
+    { ...g[4], alt: "Podo Wiki app version diff between an older and newer revision", caption: "Version diff" },
+  ],
   links: [{ ...l[0], label: "Service" }, ...l.slice(1)],
 };

@@ -23,7 +23,8 @@ export default function ProjectCard({ project, index, size = "default", showCate
   const large = size === "large";
   const t = getT();
   // 카드 전체는 제목 링크를 늘려 덮고(stretched link), 바로가기 버튼은 그 위에 따로 둡니다.
-  const links = project.links?.slice(0, 2) ?? [];
+  // 링크는 모두 보여주고(예: 포도위키 서비스 · App Store · Google Play · GitHub), 많으면 버튼 단위로 줄바꿈합니다.
+  const links = project.links ?? [];
   return (
     <article
       className={cn(
