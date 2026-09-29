@@ -35,10 +35,10 @@ export default function ArchitectureDiagram({ architecture }: { architecture: Ar
                   <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
                   <span className="text-caption text-subtle">{kind.label}</span>
                 </div>
-                <p className="text-body font-semibold text-fg">{stage.title}</p>
+                <p className="text-body font-semibold text-fg text-balance">{stage.title}</p>
                 <ul className="flex flex-col gap-1.5">
                   {stage.items.map((item) => (
-                    <li key={item} className="text-small text-muted">
+                    <li key={item} className="text-small text-muted text-balance">
                       {item}
                     </li>
                   ))}
@@ -46,7 +46,7 @@ export default function ArchitectureDiagram({ architecture }: { architecture: Ar
                 {stage.tech && (
                   <ul className="mt-auto flex flex-wrap gap-1.5 pt-1">
                     {stage.tech.map((t) => (
-                      <li key={t} className="rounded-sm bg-surface-raised px-2 py-0.5 font-mono text-caption text-fg">
+                      <li key={t} className="rounded-sm bg-surface-raised px-2 py-0.5 font-mono text-caption text-fg text-balance">
                         {t}
                       </li>
                     ))}

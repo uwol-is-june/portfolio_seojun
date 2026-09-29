@@ -73,7 +73,7 @@ function Node({ node }: { node: FlowNode }) {
         {node.branches.map((b) => (
           <li key={b.condition} className="flex flex-col gap-1 rounded-sm bg-surface-raised px-3 py-2">
             <span className="text-caption text-subtle">{b.condition}</span>
-            <span className="text-small text-fg">{b.label}</span>
+            <span className="text-small text-fg text-balance">{b.label}</span>
           </li>
         ))}
       </ul>

@@ -71,7 +71,6 @@ export const plannerShowcase = {
  * GitHub Actions cron(incar_stock daily-collect · devtier batch), GitHub Actions CI(diet-saju ci.yml),
  * Expo EAS(Podo-Wiki/mobile), 공개 데모(/demo/*).
  */
-type Owner = "me" | "claude" | "both";
 type Example = { title: string; slug: string };
 type Branch = { need: string; tool: string; examples: Example[] };
 
@@ -91,7 +90,6 @@ export const builderShowcase: {
     label: string;
     /** 단계 3D 아이콘 (public/icons/loop, Fluent Emoji 3D · MIT) */
     icon: string;
-    owner: Owner;
     text: string;
     tags: string[];
     branches?: Branch[];
@@ -99,13 +97,14 @@ export const builderShowcase: {
     snippet?: { title: string; lines: string[] };
     /** 동시에 도는 세션 (레인으로 보여줌) */
     lanes?: string[];
+    /** 이 단계를 왜 하는지 뒷받침하는 외부 자료 (수치 카드 + 출처) */
+    research?: { title: string; stats: { value: string; label: string }[]; sources: { label: string; href: string }[] };
   }[];
 } = {
   flow: [
     {
       label: "기획안 · 프로젝트 세팅",
       icon: "/icons/loop/plan.webp",
-      owner: "me",
       text: "코드보다 기획안을 먼저 씁니다. CLAUDE.md에 목표 · 규칙 · 구조를 적고, 그 문서를 기준으로 프로젝트를 세팅합니다.",
       tags: ["CLAUDE.md", "AGENTS.md"],
       snippet: {
@@ -116,7 +115,6 @@ export const builderShowcase: {
     {
       label: "인프라 셋업",
       icon: "/icons/loop/infra.webp",
-      owner: "both",
       text: "기획안에 필요한 것만 골라 붙입니다. 쓰지 않을 도구는 처음부터 넣지 않습니다.",
       tags: ["Vercel", "Supabase", "GitHub Actions"],
       branches: [
@@ -132,7 +130,6 @@ export const builderShowcase: {
     {
       label: "에이전트 구축",
       icon: "/icons/loop/agents.webp",
-      owner: "both",
       text: "기획안의 역할대로 서브에이전트와 스킬을 만듭니다. 화면 · 문구 · QA처럼 관점이 다른 일을 나눠 맡깁니다.",
       tags: [".claude/agents", "스킬"],
       snippet: {
@@ -143,7 +140,6 @@ export const builderShowcase: {
     {
       label: "TASK.md 생성",
       icon: "/icons/loop/tasks.webp",
-      owner: "me",
       text: "요청을 태스크 한 줄로 쪼개고 난이도에 맞는 모델과 에이전트를 붙입니다. 동시에 할 수 있는 태스크는 따로 묶습니다.",
       tags: ["docs/TASK.md"],
       snippet: {
@@ -154,7 +150,6 @@ export const builderShowcase: {
     {
       label: "세션 병렬 작업",
       icon: "/icons/loop/parallel.webp",
-      owner: "claude",
       text: "파일이 겹치지 않는 태스크는 세션을 나눠 동시에 진행합니다.",
       tags: ["병렬 세션"],
       lanes: ["세션 A · TASK-01", "세션 B · TASK-02", "세션 C · TASK-03"],
@@ -162,15 +157,25 @@ export const builderShowcase: {
     {
       label: "QA · 코드리뷰",
       icon: "/icons/loop/qa.webp",
-      owner: "both",
-      text: "QA · 코드리뷰 에이전트가 빌드 · 린트 · 반응형을 점검하고, 방향이 갈리는 자리는 제가 통과시킵니다.",
-      tags: ["qa-reviewer", "code-review", "build · lint"],
-      branches: [{ need: "문장을 다른 눈으로 보려면", tool: "GPT 읽기 검사", examples: [ex.cardnews] }],
+      text: "AI로 코드를 빠르게 만들수록 병목은 리뷰로 옮겨갑니다. 그래서 변경마다 코드리뷰 에이전트를 먼저 돌려 논리 오류를 잡고, 빌드 · 린트 · 반응형은 QA 에이전트가 점검합니다.",
+      tags: ["/code-review", "qa-reviewer", "build · lint"],
+      research: {
+        title: "Anthropic이 사내 PR에 코드리뷰 에이전트를 돌린 결과",
+        stats: [
+          { value: "+200%", label: "1년 새 엔지니어 1인당 코드 산출량. 늘어난 코드를 사람이 다 읽지 못해 리뷰가 병목이 됨" },
+          { value: "16% → 54%", label: "실질적인 리뷰 코멘트를 받은 PR 비율" },
+          { value: "84%", label: "1,000줄 넘는 PR에서 문제를 찾아낸 비율 (평균 7.5건)" },
+          { value: "1% 미만", label: "엔지니어가 틀렸다고 표시한 지적" },
+        ],
+        sources: [
+          { label: "Anthropic · Code Review for Claude Code (2026.03)", href: "https://claude.com/blog/code-review" },
+          { label: "TechCrunch (2026.03.09)", href: "https://techcrunch.com/2026/03/09/anthropic-launches-code-review-tool-to-check-flood-of-ai-generated-code/" },
+        ],
+      },
     },
     {
       label: "지속 개선 · 운영",
       icon: "/icons/loop/operate.webp",
-      owner: "me",
       text: "배포한 뒤에도 같은 루프를 다시 돕니다. 되돌린 자리는 날짜와 함께 규칙 문서로 올려 다음 작업이 먼저 읽게 합니다.",
       tags: ["회고 문서"],
       branches: [

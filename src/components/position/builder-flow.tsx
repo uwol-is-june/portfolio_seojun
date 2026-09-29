@@ -10,13 +10,6 @@ import { cn } from "@/lib/cn";
 import { easeOutExpo } from "@/lib/motion";
 
 type Step = (typeof builderShowcase.flow)[number];
-type Owner = Step["owner"];
-
-const owners: Record<Owner, { text: string; border: string; ring: string }> = {
-  me: { text: "text-collab", border: "border-collab/60", ring: "border-collab" },
-  claude: { text: "text-ai", border: "border-ai/60", ring: "border-ai" },
-  both: { text: "text-fg", border: "border-line-strong", ring: "border-fg" },
-};
 
 const num = (i: number) => String(i + 1).padStart(2, "0");
 
@@ -29,7 +22,6 @@ const num = (i: number) => String(i + 1).padStart(2, "0");
 /** 데이터는 서버(builder-showcase)가 현재 언어로 골라 넘깁니다. */
 export default function BuilderFlow({ flow }: { flow: Step[] }) {
   const t = useT();
-  const ownerLabel: Record<Owner, string> = { me: t.ownerMe, claude: "Claude Code", both: t.ownerBoth };
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -43,7 +35,6 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
   };
 
   const step = flow[active];
-  const o = owners[step.owner];
 
   return (
     <div className="flex flex-col gap-6">
@@ -72,7 +63,7 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                 onKeyDown={(e) => onKeyDown(e, i)}
                 className={cn(
                   "flex h-full w-36 flex-col items-start gap-2 rounded-card border p-4 text-left transition-[background-color,border-color,transform] duration-300 ease-out-expo md:w-full",
-                  selected ? cn("-translate-y-1 bg-surface-raised", owners[s.owner].ring) : cn("bg-bg hover:bg-surface", owners[s.owner].border),
+                  selected ? "-translate-y-1 border-fg bg-surface-raised" : "border-line-strong bg-bg hover:bg-surface",
                 )}
               >
                 <Image
@@ -82,7 +73,7 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   height={44}
                   className={cn("size-11 transition-transform duration-300 ease-out-expo", selected && "scale-110")}
                 />
-                <span className={cn("text-caption font-semibold", owners[s.owner].text)}>{num(i)}</span>
+                <span className={cn("text-caption font-semibold", selected ? "text-fg" : "text-subtle")}>{num(i)}</span>
                 <span className="text-small font-semibold text-fg text-balance break-keep">{s.label}</span>
               </button>
               {i < flow.length - 1 && (
@@ -116,11 +107,7 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
               <div className="flex items-center gap-4">
                 <Image src={step.icon} alt="" width={64} height={64} className="size-16" />
                 <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-caption">
-                    <span className={cn("font-semibold", o.text)}>STEP {num(active)}</span>
-                    <span className="text-subtle">·</span>
-                    <span className="text-muted">{ownerLabel[step.owner]}</span>
-                  </span>
+                  <span className="text-caption font-semibold text-subtle">STEP {num(active)}</span>
                   <h3 className="text-h3 font-semibold text-fg break-keep">{step.label}</h3>
                 </div>
               </div>
@@ -182,7 +169,27 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   </ul>
                 </>
               )}
-              {!step.snippet && !step.lanes && !step.branches && (
+              {step.research && (
+                <>
+                  <span className="text-caption font-semibold text-subtle break-keep">{step.research.title}</span>
+                  <ul className="grid gap-2 sm:grid-cols-2">
+                    {step.research.stats.map((s) => (
+                      <li key={s.value} className="flex flex-col gap-1.5 rounded-sm border border-line bg-bg p-4">
+                        <span className="text-h3 font-semibold text-fg">{s.value}</span>
+                        <span className="text-small text-muted break-keep">{s.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="flex flex-wrap gap-x-3 gap-y-1 text-caption text-subtle">
+                    {step.research.sources.map((src) => (
+                      <a key={src.href} href={src.href} target="_blank" rel="noreferrer" className="underline decoration-line-strong underline-offset-4 hover:text-fg">
+                        {src.label} ↗
+                      </a>
+                    ))}
+                  </p>
+                </>
+              )}
+              {!step.snippet && !step.lanes && !step.branches && !step.research && (
                 <p className="text-small text-subtle">{t.loopHint}</p>
               )}
             </div>

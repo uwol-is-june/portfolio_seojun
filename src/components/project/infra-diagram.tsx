@@ -44,7 +44,7 @@ function Node({ node, className }: { node: InfraNode; className: string }) {
   return (
     <li className={cn("flex flex-col gap-1 rounded-card border px-4 py-3", className)}>
       <span className="font-mono text-small font-medium text-fg">{node.name}</span>
-      {node.note && <span className="text-small text-muted">{node.note}</span>}
+      {node.note && <span className="text-small text-muted text-balance">{node.note}</span>}
     </li>
   );
 }

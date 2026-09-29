@@ -14,7 +14,7 @@ export function affiliationChip(affiliation: Affiliation, organization: string, 
   const kind = affiliationLabel(affiliation, t);
   if (affiliation === "personal") return kind;
   const name = organization
-    .split(" · ")[0]
+    .split(/\s·\s/)[0]
     .replace(/^IT 연합동아리\s*/, "")
     .replace(/,\s*inter-university IT club$/, "");
   // 옆의 구분 칩과 같은 말(예: 창업)이면 이름만 보여줍니다.

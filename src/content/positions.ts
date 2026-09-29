@@ -38,7 +38,7 @@ export const positions: Position[] = [
     id: "ai-product-builder",
     title: "AI Product Builder",
     shortTitle: "AI PRODUCT BUILDER",
-    tagline: "AI로 직접 만들고, 실제로 써서 검증하는 AI Product Builder",
+    tagline: "현업이 중요한 일에 더 몰입할 수 있도록 돕는 AI Product Builder",
     intro: [],
     emphasis: [],
     cover: {

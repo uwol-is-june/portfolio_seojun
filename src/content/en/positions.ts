@@ -21,7 +21,7 @@ const text: Record<Position["id"], Pick<Position, "tagline" | "intro" | "emphasi
     alt: "App screens from my service planning work: Podo Ticket · Mungx5 · Podo Store",
   },
   "ai-product-builder": {
-    tagline: "An AI Product Builder who builds with AI and validates by actually using it",
+    tagline: "An AI Product Builder who helps teams focus on the work that matters most",
     intro: [],
     emphasis: [],
     alt: "Screens from services I built as an AI Product Builder: Card News Agent · Coverage Analysis · DevTier · FA Recruit Simulator and more",

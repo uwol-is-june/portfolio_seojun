@@ -1,3 +1,4 @@
+import { keepDots } from "@/lib/nbsp";
 import type { Locale } from "./config";
 
 /**
@@ -64,8 +65,6 @@ const ko = {
   plannerDocs: "문서와 산출물",
 
   // Building Loop
-  ownerMe: "내가 판단",
-  ownerBoth: "함께",
   loopSteps: "Claude Code Building Loop 단계",
   loopTools: "쓰는 도구 · 문서",
   loopLanes: "동시에 도는 세션",
@@ -186,8 +185,6 @@ const en: Dict = {
   plannerOther: "Other planning work",
   plannerDocs: "Docs and deliverables",
 
-  ownerMe: "My call",
-  ownerBoth: "Together",
   loopSteps: "Claude Code Building Loop steps",
   loopTools: "Tools · docs",
   loopLanes: "Sessions running in parallel",
@@ -247,7 +244,7 @@ const en: Dict = {
   projectEyebrow: "Project",
 };
 
-export const dictionaries: Record<Locale, Dict> = { ko, en };
+export const dictionaries: Record<Locale, Dict> = { ko: keepDots(ko), en: keepDots(en) };
 
 export function getDictionary(locale: Locale): Dict {
   return dictionaries[locale];

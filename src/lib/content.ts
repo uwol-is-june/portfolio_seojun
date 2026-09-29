@@ -13,14 +13,15 @@ import { site as siteKo } from "@/content/site";
 import type { PositionId } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 import { getLocale } from "@/i18n/request";
+import { keepDots } from "@/lib/nbsp";
 
 /**
  * 콘텐츠 읽기 (서버 컴포넌트 전용)
  * 언어를 넘기지 않으면 요청 언어(getLocale)를 씁니다. 영어는 src/content/en.
  */
 const content = {
-  ko: { positions: positionsKo, projects: projectsKo, builds: buildsKo, profile: profileKo, site: siteKo, showcases: showcasesKo },
-  en: { positions: positionsEn, projects: projectsEn, builds: buildsEn, profile: profileEn, site: siteEn, showcases: showcasesEn },
+  ko: keepDots({ positions: positionsKo, projects: projectsKo, builds: buildsKo, profile: profileKo, site: siteKo, showcases: { ...showcasesKo } }),
+  en: keepDots({ positions: positionsEn, projects: projectsEn, builds: buildsEn, profile: profileEn, site: siteEn, showcases: { ...showcasesEn } }),
 } satisfies Record<Locale, unknown>;
 
 const pick = (locale?: Locale) => content[locale ?? getLocale()];

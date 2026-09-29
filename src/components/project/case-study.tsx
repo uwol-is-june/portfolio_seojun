@@ -330,7 +330,7 @@ function Steps({ steps }: { steps: ProcessStep[] }) {
             </div>
           )}
           <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
-          <h3 className="text-h3 font-semibold text-fg">{step.title}</h3>
+          <h3 className="text-h3 font-semibold text-fg text-balance">{step.title}</h3>
           <Text size="sm">{step.description}</Text>
           {step.points && (
             <ul className="flex flex-col gap-1.5">
@@ -375,7 +375,7 @@ function IterationBlock({ iteration, accent }: { iteration: Iteration; accent: s
     <div className="flex flex-col gap-10">
       <div className="grid gap-4 lg:grid-cols-2">
         <Card label="Conclusion">
-          <p className={cn("text-h3 font-semibold", failed ? "text-ai" : "text-fg")}>{iteration.verdict}</p>
+          <p className={cn("text-h3 font-semibold text-balance", failed ? "text-ai" : "text-fg")}>{iteration.verdict}</p>
           <ul className="flex flex-col gap-2">
             {iteration.findings.map((f) => (
               <li key={f} className="text-small text-muted">

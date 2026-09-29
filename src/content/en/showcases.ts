@@ -76,7 +76,7 @@ export const plannerShowcase: typeof ko.plannerShowcase = {
 };
 
 type Flow = (typeof ko.builderShowcase)["flow"];
-const flowText: Pick<Flow[number], "label" | "text" | "tags" | "snippet" | "lanes">[] = [
+const flowText: Pick<Flow[number], "label" | "text" | "tags" | "snippet" | "lanes" | "research">[] = [
   {
     label: "Plan · project setup",
     text: "I write the plan before any code. CLAUDE.md holds the goals, rules, and structure, and the project is set up from that document.",
@@ -117,8 +117,21 @@ const flowText: Pick<Flow[number], "label" | "text" | "tags" | "snippet" | "lane
   },
   {
     label: "QA · code review",
-    text: "QA and code review agents check the build, lint, and responsive layout, and I sign off wherever the direction could split.",
-    tags: ["qa-reviewer", "code-review", "build · lint"],
+    text: "The faster AI writes code, the more the bottleneck moves to review. So a code review agent runs on every change first to catch logic errors, and a QA agent checks the build, lint, and responsive layout.",
+    tags: ["/code-review", "qa-reviewer", "build · lint"],
+    research: {
+      title: "What Anthropic saw running a code review agent on its own PRs",
+      stats: [
+        { value: "+200%", label: "Code output per engineer in a year. People can't read it all, so review became the bottleneck" },
+        { value: "16% → 54%", label: "Share of PRs that got substantive review comments" },
+        { value: "84%", label: "Share of PRs over 1,000 lines with findings (7.5 issues on average)" },
+        { value: "<1%", label: "Findings engineers marked as incorrect" },
+      ],
+      sources: [
+        { label: "Anthropic · Code Review for Claude Code (Mar 2026)", href: "https://claude.com/blog/code-review" },
+        { label: "TechCrunch (Mar 9, 2026)", href: "https://techcrunch.com/2026/03/09/anthropic-launches-code-review-tool-to-check-flood-of-ai-generated-code/" },
+      ],
+    },
   },
   {
     label: "Improve · operate",
@@ -135,7 +148,6 @@ const branchText: Record<string, { need: string; tool: string }> = {
   "Gemini · Claude API (계산은 코드로)": { need: "Text generation", tool: "Gemini · Claude API (math stays in code)" },
   "API 연동 (DART · SEC · CODEF · 토스증권)": { need: "External data", tool: "APIs (DART · SEC · CODEF · Toss Securities)" },
   "Expo EAS": { need: "App builds", tool: "Expo EAS" },
-  "GPT 읽기 검사": { need: "A second pair of eyes on copy", tool: "GPT read-through" },
   "App Store · Google Play 출시": { need: "For apps", tool: "App Store · Google Play release" },
   "로컬 · 사내 운영 + 공개 데모": { need: "For live accounts · internal tools", tool: "Local · internal use + public demo" },
 };
