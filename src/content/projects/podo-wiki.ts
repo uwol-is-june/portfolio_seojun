@@ -53,7 +53,7 @@ export const podoWiki: Project = {
   },
   outcome: { metrics: [] },
   links: [
-    { label: "서비스", href: "https://podo-wiki.vercel.app" },
+    { label: "서비스", href: "https://wiki.podo-store.com" },
     { label: "App Store", href: "https://apps.apple.com/kr/app/id6790099095" },
     { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.podowiki.app" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/Podo-Wiki" },

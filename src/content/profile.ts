@@ -18,7 +18,7 @@ export const profile: Profile = {
   portrait: { src: "/profile/portrait.webp", alt: "서준 프로필 사진" },
   timeline: [
     {
-      period: "2026.03 – 2026.10",
+      period: "2026.03 – 재직중",
       organization: "(주)인카금융서비스",
       role: "AI PM · AI전략총괄 AI Lab · 사원(계약직)",
       points: [

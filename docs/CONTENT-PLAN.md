@@ -103,7 +103,7 @@
 | cardnews-agent | cards.json → 1080×1350 PNG + 캡션, 문안 규칙 코드 검사. 커밋 30 | GitHub | Builds |
 | diet-saju | 사주 계산은 코드, 해석만 Gemini. Vitest 검증. 커밋 101 | diet-saju.vercel.app | Builds |
 | devtier | GitHub 잔디 기반 개발자 티어, Supabase · GraphQL, v0.4.37. 커밋 69 | devtier-brown.vercel.app | Builds |
-| Podo-Wiki | 공연단체 인수인계 위키. 커밋 178 | podo-wiki.vercel.app | Builds |
+| Podo-Wiki | 공연단체 인수인계 위키. 커밋 178 | wiki.podo-store.com | Builds |
 | dasii_landing_page | 다이어트 보조제 성분 매거진 | dasii-landing-page.vercel.app | Builds (다시) |
 | uwol-is-june | 프로필 README: 포도상점 · 다시 · 멍멍멍멍멍 스토어 링크 | - | 링크 출처 |
 | portfolio_seojun | 이 사이트 | portfolio-seojun.vercel.app | 이 사이트 케이스 스터디 |

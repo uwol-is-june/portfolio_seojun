@@ -1,0 +1,30 @@
+/* 보장분석 공개 데모 스타일: 원본(incar_ca_test) globals.css 그대로.
+   이 폴더와 src/demos/coverage 만 스캔한다 (포트폴리오 클래스와 섞이지 않게) */
+@import "tailwindcss" source(none);
+@source "./";
+@source "../../../../demos/coverage";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .print-break-inside-avoid {
+    break-inside: avoid;
+  }
+}
