@@ -94,14 +94,17 @@ export default function Gallery({ images, layout }: { images: ImageAsset[]; layo
       >
         {current && (
           <div data-backdrop className="flex h-full w-full flex-col items-center justify-center gap-3 px-4 py-14 md:px-20">
-            <div className="relative min-h-0 w-full flex-1">
+            {/* 그림 상자를 실제 그림 크기로만 그려, 옆 빈 곳을 누르면 배경 클릭으로 닫히게 합니다. */}
+            <div data-backdrop className="flex min-h-0 w-full flex-1 items-center justify-center">
               <Image
                 key={current.src}
                 src={current.src}
                 alt={current.alt}
-                fill
+                width={0}
+                height={0}
                 sizes="100vw"
-                className="object-contain"
+                loading="eager"
+                className="h-auto max-h-full w-auto max-w-full"
               />
             </div>
             <p className="flex max-w-3xl items-baseline gap-3 text-center text-small text-white/85">
