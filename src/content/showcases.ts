@@ -66,25 +66,26 @@ export const plannerShowcase = {
 
 /**
  * AI Product Builder: Claude Code Building Loop (6단계)
- * 예시 · 에이전트 · 세팅은 각 저장소 코드와 배포 주소로 확인한 것만 적습니다:
- * Vercel(각 프로젝트 서비스 링크), Supabase(devtier · Podo-Wiki package.json),
+ * 루프는 '내 작업 프로세스' 설명이라 단계마다 도식 하나로 보여주고, 프로젝트 링크는 걸지 않습니다(이름만 예시로).
+ * 스택 · 에이전트 · 세팅은 각 저장소 코드와 배포 설정으로 확인한 것만 적습니다:
+ * Vercel(각 프로젝트 서비스 링크), Supabase(devtier · Podo-Wiki package.json), Upstash Redis(diet-saju),
  * GitHub Actions cron(경영진 주가 보고 daily-collect · devtier batch), GitHub Actions CI(diet-saju ci.yml),
- * Expo EAS(Podo-Wiki/mobile), 공개 데모(/demo/*), 폴더별 CLAUDE.md(diet-saju · cardnews-agent),
+ * Expo EAS(Podo-Wiki/mobile), 정적 대시보드(경영진 주가 보고), 폴더별 CLAUDE.md(diet-saju · cardnews-agent),
  * Stop 훅(seohak-gaemi-club .claude/settings.json), 태스크 3분할(Podo-Wiki TASK_W · TASK_M · TASK_A).
+ * 외부 수치: Microsoft(2025.07) · Anthropic(2026.03) 원문에서 확인한 것만 씁니다.
  */
-type Example = { title: string; slug: string };
-type Branch = { need: string; tool: string; examples: Example[] };
-
-const ex = {
-  cardnews: { title: "카드뉴스 에이전트", slug: "cardnews-agent" },
-  seohak: { title: "서학개미클럽", slug: "seohak-gaemi-club" },
-  devtier: { title: "DevTier", slug: "devtier" },
-  wiki: { title: "포도위키", slug: "podo-wiki" },
-  stock: { title: "경영진 주가 보고", slug: "incar-stock-report" },
-  saju: { title: "다이어트 사주", slug: "diet-saju" },
-  coverage: { title: "보장분석", slug: "coverage-analysis" },
-  fa: { title: "위촉 시뮬레이터", slug: "fa-recruit-simulator" },
+const p = {
+  cardnews: "카드뉴스 에이전트",
+  seohak: "서학개미클럽",
+  devtier: "DevTier",
+  wiki: "포도위키",
+  stock: "경영진 주가 보고",
+  saju: "다이어트 사주",
+  coverage: "보장분석",
 };
+
+/** 순서대로 이어지는 흐름 노드. agent면 에이전트가 맡는 칸으로 강조합니다. */
+type SequenceNode = { name: string; desc: string; agent?: boolean };
 
 export const builderShowcase: {
   flow: {
@@ -93,23 +94,25 @@ export const builderShowcase: {
     icon: string;
     /** 가장 중요한 단계면 true (강조 표시) */
     key?: boolean;
-    /** 단계 설명 불릿 (한 줄에 한 가지) */
+    /** 단계 설명 불릿 (한 줄에 한 가지). 비어 있으면 도식을 패널 전체 폭으로 보여줍니다. */
     points: string[];
-    /** 갈래 카드 묶음의 제목. 없으면 Infra spec */
-    branchesTitle?: string;
-    branches?: Branch[];
+    /** 순서 흐름도. loopBack이 있으면 마지막에서 처음 단계로 돌아가는 순환으로 그립니다. */
+    sequence?: { title: string; nodes: SequenceNode[]; loopBack?: string };
+    /** 상황 → 선택 분기도 (영역별) */
+    choices?: { group: string; rows: { when: string; pick: string; examples: string[] }[] }[];
+    /** 공통 에이전트 위에 프로젝트별 에이전트를 얹는 층 구조 */
+    layers?: {
+      common: { title: string; items: { name: string; desc: string }[] };
+      extra: { title: string; projects: { project: string; why: string; items: string[] }[] };
+    };
+    /** 결론을 받치는 외부 지표 */
+    stats?: { value: string; label: string; source: string; href: string }[];
     /** 단계에서 실제로 쓰는 문서 한 토막 (코드 블록으로 보여줌) */
     snippet?: { title: string; lines: string[] };
     /** 동시에 도는 세션 (레인으로 보여줌) */
     lanes?: string[];
     /** 나쁜 방식 → 내 방식 비교 */
     contrast?: { bad: { title: string; points: string[] }; good: { title: string; points: string[] } };
-    /** 프로젝트별로 직접 만든 에이전트 · 스킬 */
-    agents?: { project: Example; items: { name: string; desc: string }[] }[];
-    /** 전후 비교 막대 (value는 100건 기준) */
-    compare?: { title: string; bars: { label: string; value: number }[]; unit: string };
-    /** 결론을 받치는 외부 근거 한 줄 */
-    evidence?: { text: string; source: string; href: string };
   }[];
 } = {
   flow: [
@@ -118,66 +121,96 @@ export const builderShowcase: {
       icon: "/icons/loop/plan.webp",
       points: [
         "코드보다 규칙 문서를 먼저 세웁니다.",
-        "루트 CLAUDE.md에는 구조 · 경계 · 명령어만 둡니다.",
-        "세부 규칙은 폴더별 문서로 나눠, 그 폴더를 고칠 때만 읽게 합니다.",
-        "규칙은 한 곳에만 적고 베끼지 않아 문서끼리 어긋나지 않습니다.",
+        "루트 CLAUDE.md엔 구조 · 경계 · 명령어만 두고, 세부 규칙은 폴더별 문서로 나눕니다.",
+        "규칙은 한 곳에만 적어 문서끼리 어긋나지 않게 합니다.",
       ],
-      snippet: {
+      sequence: {
         title: "세팅 순서",
-        lines: [
-          "1. CLAUDE.md     구조 · 경계 · 명령어만",
-          "2. 폴더별 규칙   components/ · lib/ · docs/CLAUDE.md",
-          "3. docs/TASK.md  태스크 형식 · 모델 (O)(S)(H)",
-          "4. 검증 게이트   lint · test 수시, build는 커밋 직전",
-          "5. 훅 · 권한     Stop 훅으로 결과물 자동 커밋",
-          "6. 결정 기록     되돌린 이유를 날짜와 함께",
+        nodes: [
+          { name: "CLAUDE.md", desc: "구조 · 경계 · 명령어만" },
+          { name: "폴더별 규칙", desc: "components/ · lib/ · docs/CLAUDE.md" },
+          { name: "docs/TASK.md", desc: "태스크 형식 · 모델 (O)(S)(H)" },
+          { name: "검증 게이트", desc: "lint · test 수시, build는 커밋 직전" },
+          { name: "훅 · 권한", desc: "Stop 훅으로 결과물 자동 커밋" },
+          { name: "결정 기록", desc: "되돌린 이유를 날짜와 함께" },
         ],
       },
     },
     {
-      label: "인프라 셋업",
+      label: "인프라 세팅",
       icon: "/icons/loop/infra.webp",
-      points: ["기획안에 필요한 것만 골라 붙입니다.", "쓰지 않을 도구는 처음부터 넣지 않습니다."],
-      branches: [
-        { need: "배포", tool: "Vercel", examples: [ex.devtier, ex.saju, ex.stock, ex.coverage] },
-        { need: "DB · 로그인", tool: "Supabase", examples: [ex.devtier, ex.wiki] },
-        { need: "정기 실행", tool: "cron job (GitHub Actions)", examples: [ex.stock, ex.devtier] },
-        { need: "테스트 자동화", tool: "GitHub Actions CI", examples: [ex.saju] },
-        { need: "문장 생성", tool: "Gemini · Claude API (계산은 코드로)", examples: [ex.saju, ex.stock] },
-        { need: "외부 데이터", tool: "API 연동 (DART · SEC · CODEF · 토스증권)", examples: [ex.stock, ex.seohak, ex.coverage] },
-        { need: "앱 빌드", tool: "Expo EAS", examples: [ex.wiki] },
+      points: [],
+      choices: [
+        {
+          group: "프론트엔드",
+          rows: [
+            { when: "화면 한두 장 · 서버 로직 없음", pick: "정적 배포 · HTML + Chart.js", examples: [p.stock] },
+            { when: "로그인 · 입력 · 결과처럼 화면이 여러 개", pick: "동적 배포 · Next.js", examples: [p.devtier, p.saju, p.coverage, p.wiki] },
+            { when: "모바일 앱도 필요", pick: "Expo (React Native)", examples: [p.wiki] },
+            { when: "나만 쓰는 도구", pick: "로컬 Next.js 대시보드", examples: [p.seohak] },
+          ],
+        },
+        {
+          group: "백엔드",
+          rows: [
+            { when: "API 키를 숨기고 외부 API 호출", pick: "Next.js API 라우트 (Vercel 함수)", examples: [p.saju, p.coverage, p.devtier] },
+            { when: "정해진 시간에 수집 · 계산", pick: "GitHub Actions cron", examples: [p.stock, p.devtier] },
+            { when: "서버 없이 내 PC에서", pick: "Node.js · Python 스크립트", examples: [p.cardnews, p.seohak] },
+            { when: "문장 생성이 필요", pick: "Gemini API (계산은 코드로)", examples: [p.saju, p.stock] },
+          ],
+        },
+        {
+          group: "데이터",
+          rows: [
+            { when: "로그인 + 관계형 데이터", pick: "Supabase (Postgres · Auth)", examples: [p.devtier, p.wiki] },
+            { when: "조회수 · 좋아요 카운터만", pick: "Upstash Redis", examples: [p.saju] },
+            { when: "기록만 쌓이면 됨", pick: "저장소에 JSON · 파일 커밋", examples: [p.stock, p.seohak] },
+          ],
+        },
+        {
+          group: "배포 · 자동화",
+          rows: [
+            { when: "누구나 접속", pick: "Vercel", examples: [p.devtier, p.saju, p.stock, p.wiki] },
+            { when: "push마다 검사", pick: "GitHub Actions CI", examples: [p.saju] },
+            { when: "앱 스토어 출시", pick: "EAS Build · Submit", examples: [p.wiki] },
+          ],
+        },
       ],
     },
     {
       label: "에이전트 구축",
       icon: "/icons/loop/agents.webp",
       points: [
-        "관점이 다른 일은 에이전트와 스킬로 나눠 맡깁니다.",
+        "공통 에이전트는 어느 프로젝트에서나 먼저 세팅합니다.",
+        "프로젝트 성격상 다른 관점이 필요하면 에이전트 · 스킬을 더 만듭니다.",
         "한 에이전트가 화면 · 문구 · 검수를 다 하면 기준이 섞이기 때문입니다.",
       ],
-      agents: [
-        {
-          project: { title: "이 포트폴리오", slug: "" },
+      layers: {
+        common: {
+          title: "공통 · 모든 프로젝트",
           items: [
-            { name: "ui-builder", desc: "섹션 · 컴포넌트 · 애니메이션 구현" },
-            { name: "content-writer", desc: "소개 · 프로젝트 문구 (한국어 · 영어)" },
-            { name: "seo-performance", desc: "메타데이터 · OG 이미지 · 성능" },
+            { name: "ui-builder", desc: "화면 · 컴포넌트 구현" },
+            { name: "content-writer", desc: "문구 (한국어 · 영어)" },
             { name: "qa-reviewer", desc: "빌드 · 반응형 · 접근성 점검" },
+            { name: "seo-performance", desc: "메타데이터 · 성능" },
           ],
         },
-        {
-          project: ex.seohak,
-          items: [
-            { name: "/investment-team", desc: "버핏 · 멍거 · 단융핑 · 리루 관점 서브에이전트 4개가 병렬 분석" },
-            { name: "/news-pulse", desc: "주가 급변동 원인을 4개 에이전트가 나눠 탐색" },
-            { name: "/thesis-tracker", desc: "매수 뒤 투자 논제가 유효한지 추적" },
+        extra: {
+          title: "필요하면 · 프로젝트별 추가",
+          projects: [
+            {
+              project: p.seohak,
+              why: "투자 판단을 여러 관점으로 교차 검증해야 해서",
+              items: ["/investment-team", "/news-pulse", "/thesis-tracker"],
+            },
+            {
+              project: p.cardnews,
+              why: "한 편을 매번 같은 규칙으로 기획부터 렌더까지 만들어야 해서",
+              items: ["cardnews 스킬"],
+            },
           ],
         },
-        {
-          project: ex.cardnews,
-          items: [{ name: "cardnews 스킬", desc: "기획 → 원고 → 검수 → 1080×1350 렌더까지 한 편 제작" }],
-        },
-      ],
+      },
     },
     {
       label: "TASK.md · 병렬 작업",
@@ -204,37 +237,55 @@ export const builderShowcase: {
       icon: "/icons/loop/qa.webp",
       points: [
         "AI가 코드를 빠르게 쏟아낼수록 사람이 다 읽을 수 없어 리뷰가 병목이 됩니다.",
-        "변경마다 코드리뷰 에이전트 → QA 에이전트 순으로 점검한 뒤 배포합니다.",
+        "그래서 변경마다 에이전트가 먼저 점검하고, 통과한 것만 배포합니다.",
       ],
-      compare: {
-        title: "PR 100건 중 실제 문제를 지적받은 PR",
-        bars: [
-          { label: "사람만 리뷰할 때", value: 16 },
-          { label: "코드리뷰 에이전트를 붙인 뒤", value: 54 },
+      sequence: {
+        title: "변경 하나가 배포되기까지",
+        nodes: [
+          { name: "AI가 쓴 코드", desc: "태스크 하나 = 변경 하나" },
+          { name: "코드리뷰 에이전트", desc: "논리 오류 · 버그", agent: true },
+          { name: "QA 에이전트", desc: "빌드 · 린트 · 반응형", agent: true },
+          { name: "배포", desc: "main에 푸시" },
         ],
-        unit: "건",
       },
-      evidence: {
-        text: "코드가 너무 많아지자 사람 리뷰는 대부분 훑고 지나갔습니다. Anthropic은 코드리뷰 에이전트를 붙인 뒤, 실제 문제를 지적받는 코드 변경이 100건 중 16건에서 54건으로 늘었습니다.",
-        source: "Anthropic · 2026.03",
-        href: "https://claude.com/blog/code-review",
-      },
+      stats: [
+        {
+          value: "10~20%",
+          label: "AI 코드리뷰를 붙인 저장소 5,000곳의 PR 완료 시간 단축 (중앙값)",
+          source: "Microsoft · 2025.07",
+          href: "https://devblogs.microsoft.com/engineering-at-microsoft/enhancing-code-quality-at-scale-with-ai-powered-code-reviews/",
+        },
+        {
+          value: "84%",
+          label: "1,000줄 넘는 큰 PR에서 문제를 찾아낸 비율 (평균 7.5건)",
+          source: "Anthropic · 2026.03",
+          href: "https://claude.com/blog/code-review",
+        },
+        {
+          value: "1% 미만",
+          label: "에이전트가 지적한 문제 가운데 틀린 것",
+          source: "Anthropic · 2026.03",
+          href: "https://claude.com/blog/code-review",
+        },
+      ],
     },
     {
       label: "지속 개선 · 운영",
       icon: "/icons/loop/operate.webp",
       points: [
-        "배포한 뒤에는 GA4 · Amplitude로 유입 · 전환 지표를 봅니다.",
-        "떨어지는 구간을 찾아 다시 루프를 돕니다.",
-        "되돌린 결정은 날짜와 근거를 붙여 규칙 문서에 남겨, 다음 작업이 먼저 읽게 합니다.",
+        "배포한 뒤 지표를 보고, 떨어지는 구간을 찾아 다시 루프를 돕니다.",
+        "되돌린 결정은 날짜와 근거를 붙여 규칙 문서에 남깁니다.",
       ],
-      branchesTitle: "운영 방식",
-      branches: [
-        { need: "지표 분석", tool: "GA4 · Amplitude", examples: [] },
-        { need: "서버 지표", tool: "요청 로그 집계 (Vercel)", examples: [ex.saju] },
-        { need: "앱이면", tool: "App Store · Google Play 출시", examples: [ex.wiki] },
-        { need: "실계좌 · 사내용이면", tool: "로컬 · 사내 운영 + 공개 데모", examples: [ex.seohak, ex.coverage, ex.fa] },
-      ],
+      sequence: {
+        title: "개선 순환",
+        nodes: [
+          { name: "배포 · 출시", desc: "웹은 Vercel, 앱은 스토어, 사내용은 공개 데모" },
+          { name: "지표 보기", desc: "GA4 · Amplitude · 요청 로그" },
+          { name: "떨어지는 구간 찾기", desc: "유입 · 전환이 끊기는 화면" },
+          { name: "결정 기록", desc: "날짜 · 근거를 규칙 문서에" },
+        ],
+        loopBack: "01 프로젝트 세팅으로 돌아가 다음 태스크",
+      },
     },
   ],
 };

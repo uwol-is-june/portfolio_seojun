@@ -61,7 +61,7 @@ export const profile: Profile = {
     {
       period: "2024.07 – 2024.08",
       organization: "현대자동차그룹",
-      role: "소프티어 부트캠프 4기 서비스 기획 파트",
+      role: "현대자동차그룹 소프티어 부트캠프 4기 서비스 기획 파트",
       points: [
         "[KIA SWIPY] 서비스 기획: 사용자 기반 PBV 모듈 추천 및 교체 서비스",
         "[캐스퍼 EV와 떠나기] 서비스 기획: 현대자동차그룹 신차 출시 이벤트",

@@ -206,7 +206,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           ))}
 
           {project.gallery && project.gallery.length > 0 && (
-            <Chapter number={nextChapter()} label="Gallery" title={t.chGallery}>
+            <Chapter number={nextChapter()} label="Screen" title={t.chGallery}>
               <Gallery images={project.gallery} layout={project.galleryLayout} />
             </Chapter>
           )}

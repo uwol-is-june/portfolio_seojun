@@ -10,7 +10,7 @@ export const cardnewsAgent: Project = {
   title: "Card News Agent",
   subtitle: "A Claude Code skill that makes Instagram card news",
   summary:
-    "A tool that turns one cards.json file into 1080×1350 card images and a caption. It runs as a Claude Code skill, and all 31 card news episodes on the DASII Instagram account were made with it.",
+    "A tool that turns one cards.json file into 1080×1350 card images and a caption. All 31 DASII Instagram card news episodes were made with it as a Claude Code skill.",
   cardPoints: [
     "One cards.json → card images · caption",
     "Runs as a skill, checked by rules · GPT · a human",

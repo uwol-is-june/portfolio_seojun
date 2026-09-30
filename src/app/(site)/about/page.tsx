@@ -99,7 +99,7 @@ export default function AboutPage() {
       <Section bordered aria-labelledby="activities">
         <TwoColumn id="activities" eyebrow="Activities · Education" title={t.activities}>
           <div className="flex flex-col gap-16">
-            <Timeline items={profile.activities} />
+            <Timeline items={profile.activities} titleFirst="role" />
             <Timeline items={profile.education} />
           </div>
         </TwoColumn>
@@ -163,15 +163,16 @@ function TwoColumn({
   );
 }
 
-function Timeline({ items }: { items: TimelineItem[] }) {
+/** 경력 · 학력은 소속이 제목, 활동은 활동명이 제목(titleFirst="role")이고 나머지가 아래 줄에 옵니다. */
+function Timeline({ items, titleFirst = "organization" }: { items: TimelineItem[]; titleFirst?: "organization" | "role" }) {
   return (
     <ol className="flex flex-col gap-10 border-l border-line pl-6">
       {items.map((item) => (
         <li key={`${item.period}-${item.organization}`} className="relative flex flex-col gap-2">
           <span aria-hidden className="absolute top-1.5 -left-[1.8125rem] size-2.5 rounded-pill border border-fg bg-bg" />
           <p className="font-mono text-caption text-subtle">{item.period}</p>
-          <h3 className="text-h3 font-semibold text-fg">{item.organization}</h3>
-          <p className="text-body text-muted">{item.role}</p>
+          <h3 className="text-h3 font-semibold text-fg">{titleFirst === "role" ? item.role : item.organization}</h3>
+          <p className="text-body text-muted">{titleFirst === "role" ? item.organization : item.role}</p>
           {item.description && <Text size="sm">{item.description}</Text>}
           {item.points && (
             <ul className="mt-1 flex flex-col gap-1.5">

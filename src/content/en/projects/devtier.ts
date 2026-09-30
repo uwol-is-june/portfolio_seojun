@@ -62,6 +62,10 @@ export const devtier: Project = {
   gallery: [
     { ...g[0], alt: "DevTier start screen", caption: "Start · measure by GitHub username" },
     { ...g[1], alt: "DevTier result: tier and power score", caption: "Result · tier and power score" },
+    { ...g[2], alt: "Weakness radar and score history on the result page", caption: "Result · weakness radar and score history" },
+    { ...g[3], alt: "Full ranking table of Korean developers", caption: "Full ranking · 2,742 Korean developers" },
+    { ...g[4], alt: "Live status: indexed users, update cycle, and tier distribution", caption: "Live status · tier distribution and score formula" },
+    { ...g[5], alt: "Core features: tier system, power algorithm, README badge", caption: "Core features · tiers · power score · README badge" },
   ],
   links: [{ ...l[0], label: "Web" }, l[1]],
   infra: {

@@ -3,6 +3,7 @@ import type { Project } from "../../types";
 
 const s = ko.architecture?.stages ?? [];
 const l = ko.links ?? [];
+const g = ko.gallery ?? [];
 
 export const dietSaju: Project = {
   ...ko,
@@ -39,6 +40,12 @@ export const dietSaju: Project = {
       { ...s[4], title: "Result", items: ["Chart + reading"] },
     ],
   },
+  gallery: [
+    { ...g[0], alt: "Diet Saju start screen: five reading topics", caption: "Start · pick a reading topic" },
+    { ...g[1], alt: "Input screen: birth date, sex, and birth time", caption: "Input · birth date and time (not stored)" },
+    { ...g[2], alt: "Result screen: body type and summary", caption: "Result · body type and summary" },
+    { ...g[3], alt: "Four pillars and five-element balance bars", caption: "Saju chart · five-element balance (computed in code)" },
+  ],
   links: [{ ...l[0], label: "Web" }, l[1]],
   infra: {
     client: [

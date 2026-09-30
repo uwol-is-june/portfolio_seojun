@@ -66,6 +66,7 @@ export const incarStockReport: Project = {
     { ...g[0], alt: "Prices tab: current price and last 7 trading days", caption: "Prices · AI overall view" },
     { ...g[1], alt: "Chart tab: 7-day candles · volume · 1-year trend", caption: "Price chart" },
     { ...g[2], alt: "AI analysis tab: price · investors · volume · market comparison · overall", caption: "AI analysis · 5-part stock analysis" },
+    { ...g[3], alt: "PDF export options: choose sections to include", caption: "PDF export · choose sections for the report" },
   ],
   links: [{ ...(ko.links?.[0] ?? { href: "" }), label: "Dashboard" }, ...(ko.links?.slice(1) ?? [])],
   infra: {

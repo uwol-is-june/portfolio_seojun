@@ -109,6 +109,7 @@ export const incarStockReport: Project = {
     { src: "/projects/incar-stock-report/cover.webp", alt: "시세 현황 탭: 현재가와 최근 7거래일", caption: "시세 현황 · AI 종합 의견" },
     { src: "/projects/incar-stock-report/screen-chart.webp", alt: "주가 차트 탭: 7거래일 캔들 · 거래량 · 1년 추이", caption: "주가 차트" },
     { src: "/projects/incar-stock-report/screen-ai.webp", alt: "AI 분석 탭: 가격 · 투자자 · 거래량 · 시장 비교 · 종합 의견", caption: "AI 분석 · 종목 분석 5항목" },
+    { src: "/projects/incar-stock-report/screen-pdf.webp", alt: "PDF 출력 옵션: 포함할 섹션 선택", caption: "PDF 출력 · 보고에 넣을 섹션 고르기" },
   ],
   links: [
     { label: "대시보드", href: "https://incar-stock.vercel.app" },

@@ -73,6 +73,13 @@ export const dietSaju: Project = {
     ],
   },
   outcome: { metrics: [] },
+  galleryLayout: "wide",
+  gallery: [
+    { src: "/projects/diet-saju/cover.webp", alt: "다이어트 사주 첫 화면: 풀이 주제 5가지", caption: "첫 화면 · 풀이 주제 고르기" },
+    { src: "/projects/diet-saju/screen-form.webp", alt: "생년월일 · 성별 · 태어난 시각 입력 화면", caption: "입력 · 생년월일시 (저장하지 않음)" },
+    { src: "/projects/diet-saju/screen-result.webp", alt: "결과 화면: 체질 유형과 한눈에 보기", caption: "결과 · 체질 유형과 한눈에 보기" },
+    { src: "/projects/diet-saju/screen-chart.webp", alt: "사주 원국 네 기둥과 오행 비중 막대", caption: "사주 원국 · 오행 비중 (코드로 계산)" },
+  ],
   links: [
     { label: "Web", href: "https://diet-saju.vercel.app" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/diet-saju" },

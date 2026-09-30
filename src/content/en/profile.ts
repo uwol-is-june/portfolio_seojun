@@ -53,7 +53,7 @@ export const profile: Profile = {
     {
       period: "Jul 2024 – Aug 2024",
       organization: "Hyundai Motor Group",
-      role: "Softeer Bootcamp 4th, service planning track",
+      role: "Hyundai Motor Group Softeer Bootcamp 4th, service planning track",
       points: [
         "KIA SWIPY: a user-driven PBV module recommendation and swap service",
         "Road Trip with Casper EV: a launch event for a new Hyundai Motor Group car",

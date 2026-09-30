@@ -75,38 +75,110 @@ export const plannerShowcase: typeof ko.plannerShowcase = {
   ],
 };
 
+const p = {
+  cardnews: titles["cardnews-agent"],
+  seohak: titles["seohak-gaemi-club"],
+  devtier: titles.devtier,
+  wiki: titles["podo-wiki"],
+  stock: titles["incar-stock-report"],
+  saju: titles["diet-saju"],
+  coverage: titles["coverage-analysis"],
+};
+
 type Flow = (typeof ko.builderShowcase)["flow"];
-const flowText: Pick<Flow[number], "label" | "points" | "branchesTitle" | "snippet" | "lanes" | "contrast" | "compare" | "evidence">[] = [
+const flowText: Omit<Flow[number], "icon" | "key">[] = [
   {
     label: "Project setup",
     points: [
       "I set up the rule docs before any code.",
-      "The root CLAUDE.md holds only structure, boundaries, and commands.",
-      "Detailed rules live in per-folder docs, read only when that folder changes.",
-      "Each rule lives in one place and is never copied, so docs never contradict each other.",
+      "The root CLAUDE.md holds only structure, boundaries, and commands; detailed rules live in per-folder docs.",
+      "Each rule lives in one place, so docs never contradict each other.",
     ],
-    snippet: {
+    sequence: {
       title: "Setup order",
-      lines: [
-        "1. CLAUDE.md      structure · boundaries · commands",
-        "2. Folder rules   components/ · lib/ · docs/CLAUDE.md",
-        "3. docs/TASK.md   task format · model (O)(S)(H)",
-        "4. Gates          lint · test often, build before commit",
-        "5. Hooks · perms  Stop hook auto-commits output",
-        "6. Decision log   why things were rolled back, dated",
+      nodes: [
+        { name: "CLAUDE.md", desc: "structure · boundaries · commands" },
+        { name: "Folder rules", desc: "components/ · lib/ · docs/CLAUDE.md" },
+        { name: "docs/TASK.md", desc: "task format · model (O)(S)(H)" },
+        { name: "Gates", desc: "lint · test often, build before commit" },
+        { name: "Hooks · perms", desc: "Stop hook auto-commits output" },
+        { name: "Decision log", desc: "why things were rolled back, dated" },
       ],
     },
   },
   {
-    label: "Infrastructure",
-    points: ["I add only what the plan needs.", "Tools I won't use never go in."],
+    label: "Infrastructure setup",
+    points: [],
+    choices: [
+      {
+        group: "Frontend",
+        rows: [
+          { when: "One or two screens, no server logic", pick: "Static deploy · HTML + Chart.js", examples: [p.stock] },
+          { when: "Many screens: login, input, results", pick: "Dynamic deploy · Next.js", examples: [p.devtier, p.saju, p.coverage, p.wiki] },
+          { when: "Needs a mobile app too", pick: "Expo (React Native)", examples: [p.wiki] },
+          { when: "A tool only I use", pick: "Local Next.js dashboard", examples: [p.seohak] },
+        ],
+      },
+      {
+        group: "Backend",
+        rows: [
+          { when: "Call external APIs with hidden keys", pick: "Next.js API routes (Vercel functions)", examples: [p.saju, p.coverage, p.devtier] },
+          { when: "Collect or compute on a schedule", pick: "GitHub Actions cron", examples: [p.stock, p.devtier] },
+          { when: "No server, runs on my PC", pick: "Node.js · Python scripts", examples: [p.cardnews, p.seohak] },
+          { when: "Needs generated text", pick: "Gemini API (math stays in code)", examples: [p.saju, p.stock] },
+        ],
+      },
+      {
+        group: "Data",
+        rows: [
+          { when: "Login + relational data", pick: "Supabase (Postgres · Auth)", examples: [p.devtier, p.wiki] },
+          { when: "Just view and like counters", pick: "Upstash Redis", examples: [p.saju] },
+          { when: "Only needs to keep a record", pick: "JSON · files committed to the repo", examples: [p.stock, p.seohak] },
+        ],
+      },
+      {
+        group: "Deploy · automation",
+        rows: [
+          { when: "Anyone can open it", pick: "Vercel", examples: [p.devtier, p.saju, p.stock, p.wiki] },
+          { when: "Check every push", pick: "GitHub Actions CI", examples: [p.saju] },
+          { when: "Ship to app stores", pick: "EAS Build · Submit", examples: [p.wiki] },
+        ],
+      },
+    ],
   },
   {
     label: "Build agents",
     points: [
-      "Work with a different point of view goes to its own agent or skill.",
+      "Common agents are set up first in every project.",
+      "When a project needs another point of view, I add agents or skills for it.",
       "When one agent handles UI, copy, and review together, the standards blur.",
     ],
+    layers: {
+      common: {
+        title: "Common · every project",
+        items: [
+          { name: "ui-builder", desc: "Screens · components" },
+          { name: "content-writer", desc: "Copy (Korean · English)" },
+          { name: "qa-reviewer", desc: "Build · responsive · accessibility checks" },
+          { name: "seo-performance", desc: "Metadata · performance" },
+        ],
+      },
+      extra: {
+        title: "When needed · per project",
+        projects: [
+          {
+            project: p.seohak,
+            why: "Investment calls need cross-checking from several points of view",
+            items: ["/investment-team", "/news-pulse", "/thesis-tracker"],
+          },
+          {
+            project: p.cardnews,
+            why: "Every episode has to follow the same rules from plan to render",
+            items: ["cardnews skill"],
+          },
+        ],
+      },
+    },
   },
   {
     label: "TASK.md · parallel work",
@@ -130,66 +202,57 @@ const flowText: Pick<Flow[number], "label" | "points" | "branchesTitle" | "snipp
     label: "QA · code review",
     points: [
       "The faster AI writes code, the less of it people can read, so review becomes the bottleneck.",
-      "Every change goes through a code review agent, then a QA agent, before it ships.",
+      "So agents check every change first, and only what passes ships.",
     ],
-    compare: {
-      title: "Out of 100 PRs, those with a real issue flagged",
-      bars: [
-        { label: "Human review only", value: 16 },
-        { label: "With a code review agent", value: 54 },
+    sequence: {
+      title: "From one change to production",
+      nodes: [
+        { name: "AI-written code", desc: "one task = one change" },
+        { name: "Code review agent", desc: "logic errors · bugs", agent: true },
+        { name: "QA agent", desc: "build · lint · responsive", agent: true },
+        { name: "Ship", desc: "push to main" },
       ],
-      unit: "",
     },
-    evidence: {
-      text: "As code piled up, human reviews mostly skimmed. After Anthropic added a code review agent, code changes with a real issue flagged went from 16 in 100 to 54 in 100.",
-      source: "Anthropic · Mar 2026",
-      href: "https://claude.com/blog/code-review",
-    },
+    stats: [
+      {
+        value: "10–20%",
+        label: "Faster PR completion (median) across 5,000 repos using AI code review",
+        source: "Microsoft · Jul 2025",
+        href: "https://devblogs.microsoft.com/engineering-at-microsoft/enhancing-code-quality-at-scale-with-ai-powered-code-reviews/",
+      },
+      {
+        value: "84%",
+        label: "Large PRs (1,000+ lines) where it found issues, 7.5 on average",
+        source: "Anthropic · Mar 2026",
+        href: "https://claude.com/blog/code-review",
+      },
+      {
+        value: "<1%",
+        label: "Findings that turned out to be wrong",
+        source: "Anthropic · Mar 2026",
+        href: "https://claude.com/blog/code-review",
+      },
+    ],
   },
   {
     label: "Improve · operate",
     points: [
-      "After shipping, I watch acquisition and conversion in GA4 and Amplitude.",
-      "I find where they drop and run the loop again.",
-      "Rolled-back decisions go into the rules doc with a date and reason, so the next task reads them first.",
+      "After shipping, I watch the metrics, find where they drop, and run the loop again.",
+      "Rolled-back decisions go into the rules doc with a date and reason.",
     ],
-    branchesTitle: "How I run it",
+    sequence: {
+      title: "Improvement cycle",
+      nodes: [
+        { name: "Ship · release", desc: "Vercel for web, stores for apps, public demos for internal tools" },
+        { name: "Watch metrics", desc: "GA4 · Amplitude · request logs" },
+        { name: "Find the drop", desc: "screens where acquisition or conversion breaks" },
+        { name: "Log the decision", desc: "date and reason in the rules doc" },
+      ],
+      loopBack: "Back to 01 Project setup for the next task",
+    },
   },
 ];
 
-const branchText: Record<string, { need: string; tool: string }> = {
-  Vercel: { need: "Deploy", tool: "Vercel" },
-  Supabase: { need: "DB · auth", tool: "Supabase" },
-  "cron job (GitHub Actions)": { need: "Scheduled runs", tool: "cron job (GitHub Actions)" },
-  "GitHub Actions CI": { need: "Test automation", tool: "GitHub Actions CI" },
-  "Gemini · Claude API (계산은 코드로)": { need: "Text generation", tool: "Gemini · Claude API (math stays in code)" },
-  "API 연동 (DART · SEC · CODEF · 토스증권)": { need: "External data", tool: "APIs (DART · SEC · CODEF · Toss Securities)" },
-  "Expo EAS": { need: "App builds", tool: "Expo EAS" },
-  "GA4 · Amplitude": { need: "Product metrics", tool: "GA4 · Amplitude" },
-  "요청 로그 집계 (Vercel)": { need: "Server metrics", tool: "Request log metrics (Vercel)" },
-  "App Store · Google Play 출시": { need: "For apps", tool: "App Store · Google Play release" },
-  "로컬 · 사내 운영 + 공개 데모": { need: "For live accounts · internal tools", tool: "Local · internal use + public demo" },
-};
-
-const agentText: Record<string, string> = {
-  "ui-builder": "Sections · components · motion",
-  "content-writer": "Intro and project copy (Korean · English)",
-  "seo-performance": "Metadata · OG images · performance",
-  "qa-reviewer": "Build · responsive · accessibility checks",
-  "/investment-team": "4 subagents analyze in parallel from Buffett · Munger · Duan Yongping · Li Lu views",
-  "/news-pulse": "4 agents split up the search for why a stock moved",
-  "/thesis-tracker": "Tracks whether the thesis still holds after buying",
-  "cardnews 스킬": "Makes one episode: plan → draft → review → 1080×1350 render",
-};
-
 export const builderShowcase: typeof ko.builderShowcase = {
-  flow: ko.builderShowcase.flow.map((step, i) => ({
-    ...step,
-    ...flowText[i],
-    branches: step.branches?.map((b) => ({ ...b, ...(branchText[b.tool] ?? {}), examples: b.examples.map(ex) })),
-    agents: step.agents?.map((a) => ({
-      project: a.project.slug ? ex(a.project) : { ...a.project, title: "This portfolio" },
-      items: a.items.map((it) => ({ name: it.name === "cardnews 스킬" ? "cardnews skill" : it.name, desc: agentText[it.name] ?? it.desc })),
-    })),
-  })),
+  flow: ko.builderShowcase.flow.map((step, i) => ({ icon: step.icon, key: step.key, ...flowText[i] })),
 };

@@ -5,7 +5,7 @@ export const cardnewsAgent: Project = {
   title: "카드뉴스 에이전트",
   subtitle: "인스타그램 카드뉴스를 만드는 Claude Code 스킬",
   summary:
-    "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구입니다. Claude Code 스킬로 불러 쓰며, '다시(DASII)' 인스타그램 카드뉴스 31편을 이 도구로 만들어 운영하고 있습니다.",
+    "cards.json 한 벌로 1080×1350 카드 이미지와 캡션을 만드는 도구입니다. Claude Code 스킬로 불러 써서 '다시(DASII)' 인스타그램 카드뉴스 31편을 운영하고 있습니다.",
   cardPoints: [
     "cards.json 한 벌로 카드 이미지 · 캡션 생성",
     "스킬로 불러 쓰고 규칙 · GPT · 사람이 3단 검수",

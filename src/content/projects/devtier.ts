@@ -84,6 +84,10 @@ export const devtier: Project = {
   gallery: [
     { src: "/projects/devtier/cover.webp", alt: "DevTier 첫 화면", caption: "첫 화면 · GitHub 아이디로 측정" },
     { src: "/projects/devtier/screen-result.webp", alt: "DevTier 결과 화면: 티어와 전투력 점수", caption: "결과 · 티어와 전투력" },
+    { src: "/projects/devtier/screen-radar.webp", alt: "결과 화면의 약점 분석 레이더와 점수 추이", caption: "결과 · 약점 분석과 점수 추이" },
+    { src: "/projects/devtier/screen-ranking.webp", alt: "한국 개발자 전체 랭킹 표", caption: "전체 랭킹 · 한국 개발자 2,742명" },
+    { src: "/projects/devtier/screen-status.webp", alt: "운영 현황: 수집 인원 · 갱신 주기와 티어 분포", caption: "운영 현황 · 티어 분포와 점수 공식" },
+    { src: "/projects/devtier/screen-features.webp", alt: "핵심 기능: 티어 시스템 · 전투력 알고리즘 · README 뱃지", caption: "핵심 기능 · 티어 · 전투력 · README 뱃지" },
   ],
   links: [
     { label: "Web", href: "https://devtier-brown.vercel.app" },

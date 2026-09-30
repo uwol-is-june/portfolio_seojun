@@ -67,9 +67,7 @@ const ko = {
   // Building Loop
   loopSteps: "Claude Code Building Loop 단계",
   loopLanes: "동시에 도는 세션",
-  loopBranches: "Infra spec",
   loopKey: "핵심",
-  loopHint: "단계에 마우스를 올리거나 눌러 다른 단계를 볼 수 있습니다.",
 
   // 프로젝트 카드 · 배지
   deployed: "배포",
@@ -96,7 +94,7 @@ const ko = {
   infraRuntime: "실행 · 배포",
   infraData: "데이터 · 외부 API",
   chResult: "결과",
-  chGallery: "Screen",
+  chGallery: "스크린",
   galleryOpen: (label: string) => `${label} 크게 보기`,
   galleryClose: "닫기",
   galleryPrev: "이전 이미지",
@@ -191,9 +189,7 @@ const en: Dict = {
 
   loopSteps: "Claude Code Building Loop steps",
   loopLanes: "Sessions running in parallel",
-  loopBranches: "Infra spec",
   loopKey: "Key",
-  loopHint: "Hover or tap a step to see the others.",
 
   deployed: "Live",
   deployedTitle: "Deployed service anyone can open",
@@ -218,7 +214,7 @@ const en: Dict = {
   infraRuntime: "Runtime · deploy",
   infraData: "Data · external APIs",
   chResult: "Result",
-  chGallery: "Screen",
+  chGallery: "Screens",
   galleryOpen: (label: string) => `View ${label} larger`,
   galleryClose: "Close",
   galleryPrev: "Previous image",
