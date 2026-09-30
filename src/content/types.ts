@@ -111,10 +111,7 @@ export interface ArchitectureStage {
 
 /** 서비스 구조도: 왼쪽(위)에서 오른쪽(아래)으로 흐르는 단계 */
 export interface Architecture {
-  caption?: string;
   stages: ArchitectureStage[];
-  /** 흐름 밖의 부가 기능 */
-  extras?: string[];
 }
 
 /** 인프라 구성 요소 하나 (예: Vercel · 웹과 API 라우트 배포) */
@@ -132,7 +129,6 @@ export interface Infra {
   client: InfraNode[];
   runtime: InfraNode[];
   data: InfraNode[];
-  caption?: string;
 }
 
 /** 결과 → 실패 분석 → 인사이트 → 개선 액션 → 재결과 */

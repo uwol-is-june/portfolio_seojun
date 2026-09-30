@@ -66,7 +66,6 @@ const ko = {
 
   // Building Loop
   loopSteps: "Claude Code Building Loop 단계",
-  loopTools: "쓰는 도구 · 문서",
   loopLanes: "동시에 도는 세션",
   loopBranches: "Infra spec",
   loopKey: "핵심",
@@ -98,6 +97,10 @@ const ko = {
   infraData: "데이터 · 외부 API",
   chResult: "결과",
   chGallery: "Screen",
+  galleryOpen: (label: string) => `${label} 크게 보기`,
+  galleryClose: "닫기",
+  galleryPrev: "이전 이미지",
+  galleryNext: "다음 이미지",
   chRetro: "회고",
   source: "출처",
   artifact: "산출물",
@@ -187,7 +190,6 @@ const en: Dict = {
   plannerDocs: "Docs and deliverables",
 
   loopSteps: "Claude Code Building Loop steps",
-  loopTools: "Tools · docs",
   loopLanes: "Sessions running in parallel",
   loopBranches: "Infra spec",
   loopKey: "Key",
@@ -217,6 +219,10 @@ const en: Dict = {
   infraData: "Data · external APIs",
   chResult: "Result",
   chGallery: "Screen",
+  galleryOpen: (label: string) => `View ${label} larger`,
+  galleryClose: "Close",
+  galleryPrev: "Previous image",
+  galleryNext: "Next image",
   chRetro: "Retrospective",
   source: "Source",
   artifact: "Deliverable",

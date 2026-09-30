@@ -2,11 +2,12 @@ import Image from "next/image";
 import Reveal from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import CategoryBadge from "@/components/ui/category-badge";
+import Clauses from "@/components/ui/clauses";
 import Container from "@/components/ui/container";
 import Link from "@/components/ui/locale-link";
 import Tag from "@/components/ui/tag";
 import Text from "@/components/ui/text";
-import type { Evidence, ImageAsset, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
+import type { Evidence, Iteration, Metric, Position, ProcessStep, Project } from "@/content/types";
 import { getT } from "@/i18n/server";
 import { categories } from "@/lib/category";
 import { cn } from "@/lib/cn";
@@ -14,6 +15,7 @@ import ArchitectureDiagram from "./architecture-diagram";
 import BackLink from "./back-link";
 import InfraDiagram from "./infra-diagram";
 import FlowCompare from "./flow-compare";
+import Gallery from "./gallery";
 
 type CaseStudyProps = {
   project: Project;
@@ -73,7 +75,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
           <Text size="lg" className="max-w-3xl">
             {project.summary.split(/(?<=[.!?])\s+/).map((sentence) => (
               <span key={sentence} className="block">
-                {sentence}
+                <Clauses text={sentence} />
               </span>
             ))}
           </Text>
@@ -141,7 +143,9 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
               <div className="flex flex-col gap-4">
                 {project.hypothesis && (
                   <Card label="Hypothesis" accent={accent.text}>
-                    <p className="text-h3 font-medium text-fg text-balance">{project.hypothesis}</p>
+                    <p className="text-h3 font-medium text-fg text-balance">
+                      <Clauses text={project.hypothesis} />
+                    </p>
                     {project.hypothesisNote && <p className="text-small text-subtle">{project.hypothesisNote}</p>}
                   </Card>
                 )}
@@ -203,16 +207,7 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
 
           {project.gallery && project.gallery.length > 0 && (
             <Chapter number={nextChapter()} label="Gallery" title={t.chGallery}>
-              <div className="flex flex-col gap-3 md:gap-4">
-                {project.galleryLayout === "wide" ? (
-                  <Gallery images={project.gallery} wide />
-                ) : (
-                  <>
-                    <Gallery images={project.gallery.filter((img) => img.wide)} wide />
-                    <Gallery images={project.gallery.filter((img) => !img.wide)} />
-                  </>
-                )}
-              </div>
+              <Gallery images={project.gallery} layout={project.galleryLayout} />
             </Chapter>
           )}
 
@@ -230,33 +225,6 @@ export default function CaseStudy({ project, positions }: CaseStudyProps) {
         </div>
       </article>
     </main>
-  );
-}
-
-function Gallery({ images, wide = false }: { images: ImageAsset[]; wide?: boolean }) {
-  if (images.length === 0) return null;
-  return (
-    <ul className={cn("grid gap-3 md:gap-4", wide ? "sm:grid-cols-2" : "grid-cols-2 md:grid-cols-3")}>
-      {images.map((img) => (
-        <li key={img.src} className="flex flex-col gap-2">
-          <div
-            className={cn(
-              "relative overflow-hidden rounded-card bg-surface",
-              wide ? "aspect-[16/10] border border-line" : "aspect-[4/5]",
-            )}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              sizes={wide ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
-              className={wide ? "object-cover object-top" : "object-contain"}
-            />
-          </div>
-          {img.caption && <p className="text-caption text-subtle">{img.caption}</p>}
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -280,7 +248,9 @@ function Chapter({
               <span className="font-mono">{number}</span>
               {label}
             </p>
-            <h2 className="max-w-4xl text-h2 font-semibold text-fg text-balance">{title}</h2>
+            <h2 className="max-w-4xl text-h2 font-semibold text-fg text-balance">
+              <Clauses text={title} />
+            </h2>
           </div>
           {children}
         </section>
@@ -334,7 +304,9 @@ function Steps({ steps }: { steps: ProcessStep[] }) {
             </div>
           )}
           <span className="font-mono text-caption text-subtle">{String(i + 1).padStart(2, "0")}</span>
-          <h3 className="text-h3 font-semibold text-fg text-balance">{step.title}</h3>
+          <h3 className="text-h3 font-semibold text-fg text-balance">
+            <Clauses text={step.title} />
+          </h3>
           <Text size="sm">{step.description}</Text>
           {step.points && (
             <ul className="flex flex-col gap-1.5">
@@ -379,7 +351,9 @@ function IterationBlock({ iteration, accent }: { iteration: Iteration; accent: s
     <div className="flex flex-col gap-10">
       <div className="grid gap-4 lg:grid-cols-2">
         <Card label="Conclusion">
-          <p className={cn("text-h3 font-semibold text-balance", failed ? "text-ai" : "text-fg")}>{iteration.verdict}</p>
+          <p className={cn("text-h3 font-semibold text-balance", failed ? "text-ai" : "text-fg")}>
+            <Clauses text={iteration.verdict} />
+          </p>
           <ul className="flex flex-col gap-2">
             {iteration.findings.map((f) => (
               <li key={f} className="text-small text-muted">
@@ -391,7 +365,9 @@ function IterationBlock({ iteration, accent }: { iteration: Iteration; accent: s
         <div className="flex flex-col gap-4">
           <EvidenceCard label="Failure Analysis" evidence={iteration.analysis} />
           <Card label="Insight" accent={accent}>
-            <p className="text-h3 font-medium text-fg text-balance">{iteration.insight}</p>
+            <p className="text-h3 font-medium text-fg text-balance">
+              <Clauses text={iteration.insight} />
+            </p>
           </Card>
         </div>
       </div>

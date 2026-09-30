@@ -51,8 +51,6 @@ export const devtier: Project = {
       { ...s[3], title: "Score · rank", items: ["9 metrics → power score", "Rank · top % among Korean devs", "Bot account penalty"] },
       { ...s[4], title: "Result · share", items: ["Rank · top % · tier", "SVG badge · tier card"] },
     ],
-    extras: ["Achievements", "Korean · English"],
-    caption: "Based on the devtier repo",
   },
   outcome: {
     metrics: [
@@ -79,6 +77,5 @@ export const devtier: Project = {
       { name: "Supabase", note: "Postgres and GitHub login (Auth)" },
       { name: "GitHub GraphQL API", note: "Contributions, stars, and PR data" },
     ],
-    caption: "Based on the devtier repo and live site",
   },
 };

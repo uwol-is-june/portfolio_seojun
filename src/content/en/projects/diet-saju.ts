@@ -38,7 +38,6 @@ export const dietSaju: Project = {
       { ...s[3], title: "Write the reading", items: ["Prompt built from the results", "Per-minute rate limit"] },
       { ...s[4], title: "Result", items: ["Chart + reading"] },
     ],
-    caption: "Based on the diet-saju repo",
   },
   links: [{ ...l[0], label: "Web" }, l[1]],
   infra: {
@@ -54,6 +53,5 @@ export const dietSaju: Project = {
       { name: "Upstash Redis", note: "View and like counters per reading type" },
       { name: "No input storage", note: "Birth data is handled in memory only" },
     ],
-    caption: "Based on the diet-saju repo and live site",
   },
 };

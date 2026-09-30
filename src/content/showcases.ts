@@ -93,8 +93,8 @@ export const builderShowcase: {
     icon: string;
     /** 가장 중요한 단계면 true (강조 표시) */
     key?: boolean;
-    text: string;
-    tags: string[];
+    /** 단계 설명 불릿 (한 줄에 한 가지) */
+    points: string[];
     /** 갈래 카드 묶음의 제목. 없으면 Infra spec */
     branchesTitle?: string;
     branches?: Branch[];
@@ -106,20 +106,24 @@ export const builderShowcase: {
     contrast?: { bad: { title: string; points: string[] }; good: { title: string; points: string[] } };
     /** 프로젝트별로 직접 만든 에이전트 · 스킬 */
     agents?: { project: Example; items: { name: string; desc: string }[] }[];
-    /** 한 줄 흐름도 (예: AI 코드 → 코드리뷰 에이전트 → QA → 배포) */
-    pipeline?: string[];
+    /** 전후 비교 막대 (value는 100건 기준) */
+    compare?: { title: string; bars: { label: string; value: number }[]; unit: string };
     /** 결론을 받치는 외부 근거 한 줄 */
     evidence?: { text: string; source: string; href: string };
   }[];
 } = {
   flow: [
     {
-      label: "기획안 · 프로젝트 세팅",
+      label: "프로젝트 세팅",
       icon: "/icons/loop/plan.webp",
-      text: "코드보다 규칙 문서를 먼저 세웁니다. 루트 CLAUDE.md에는 구조 · 경계 · 명령어만 두고, 세부 규칙은 폴더별 문서로 나눠 그 폴더를 고칠 때만 읽게 합니다. 규칙은 한 곳에만 적고 베끼지 않아, 문서끼리 어긋나지 않게 합니다.",
-      tags: ["CLAUDE.md", "AGENTS.md", "settings.json", "hooks"],
+      points: [
+        "코드보다 규칙 문서를 먼저 세웁니다.",
+        "루트 CLAUDE.md에는 구조 · 경계 · 명령어만 둡니다.",
+        "세부 규칙은 폴더별 문서로 나눠, 그 폴더를 고칠 때만 읽게 합니다.",
+        "규칙은 한 곳에만 적고 베끼지 않아 문서끼리 어긋나지 않습니다.",
+      ],
       snippet: {
-        title: "세팅 순서 (여러 저장소 공통)",
+        title: "세팅 순서",
         lines: [
           "1. CLAUDE.md     구조 · 경계 · 명령어만",
           "2. 폴더별 규칙   components/ · lib/ · docs/CLAUDE.md",
@@ -133,8 +137,7 @@ export const builderShowcase: {
     {
       label: "인프라 셋업",
       icon: "/icons/loop/infra.webp",
-      text: "기획안에 필요한 것만 골라 붙입니다. 쓰지 않을 도구는 처음부터 넣지 않습니다.",
-      tags: ["Vercel", "Supabase", "GitHub Actions"],
+      points: ["기획안에 필요한 것만 골라 붙입니다.", "쓰지 않을 도구는 처음부터 넣지 않습니다."],
       branches: [
         { need: "배포", tool: "Vercel", examples: [ex.devtier, ex.saju, ex.stock, ex.coverage] },
         { need: "DB · 로그인", tool: "Supabase", examples: [ex.devtier, ex.wiki] },
@@ -148,8 +151,10 @@ export const builderShowcase: {
     {
       label: "에이전트 구축",
       icon: "/icons/loop/agents.webp",
-      text: "관점이 다른 일은 에이전트와 스킬로 나눠 맡깁니다. 한 에이전트가 화면 · 문구 · 검수를 다 하면 기준이 섞이기 때문입니다.",
-      tags: [".claude/agents", "스킬", "서브에이전트"],
+      points: [
+        "관점이 다른 일은 에이전트와 스킬로 나눠 맡깁니다.",
+        "한 에이전트가 화면 · 문구 · 검수를 다 하면 기준이 섞이기 때문입니다.",
+      ],
       agents: [
         {
           project: { title: "이 포트폴리오", slug: "" },
@@ -178,8 +183,12 @@ export const builderShowcase: {
       label: "TASK.md · 병렬 작업",
       icon: "/icons/loop/parallel.webp",
       key: true,
-      text: "가장 중요한 단계입니다. 세션만 나눠 병렬로 돌리면 각 세션이 자기 태스크만 보고 같은 파일을 덮어써 충돌이 잦고, 충돌을 푸는 동안 버그와 토큰 낭비가 생깁니다. 그래서 TASK.md에서 먼저 태스크를 쪼개 파일이 겹치지 않는 것끼리 묶고, 묶음마다 세션을 나눠 동시에 돌립니다.",
-      tags: ["docs/TASK.md", "병렬 세션"],
+      points: [
+        "가장 중요한 단계입니다.",
+        "세션만 나눠 돌리면 같은 파일을 덮어써 충돌 · 버그 · 토큰 낭비가 생깁니다.",
+        "그래서 TASK.md에서 태스크를 쪼개 파일이 겹치지 않는 것끼리 묶습니다.",
+        "묶음마다 세션을 나눠 동시에 돌립니다.",
+      ],
       contrast: {
         bad: { title: "세션만 나누면", points: ["같은 파일을 서로 덮어씀", "충돌을 푸느라 버그 · 토큰 낭비"] },
         good: { title: "TASK.md로 먼저 묶으면", points: ["파일이 겹치지 않는 묶음끼리 병렬", "예) 포도위키: 웹 · 앱 · 공통 태스크를 파일 3개로 분리"] },
@@ -193,11 +202,20 @@ export const builderShowcase: {
     {
       label: "QA · 코드리뷰",
       icon: "/icons/loop/qa.webp",
-      text: "AI가 코드를 빠르게 쏟아낼수록 사람이 다 읽을 수 없어 리뷰가 병목이 됩니다. 그래서 저는 변경마다 코드리뷰 에이전트를 적극 활용합니다.",
-      tags: ["/code-review", "qa-reviewer", "build · lint"],
-      pipeline: ["AI가 쓴 코드", "코드리뷰 에이전트 · 논리 오류 · 버그", "QA 에이전트 · 빌드 · 린트 · 반응형", "배포"],
+      points: [
+        "AI가 코드를 빠르게 쏟아낼수록 사람이 다 읽을 수 없어 리뷰가 병목이 됩니다.",
+        "변경마다 코드리뷰 에이전트 → QA 에이전트 순으로 점검한 뒤 배포합니다.",
+      ],
+      compare: {
+        title: "PR 100건 중 실제 문제를 지적받은 PR",
+        bars: [
+          { label: "사람만 리뷰할 때", value: 16 },
+          { label: "코드리뷰 에이전트를 붙인 뒤", value: 54 },
+        ],
+        unit: "건",
+      },
       evidence: {
-        text: "Anthropic이 사내 PR에 코드리뷰 에이전트를 붙이자, 실질적인 리뷰 코멘트를 받는 PR이 16%에서 54%로 늘었습니다.",
+        text: "코드가 너무 많아지자 사람 리뷰는 대부분 훑고 지나갔습니다. Anthropic은 코드리뷰 에이전트를 붙인 뒤, 실제 문제를 지적받는 코드 변경이 100건 중 16건에서 54건으로 늘었습니다.",
         source: "Anthropic · 2026.03",
         href: "https://claude.com/blog/code-review",
       },
@@ -205,8 +223,11 @@ export const builderShowcase: {
     {
       label: "지속 개선 · 운영",
       icon: "/icons/loop/operate.webp",
-      text: "배포한 뒤에는 GA4 · Amplitude로 유입 · 전환 지표를 보고, 떨어지는 구간을 찾아 다시 루프를 돕니다. 되돌린 결정은 날짜와 근거를 붙여 규칙 문서에 남겨 다음 작업이 먼저 읽게 합니다.",
-      tags: ["GA4", "Amplitude", "회고 문서"],
+      points: [
+        "배포한 뒤에는 GA4 · Amplitude로 유입 · 전환 지표를 봅니다.",
+        "떨어지는 구간을 찾아 다시 루프를 돕니다.",
+        "되돌린 결정은 날짜와 근거를 붙여 규칙 문서에 남겨, 다음 작업이 먼저 읽게 합니다.",
+      ],
       branchesTitle: "운영 방식",
       branches: [
         { need: "지표 분석", tool: "GA4 · Amplitude", examples: [] },

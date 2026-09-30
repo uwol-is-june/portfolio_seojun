@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState, type KeyboardEvent } from "react";
+import { Fragment, useRef, useState, type KeyboardEvent } from "react";
 import Link from "@/components/ui/locale-link";
 import type { builderShowcase } from "@/content/showcases";
 import { useT } from "@/i18n/locale-provider";
@@ -117,11 +117,11 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   <h3 className="text-h3 font-semibold text-fg break-keep">{step.label}</h3>
                 </div>
               </div>
-              <p className="text-body leading-relaxed text-fg/85 break-keep">{step.text}</p>
-              <ul className="mt-auto flex flex-wrap gap-1.5" aria-label={t.loopTools}>
-                {step.tags.map((t) => (
-                  <li key={t} className="rounded-sm border border-line bg-bg px-2 py-1 font-mono text-caption text-muted">
-                    {t}
+              <ul className="flex flex-col gap-2">
+                {step.points.map((p) => (
+                  <li key={p} className="flex gap-2.5 text-body leading-relaxed text-fg/85 break-keep">
+                    <span aria-hidden className="mt-[0.7em] size-1.5 shrink-0 rounded-full bg-subtle" />
+                    {p}
                   </li>
                 ))}
               </ul>
@@ -173,31 +173,29 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   ))}
                 </ul>
               )}
-              {step.pipeline && (
-                <ol className="flex flex-col gap-2 rounded-card border border-line bg-bg p-5" aria-label={step.label}>
-                  {step.pipeline.map((node, j) => {
-                    const [head, ...rest] = node.split(/\s·\s/);
-                    const agent = j > 0 && j < step.pipeline!.length - 1;
-                    return (
-                      <li key={node} className="flex flex-col items-start gap-2">
-                        <span
-                          className={cn(
-                            "flex flex-col rounded-sm border px-3 py-2",
-                            agent ? "border-ai/60 bg-ai/5" : "border-line-strong",
-                          )}
-                        >
-                          <span className="text-small font-semibold text-fg break-keep">{head}</span>
-                          {rest.length > 0 && <span className="text-caption text-muted break-keep">{rest.join(" · ")}</span>}
-                        </span>
-                        {j < step.pipeline!.length - 1 && (
-                          <span aria-hidden className="pl-4 text-subtle">
-                            ↓
+              {step.compare && (
+                <figure className="flex flex-col gap-4 rounded-card border border-line bg-bg p-5">
+                  <figcaption className="text-small font-semibold text-fg break-keep">{step.compare.title}</figcaption>
+                  <ul className="flex flex-col gap-3">
+                    {step.compare.bars.map((bar, j) => {
+                      const last = j === step.compare!.bars.length - 1;
+                      return (
+                        <li key={bar.label} className="flex flex-col gap-1.5">
+                          <span className="flex items-baseline justify-between gap-3 text-small">
+                            <span className="text-muted break-keep">{bar.label}</span>
+                            <span className={cn("shrink-0 font-semibold tabular-nums", last ? "text-ai" : "text-fg")}>
+                              {bar.value}
+                              {step.compare!.unit}
+                            </span>
                           </span>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ol>
+                          <span aria-hidden className="h-3 overflow-hidden rounded-pill bg-surface-raised">
+                            <span className={cn("block h-full rounded-pill", last ? "bg-ai/80" : "bg-line-strong")} style={{ width: `${bar.value}%` }} />
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </figure>
               )}
               {step.evidence && (
                 <p className="text-small text-muted break-keep">
@@ -209,10 +207,8 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
               )}
               {step.snippet && (
                 <>
-                  <span className="font-mono text-caption font-semibold text-subtle">{step.snippet.title}</span>
-                  <pre className="overflow-x-auto rounded-card border border-line bg-bg px-5 py-4 font-mono text-small leading-loose text-fg/85">
-                    {step.snippet.lines.join("\n")}
-                  </pre>
+                  <span className="text-caption font-semibold text-subtle">{step.snippet.title}</span>
+                  <SnippetBlock lines={step.snippet.lines} />
                 </>
               )}
               {step.lanes && (
@@ -253,13 +249,43 @@ export default function BuilderFlow({ flow }: { flow: Step[] }) {
                   </ul>
                 </>
               )}
-              {!step.snippet && !step.lanes && !step.branches && !step.agents && !step.pipeline && (
+              {!step.snippet && !step.lanes && !step.branches && !step.agents && !step.compare && (
                 <p className="text-small text-subtle">{t.loopHint}</p>
               )}
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
+    </div>
+  );
+}
+
+/**
+ * 문서 한 토막. "1. CLAUDE.md     구조 · 경계"처럼 공백 두 칸 이상으로 나뉜 줄은 2열 그리드로 맞춥니다.
+ * 고정폭 폰트에서도 한글은 영문 두 칸 폭이 아니라서, 공백으로 줄을 맞추면 둘째 열이 어긋나기 때문입니다.
+ */
+function SnippetBlock({ lines }: { lines: string[] }) {
+  const rows = lines.map((line) => line.split(/\s{2,}/));
+  const columns = rows.every((r) => r.length === 2);
+  return (
+    <div
+      className={cn(
+        "overflow-x-auto rounded-card border border-line bg-bg px-5 py-4 font-mono text-small leading-loose text-fg/85",
+        columns && "grid gap-x-6 sm:grid-cols-[auto_1fr]",
+      )}
+    >
+      {columns
+        ? rows.map(([key, value]) => (
+            <Fragment key={key}>
+              <span className="whitespace-nowrap">{key}</span>
+              <span className="min-w-0 font-sans break-keep text-muted max-sm:mb-2 max-sm:pl-[3ch] sm:text-fg/85">{value}</span>
+            </Fragment>
+          ))
+        : lines.map((line) => (
+            <span key={line} className="block whitespace-pre">
+              {line}
+            </span>
+          ))}
     </div>
   );
 }

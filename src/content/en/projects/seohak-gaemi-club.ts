@@ -99,8 +99,6 @@ export const seohakGaemiClub: Project = {
       { ...ko.architecture.stages[4], title: "Scoring", items: ["Compare price at call time with actual Yahoo prices", "Direction hit · target reached · error"] },
       { ...ko.architecture.stages[5], title: "Dashboard", items: ["Portfolio · track record · per-stock reports", "Articles · earnings checks · bottleneck signals"], tech: ["Next.js", "Toss Securities Open API"] },
     ],
-    extras: ["Financial data only behind a password login", "Runs locally because the Toss API requires an IP allowlist"],
-    caption: "Based on the seohak-gaemi-club repo · 12 skills · Python tools · Next.js dashboard",
   },
   outcome: {
     verdict: "Real-money picks returned +21.0% in two weeks",
@@ -122,7 +120,7 @@ export const seohakGaemiClub: Project = {
     { ...g[8], alt: "Past emotional trading return", caption: "Metrics 3 · Past emotional trading" },
   ],
   links: [
-    { ...l[0], label: "Open demo" },
+    { ...l[0], label: "Web" },
     l[1],
     { ...l[2], label: "Original open source" },
   ],
@@ -139,6 +137,5 @@ export const seohakGaemiClub: Project = {
       { name: "SEC EDGAR · Yahoo Finance", note: "Financials and prices" },
       { name: "Toss Securities Open API", note: "Real-account holdings and FX" },
     ],
-    caption: "Based on the seohak-gaemi-club repo · runs locally with no external server",
   },
 };

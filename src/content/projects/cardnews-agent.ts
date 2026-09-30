@@ -94,7 +94,6 @@ export const cardnewsAgent: Project = {
       { title: "렌더", items: ["1080×1350 PNG", "캡션 생성"], tech: ["Headless Edge"], kind: "system" },
       { title: "발행", items: ["인스타그램 업로드"], kind: "store" },
     ],
-    caption: "cardnews-agent 저장소 코드 기준 · 로컬에서 실행하는 도구",
   },
   infra: {
     client: [
@@ -110,7 +109,6 @@ export const cardnewsAgent: Project = {
       { name: "Pexels API", note: "카드 사진 검색" },
       { name: "Codex CLI (GPT)", note: "읽기 검수 · ChatGPT 로그인" },
     ],
-    caption: "cardnews-agent 저장소 기준 · 서버 없이 로컬에서 실행",
   },
   outcome: {
     verdict: "'다시' 인스타그램 카드뉴스 31편 운영",
@@ -130,13 +128,8 @@ export const cardnewsAgent: Project = {
     { src: "/projects/cardnews-agent/card-sugarlabel-07.webp", alt: "'다시' 로고가 있는 마무리 카드", caption: "07 마무리" },
     { src: "/projects/cardnews-agent/covers.webp", alt: "9월 5일부터 18일까지 발행한 카드뉴스 14편의 표지", caption: "9/05 ~ 9/18 표지 14편" },
   ],
-  retrospective: [
-    "GPT에게 글을 쓰게 하는 네 방식을 시험했는데, 값이 나온 것은 사람이 쓰고 GPT가 걸리는 자리만 짚는 방식 하나였습니다. 글쓰기를 넘기는 순간 쌓아 온 문체 규칙이 사라졌습니다.",
-    "검사 둘이 모두 통과한 편에서도 사람이 여러 자리를 되돌렸습니다. 자동 검사는 기계로 셀 수 있는 것만 잡는다는 걸 전제로, 사람이 훑을 항목을 문서로 남겼습니다.",
-    "피드 조회수를 갈래별로 읽어 보니 '행동' 주제가 평균 254로 '기준' 주제(160)보다 높았습니다. 이후 주제 후보를 낼 때 갈래가 연속되는지부터 봅니다.",
-  ],
   links: [
-    { label: "데모 열기", href: "/demo/cardnews" },
+    { label: "Web", href: "/demo/cardnews" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/cardnews-agent" },
     { label: "Instagram", href: "https://www.instagram.com/dasii.official/" },
   ],

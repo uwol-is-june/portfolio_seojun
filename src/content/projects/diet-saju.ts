@@ -57,7 +57,6 @@ export const dietSaju: Project = {
       { title: "해석 생성", items: ["계산 결과로 프롬프트 구성", "분당 요청 제한"], tech: ["Gemini"], kind: "system" },
       { title: "결과", items: ["원국 + 풀이"], kind: "screen" },
     ],
-    caption: "diet-saju 저장소 코드 기준",
   },
   infra: {
     client: [
@@ -72,7 +71,6 @@ export const dietSaju: Project = {
       { name: "Upstash Redis", note: "유형별 조회수 · 좋아요 카운터" },
       { name: "입력값 미저장", note: "생년월일시는 메모리에서만 처리" },
     ],
-    caption: "diet-saju 저장소 · 배포 사이트 기준",
   },
   outcome: { metrics: [] },
   links: [

@@ -76,13 +76,17 @@ export const plannerShowcase: typeof ko.plannerShowcase = {
 };
 
 type Flow = (typeof ko.builderShowcase)["flow"];
-const flowText: Pick<Flow[number], "label" | "text" | "tags" | "branchesTitle" | "snippet" | "lanes" | "contrast" | "pipeline" | "evidence">[] = [
+const flowText: Pick<Flow[number], "label" | "points" | "branchesTitle" | "snippet" | "lanes" | "contrast" | "compare" | "evidence">[] = [
   {
-    label: "Plan · project setup",
-    text: "I set up the rule docs before any code. The root CLAUDE.md holds only structure, boundaries, and commands; detailed rules live in per-folder docs that are read only when that folder changes. Each rule lives in one place and is never copied, so docs never contradict each other.",
-    tags: ["CLAUDE.md", "AGENTS.md", "settings.json", "hooks"],
+    label: "Project setup",
+    points: [
+      "I set up the rule docs before any code.",
+      "The root CLAUDE.md holds only structure, boundaries, and commands.",
+      "Detailed rules live in per-folder docs, read only when that folder changes.",
+      "Each rule lives in one place and is never copied, so docs never contradict each other.",
+    ],
     snippet: {
-      title: "Setup order (shared across repos)",
+      title: "Setup order",
       lines: [
         "1. CLAUDE.md      structure · boundaries · commands",
         "2. Folder rules   components/ · lib/ · docs/CLAUDE.md",
@@ -95,18 +99,23 @@ const flowText: Pick<Flow[number], "label" | "text" | "tags" | "branchesTitle" |
   },
   {
     label: "Infrastructure",
-    text: "I add only what the plan needs. Tools I won't use never go in.",
-    tags: ["Vercel", "Supabase", "GitHub Actions"],
+    points: ["I add only what the plan needs.", "Tools I won't use never go in."],
   },
   {
     label: "Build agents",
-    text: "Work with a different point of view goes to its own agent or skill. When one agent handles UI, copy, and review together, the standards blur.",
-    tags: [".claude/agents", "Skills", "Subagents"],
+    points: [
+      "Work with a different point of view goes to its own agent or skill.",
+      "When one agent handles UI, copy, and review together, the standards blur.",
+    ],
   },
   {
     label: "TASK.md · parallel work",
-    text: "The most important step. If you just open more sessions, each one sees only its own task and overwrites the same files, so conflicts are frequent and resolving them costs bugs and tokens. So I first split tasks in TASK.md and group the ones that don't touch the same files, then run one session per group.",
-    tags: ["docs/TASK.md", "Parallel sessions"],
+    points: [
+      "The most important step.",
+      "Just opening more sessions means they overwrite the same files: conflicts, bugs, wasted tokens.",
+      "So I first split tasks in TASK.md and group the ones that don't share files.",
+      "Then I run one session per group, all at once.",
+    ],
     contrast: {
       bad: { title: "Just more sessions", points: ["Sessions overwrite the same files", "Bugs and wasted tokens from conflicts"] },
       good: { title: "Group in TASK.md first", points: ["Groups that don't share files run in parallel", "e.g. Podo Wiki: web · app · shared tasks in 3 files"] },
@@ -119,19 +128,31 @@ const flowText: Pick<Flow[number], "label" | "text" | "tags" | "branchesTitle" |
   },
   {
     label: "QA · code review",
-    text: "The faster AI writes code, the less of it people can read, so review becomes the bottleneck. That's why I run a code review agent on every change.",
-    tags: ["/code-review", "qa-reviewer", "build · lint"],
-    pipeline: ["AI-written code", "Code review agent · logic errors · bugs", "QA agent · build · lint · responsive", "Ship"],
+    points: [
+      "The faster AI writes code, the less of it people can read, so review becomes the bottleneck.",
+      "Every change goes through a code review agent, then a QA agent, before it ships.",
+    ],
+    compare: {
+      title: "Out of 100 PRs, those with a real issue flagged",
+      bars: [
+        { label: "Human review only", value: 16 },
+        { label: "With a code review agent", value: 54 },
+      ],
+      unit: "",
+    },
     evidence: {
-      text: "When Anthropic added a code review agent to its own PRs, the share of PRs getting substantive review comments rose from 16% to 54%.",
+      text: "As code piled up, human reviews mostly skimmed. After Anthropic added a code review agent, code changes with a real issue flagged went from 16 in 100 to 54 in 100.",
       source: "Anthropic · Mar 2026",
       href: "https://claude.com/blog/code-review",
     },
   },
   {
     label: "Improve · operate",
-    text: "After shipping, I watch acquisition and conversion in GA4 and Amplitude, find where they drop, and run the loop again. Decisions I roll back go into the rules doc with a date and reason, so the next task reads them first.",
-    tags: ["GA4", "Amplitude", "Retro notes"],
+    points: [
+      "After shipping, I watch acquisition and conversion in GA4 and Amplitude.",
+      "I find where they drop and run the loop again.",
+      "Rolled-back decisions go into the rules doc with a date and reason, so the next task reads them first.",
+    ],
     branchesTitle: "How I run it",
   },
 ];

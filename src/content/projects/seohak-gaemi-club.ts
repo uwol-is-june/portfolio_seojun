@@ -126,8 +126,6 @@ export const seohakGaemiClub: Project = {
         kind: "screen",
       },
     ],
-    extras: ["비밀번호 로그인 뒤에서만 금융 데이터 제공", "토스 API가 IP 허용목록을 요구해 로컬 전용으로 운영"],
-    caption: "seohak-gaemi-club 저장소 코드 기준 · 스킬 12개 · Python 도구 · Next.js 대시보드",
   },
   infra: {
     client: [
@@ -142,7 +140,6 @@ export const seohakGaemiClub: Project = {
       { name: "SEC EDGAR · Yahoo Finance", note: "재무제표 · 시세" },
       { name: "토스증권 Open API", note: "실계좌 보유 종목 · 환율" },
     ],
-    caption: "seohak-gaemi-club 저장소 기준 · 외부 서버 없이 로컬에서 실행",
   },
   outcome: {
     verdict: "추천 종목 실투자로 2주 만에 수익률 +21.0%",
@@ -189,7 +186,7 @@ export const seohakGaemiClub: Project = {
     { src: "/projects/seohak-gaemi-club/screen-before.webp", alt: "기존 감정 매매 수익률 화면", caption: "Metrics 3 · 기존 감정 매매" },
   ],
   links: [
-    { label: "데모 열기", href: "/demo/seohak" },
+    { label: "Web", href: "/demo/seohak" },
     { label: "GitHub", href: "https://github.com/uwol-is-june/seohak-gaemi-club" },
     { label: "원본 오픈소스", href: "https://github.com/xbtlin/ai-berkshire" },
   ],

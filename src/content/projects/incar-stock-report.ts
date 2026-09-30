@@ -82,8 +82,6 @@ export const incarStockReport: Project = {
         kind: "screen",
       },
     ],
-    extras: ["로컬 관리자 화면에서 AI 분석 수동 갱신 (FastAPI)"],
-    caption: "사내 저장소(비공개) 코드 기준",
   },
   infra: {
     client: [
@@ -98,7 +96,6 @@ export const incarStockReport: Project = {
       { name: "pykrx · DART", note: "주가 · 공시 데이터" },
       { name: "Gemini", note: "수집한 데이터 분석" },
     ],
-    caption: "사내 저장소(비공개) 기준",
   },
   outcome: {
     metrics: [

@@ -54,8 +54,6 @@ export const incarStockReport: Project = {
       { ...s[3], title: "Store · deploy", items: ["Commit JSON per date + index", "Auto redeploy on commit"] },
       { ...s[4], title: "Dashboard", items: ["6 tabs · date picker", "PDF export"] },
     ],
-    extras: ["Refresh the AI analysis manually from a local admin screen (FastAPI)"],
-    caption: "Based on the internal (private) repo",
   },
   outcome: {
     metrics: [
@@ -83,6 +81,5 @@ export const incarStockReport: Project = {
       { name: "pykrx · DART", note: "Stock prices and disclosures" },
       { name: "Gemini", note: "Analyzes the collected data" },
     ],
-    caption: "Based on the internal (private) repo",
   },
 };

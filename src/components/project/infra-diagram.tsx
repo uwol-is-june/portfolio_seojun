@@ -15,7 +15,7 @@ export default function InfraDiagram({ infra }: { infra: Infra }) {
   ].filter((tier) => tier.nodes.length > 0);
 
   return (
-    <figure className="flex flex-col gap-5">
+    <figure>
       <ol className="flex flex-col">
         {tiers.map((tier, i) => (
           <li key={tier.id} className="flex flex-col">
@@ -35,7 +35,6 @@ export default function InfraDiagram({ infra }: { infra: Infra }) {
           </li>
         ))}
       </ol>
-      {infra.caption && <figcaption className="text-caption text-subtle">{infra.caption}</figcaption>}
     </figure>
   );
 }
@@ -43,7 +42,7 @@ export default function InfraDiagram({ infra }: { infra: Infra }) {
 function Node({ node, className }: { node: InfraNode; className: string }) {
   return (
     <li className={cn("flex flex-col gap-1 rounded-card border px-4 py-3", className)}>
-      <span className="font-mono text-small font-medium text-fg">{node.name}</span>
+      <span className="text-small font-semibold text-fg">{node.name}</span>
       {node.note && <span className="text-small text-muted text-balance">{node.note}</span>}
     </li>
   );

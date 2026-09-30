@@ -64,8 +64,6 @@ export const faRecruitSimulator: Project = {
       { ...s[3], title: "③ Eligibility", items: ["Restriction cards R · S · A · B", "Final verdict priority"] },
       { ...s[4], title: "Result · share", items: ["Eligible · review · conditional · ineligible", "Document and to-do checklist", "Text · PNG · Excel · PDF"] },
     ],
-    extras: ["Deregistration self-guide", "Association registration calendar", "How-to guide", "Results saved in the browser (localStorage)"],
-    caption: "Based on the fa-recruit-simulator repo (private)",
   },
   outcome: {
     metrics: [
@@ -84,7 +82,7 @@ export const faRecruitSimulator: Project = {
     { ...g[6], alt: "Deregistration self-guide case check", caption: "Deregistration self-guide" },
     { ...g[7], alt: "Mode selection screen", caption: "Mode selection · individual / batch" },
   ],
-  links: [{ ...(ko.links?.[0] ?? { href: "/demo/fa-recruit" }), label: "Open demo" }],
+  links: [{ ...(ko.links?.[0] ?? { href: "/demo/fa-recruit" }), label: "Web" }],
   infra: {
     client: [
       { name: "Next.js 16 web", note: "Individual and batch diagnosis, password-locked" },
@@ -95,6 +93,5 @@ export const faRecruitSimulator: Project = {
       { name: "Browser storage", note: "Keeps the batch candidate list" },
       { name: "Excel · PNG export", note: "xlsx-js-style and result images" },
     ],
-    caption: "Only what's confirmed from the private repo · hosting is internal",
   },
 };

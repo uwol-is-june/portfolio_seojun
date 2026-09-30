@@ -89,8 +89,6 @@ export const faRecruitSimulator: Project = {
         kind: "screen",
       },
     ],
-    extras: ["말소 셀프 가이드", "협회등록 예상 캘린더", "사용법 가이드", "진단 결과 브라우저 저장 (localStorage)"],
-    caption: "fa-recruit-simulator 저장소 코드 기준 (비공개 저장소)",
   },
   infra: {
     client: [
@@ -102,7 +100,6 @@ export const faRecruitSimulator: Project = {
       { name: "브라우저 저장소", note: "단체 진단 명단 보관" },
       { name: "엑셀 · PNG 내보내기", note: "xlsx-js-style · 결과 이미지" },
     ],
-    caption: "사내 저장소(비공개)에서 확인된 범위 · 배포 환경은 사내 비공개",
   },
   outcome: {
     metrics: [
@@ -123,6 +120,6 @@ export const faRecruitSimulator: Project = {
     { src: "/projects/fa-recruit-simulator/cover.webp", alt: "모드 선택 화면", caption: "모드 선택 · 개인 진단 / 단체 진단" },
   ],
   links: [
-    { label: "데모 열기", href: "/demo/fa-recruit" },
+    { label: "Web", href: "/demo/fa-recruit" },
   ],
 };

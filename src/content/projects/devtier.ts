@@ -58,8 +58,6 @@ export const devtier: Project = {
       { title: "점수 · 순위 계산", items: ["지표 9종 → 전투력", "한국 개발자 중 순위 · 상위 %", "봇 계정 패널티"], kind: "system" },
       { title: "결과 · 공유", items: ["순위 · 상위 % · 티어", "SVG 뱃지 · 티어 카드"], kind: "screen" },
     ],
-    extras: ["업적 시스템", "한국어 · 영어"],
-    caption: "devtier 저장소 코드 기준",
   },
   infra: {
     client: [
@@ -74,7 +72,6 @@ export const devtier: Project = {
       { name: "Supabase", note: "Postgres · GitHub 로그인(Auth)" },
       { name: "GitHub GraphQL API", note: "잔디 · 스타 · PR 데이터" },
     ],
-    caption: "devtier 저장소 · 배포 사이트 기준",
   },
   outcome: {
     metrics: [

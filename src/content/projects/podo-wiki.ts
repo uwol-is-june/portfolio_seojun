@@ -49,7 +49,6 @@ export const podoWiki: Project = {
       { title: "변경 이력", items: ["리비전 기록", "버전 비교(diff)"], kind: "system" },
       { title: "모바일 앱", items: ["홈 · 검색 · 북마크 · 더보기 탭", "App Store · Google Play 출시"], tech: ["Expo (EAS)"], kind: "screen" },
     ],
-    caption: "Podo-Wiki 저장소 코드 기준",
   },
   infra: {
     client: [
@@ -63,7 +62,6 @@ export const podoWiki: Project = {
     data: [
       { name: "Supabase", note: "Postgres · 이메일 로그인 · 이미지 저장소" },
     ],
-    caption: "Podo-Wiki 저장소 · 배포 사이트 기준",
   },
   outcome: { metrics: [] },
   gallery: [

@@ -77,7 +77,6 @@ export const coverageAnalysis: Project = {
         kind: "screen",
       },
     ],
-    caption: "incar_ca_test 저장소 코드 기준 (비공개 저장소)",
   },
   infra: {
     client: [
@@ -89,7 +88,6 @@ export const coverageAnalysis: Project = {
     data: [
       { name: "CODEF API", note: "내보험다보여 계약 조회" },
     ],
-    caption: "사내 저장소(비공개) · 배포 사이트에서 확인된 범위",
   },
   outcome: { metrics: [] },
   galleryLayout: "wide",
@@ -100,7 +98,6 @@ export const coverageAnalysis: Project = {
     { src: "/projects/coverage-analysis/screen-coverage.webp", alt: "보장 항목별 진행바와 갭 분석 표", caption: "보장 현황 · 갭 분석 (데모 데이터)" },
   ],
   links: [
-    { label: "데모 열기", href: "/demo/coverage" },
-    { label: "Web", href: "https://incar-ca-test.vercel.app" },
+    { label: "Web", href: "/demo/coverage" },
   ],
 };

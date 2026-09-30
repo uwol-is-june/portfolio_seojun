@@ -94,7 +94,6 @@ export const cardnewsAgent: Project = {
       { ...s[4], title: "Render", items: ["1080×1350 PNG", "Caption"] },
       { ...s[5], title: "Publish", items: ["Upload to Instagram"] },
     ],
-    caption: "Based on the cardnews-agent repo · a tool that runs locally",
   },
   outcome: {
     verdict: "31 DASII Instagram card news episodes",
@@ -114,12 +113,7 @@ export const cardnewsAgent: Project = {
     { ...g[6], alt: "Closing card with the DASII logo", caption: "07 Wrap-up" },
     { ...g[7], alt: "Covers of 14 card news episodes published from Sep 5 to 18", caption: "14 covers, 9/05 – 9/18" },
   ],
-  retrospective: [
-    "I tested four ways of having GPT write, and only one worked: a human writes and GPT just flags where it stumbles. The moment writing was handed over, the style rules I had built up disappeared.",
-    "Even on episodes that passed both checks, a human still reverted several lines. Assuming automated checks only catch what a machine can count, I documented what a human should review.",
-    "Reading feed views by topic type, \"action\" topics averaged 254 views versus 160 for \"standards\" topics. Now I check whether topic types repeat before proposing new ones.",
-  ],
-  links: [{ ...l[0], label: "Open demo" }, l[1], l[2]],
+  links: [{ ...l[0], label: "Web" }, l[1], l[2]],
   infra: {
     client: [
       { name: "Claude Code", note: "Planning and writing skills" },
@@ -134,6 +128,5 @@ export const cardnewsAgent: Project = {
       { name: "Pexels API", note: "Photo search" },
       { name: "Codex CLI (GPT)", note: "Read-through review via ChatGPT login" },
     ],
-    caption: "Based on the cardnews-agent repo · runs locally with no server",
   },
 };

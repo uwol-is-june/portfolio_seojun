@@ -54,7 +54,6 @@ export const coverageAnalysis: Project = {
       { ...s[3], title: "Gap analysis", items: ["Current vs. recommended coverage"] },
       { ...s[4], title: "Dashboard", items: ["Policy cards", "Progress bar per coverage item", "Gap summary table"] },
     ],
-    caption: "Based on the incar_ca_test repo (private)",
   },
   gallery: [
     { ...g[0], alt: "Choosing how to connect coverage data", caption: "Choose a path · My Insurance at a Glance / PDF upload" },
@@ -62,10 +61,7 @@ export const coverageAnalysis: Project = {
     { ...g[2], alt: "Coverage score, number of policies, monthly premium, and policy list", caption: "Result · coverage score and policies (demo data)" },
     { ...g[3], alt: "Progress bars per coverage item and gap table", caption: "Coverage · gap analysis (demo data)" },
   ],
-  links: [
-    { ...l[0], label: "Open demo" },
-    { ...l[1], label: "Web" },
-  ],
+  links: [{ ...l[0], label: "Web" }],
   infra: {
     client: [
       { name: "Next.js 16 web", note: "Insurance connection and coverage dashboard" },
@@ -76,6 +72,5 @@ export const coverageAnalysis: Project = {
     data: [
       { name: "CODEF API", note: "Looks up policies via the national insurance registry" },
     ],
-    caption: "Only what's confirmed from the private repo and live site",
   },
 };

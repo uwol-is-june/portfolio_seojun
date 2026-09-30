@@ -33,7 +33,6 @@ export const podoWiki: Project = {
       { ...s[2], title: "History", items: ["Revision log", "Version diff"] },
       { ...s[3], title: "Mobile app", items: ["Home · search · bookmarks · more tabs", "Released on App Store · Google Play"] },
     ],
-    caption: "Based on the Podo-Wiki repo",
   },
   gallery: [
     { ...g[0], alt: "Podo Wiki app home: theater companies, recent changes, and FAQ", caption: "Home · companies and recent changes" },
@@ -55,6 +54,5 @@ export const podoWiki: Project = {
     data: [
       { name: "Supabase", note: "Postgres, email login, and image storage" },
     ],
-    caption: "Based on the Podo-Wiki repo and live site",
   },
 };
